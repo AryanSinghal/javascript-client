@@ -1,3 +1,7 @@
+body {
+    background-image: url("../../background.jpg");
+    background-color: #bcc8da;
+}   
 .container{
     display: flex;
     flex-direction: column;  
@@ -6,16 +10,17 @@
     padding: 5%;
 }
 .shadow{
-    box-shadow: 1px 5px #ccc;
-    -moz-box-shadow:    10px 3px  #ccc;
-    -webkit-box-shadow: 3px 3px 5px #ccc;
+    box-shadow: 1px 5px grey;
+    -moz-box-shadow:    10px 3px grey;
+    -webkit-box-shadow: 3px 3px 5px grey;
+    background-color: white;
 }
 .c1{
     display: flex;
     flex-direction: row;
     flex:1;
     border: solid 1px; 
-    padding-top: 10px;
+    padding-top: 1%;
     border-color: rgba(78, 76, 76, 0.067);
 }
 .checkout{
@@ -31,10 +36,14 @@
 }
 .payment{
     flex: 2;
+    display: flex;
+    flex-direction: column; 
 }
 .cart{
     flex: 1;
     background-color: #4441;
+    display: flex;
+    flex-direction: column;
 }
 .cart, .payment{
     text-align: justify;
@@ -43,10 +52,12 @@
 .shipping{
     flex: 1;
     text-align: end;
-
 }
 .confirmation{
     flex: 4;
+}
+.new-card{
+    flex: 1;
 }
 .payment-method{
     flex: 1;
@@ -56,9 +67,87 @@
     position: absolute;
     left: 92%;    
 }
-
-
 .shipping::after, .payment-method::after{
     content: "/";
 
 } 
+.wallet{
+    flex: 1;
+    margin-top: 4%;
+}
+.discover:hover, .visa:hover, .master-card:hover{
+    box-shadow: 10px 10px 10px grey;
+}
+.discover, .visa, .master-card{
+    flex:1;
+    margin-left: 4%;
+    margin-top: 5%;
+    width: 28%;
+    height: 40%;
+}
+.hard-case-content,.mobile-holder-content,.rado-content, .usb-content{
+    flex: 1; 
+    display: flex;
+    flex-direction: row; 
+    font-size: 10px;
+    margin: 3%;
+    font-size: small;
+}
+.hard-case, .mobile-holder, .usb, .rado{
+    width: 90%;
+    height: 90%;
+    margin: 5%;
+    align-items: left;
+}
+.content, .price{
+    flex: 1;
+    margin: 2%;
+}
+.large{
+    font-size: medium;
+}
+.border{
+    flex: 1;
+    border: 4px solid grey;
+}
+.below-card{
+    flex:1;
+    display: flex;
+    flex-direction: row;
+}
+.card-ending-no{
+    margin-top: 2%;
+    margin-left: 5%;
+    flex:1;
+}
+.bill{
+    margin-top: 20%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.card-details{
+    margin: 5%;
+}
+#green-button{
+    background-color: #4CAF50;
+    padding: 4px 104px;
+    border: none;
+    color: white;
+}
+.text{
+    padding: 4px; 
+}
+.horizontal-div{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+.left{
+    flex: 1;
+    text-align: left;
+}
+.right{
+    flex: 1;
+    text-align: right;
+}
