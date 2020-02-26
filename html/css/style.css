@@ -2,29 +2,32 @@
     display: flex;
     flex-direction: column;  
     width: 90%;
-    height: 20%;
-    padding: 10;
+    height: 14%;
+    padding: 5%;
+}
+.shadow{
+    box-shadow: 1px 5px #ccc;
+    -moz-box-shadow:    10px 3px  #ccc;
+    -webkit-box-shadow: 3px 3px 5px #ccc;
 }
 .c1{
     display: flex;
     flex-direction: row;
     flex:1;
-    margin-bottom: 10 10 auto 10;
     border: solid 1px; 
     padding-top: 10px;
+    border-color: rgba(78, 76, 76, 0.067);
 }
 .checkout{
-    flex:2; 
+    flex:1; 
     margin-left: 20;
 }
 .buy{
     display: flex;
     flex: 1;
     flex-direction: row;
-    border-style: outset;
-    border: 1%;
     border: solid 1px; 
-    box-shadow: 1px 5px #4444;
+    border-color: rgba(78, 76, 76, 0.067);
 }
 .payment{
     flex: 2;
@@ -34,28 +37,28 @@
     background-color: #4441;
 }
 .cart, .payment{
-    text-align: center;
+    text-align: justify;
     padding: 10;
 }
 .shipping{
     flex: 1;
-    text-align: center;
+    text-align: end;
+
 }
 .confirmation{
     flex: 4;
-    margin-left: 2%;
 }
-.paymentMethod{
-    flex: 2;
+.payment-method{
+    flex: 1;
     text-align: center;
 }
 .fa-window-close{
     position: absolute;
-    left: 87%;    
+    left: 92%;    
 }
 
 
-.shipping::after, .paymentMethod::after{
+.shipping::after, .payment-method::after{
     content: "/";
 
 } 
