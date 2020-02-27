@@ -9,7 +9,7 @@ hr{
     display: flex;
     flex-direction: column;  
     width: 90%;
-    height: 14%;
+    height: 100%;
     padding: 5%;
 }
 .co_shadow{
