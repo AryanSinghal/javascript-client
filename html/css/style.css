@@ -2,20 +2,23 @@ body {
     background-image: url("../../background.jpg");
     background-color: #bcc8da;
 }   
-.container{
+hr{
+    border-color: rgba(78, 76, 76, 0.067); 
+}
+.co_container{
     display: flex;
     flex-direction: column;  
     width: 90%;
     height: 14%;
     padding: 5%;
 }
-.shadow{
+.co_shadow{
     box-shadow: 1px 5px grey;
     -moz-box-shadow:    10px 3px grey;
     -webkit-box-shadow: 3px 3px 5px grey;
     background-color: white;
 }
-.c1{
+.co_header{
     display: flex;
     flex-direction: row;
     flex:1;
@@ -23,43 +26,43 @@ body {
     padding-top: 1%;
     border-color: rgba(78, 76, 76, 0.067);
 }
-.checkout{
+.co_checkout{
     flex:1; 
     margin-left: 20;
 }
-.buy{
+.co_buy{
     display: flex;
     flex: 1;
     flex-direction: row;
     border: solid 1px; 
     border-color: rgba(78, 76, 76, 0.067);
 }
-.payment{
+.co_payment{
     flex: 2;
     display: flex;
     flex-direction: column; 
 }
-.cart{
+.co_cart{
     flex: 1;
     background-color: #4441;
     display: flex;
     flex-direction: column;
 }
-.cart, .payment{
+.co_cart, .co_payment{
     text-align: justify;
     padding: 10;
 }
-.shipping{
+.co_shipping{
     flex: 1;
     text-align: end;
 }
-.confirmation{
+.co_confirmation{
     flex: 4;
 }
-.new-card{
+.co_new-card{
     flex: 1;
 }
-.payment-method{
+.co_payment-method{
     flex: 1;
     text-align: center;
 }
@@ -67,25 +70,25 @@ body {
     position: absolute;
     left: 92%;    
 }
-.shipping::after, .payment-method::after{
+.co_shipping::after, .co_payment-method::after{
     content: "/";
 
 } 
-.wallet{
+.co_wallet{
     flex: 1;
     margin-top: 4%;
 }
-.discover:hover, .visa:hover, .master-card:hover{
+.co_discover:hover, .co_visa:hover, .co_master-card:hover{
     box-shadow: 10px 10px 10px grey;
 }
-.discover, .visa, .master-card{
+.co_discover, .co_visa, .co_master-card{
     flex:1;
     margin-left: 4%;
     margin-top: 5%;
     width: 28%;
     height: 40%;
 }
-.hard-case-content,.mobile-holder-content,.rado-content, .usb-content{
+.co_hard-case-content,.co_mobile-holder-content,.co_rado-content, .co_usb-content{
     flex: 1; 
     display: flex;
     flex-direction: row; 
@@ -93,61 +96,65 @@ body {
     margin: 3%;
     font-size: small;
 }
-.hard-case, .mobile-holder, .usb, .rado{
+.co_hard-case, .co_mobile-holder, .co_usb, .co_rado{
     width: 90%;
     height: 90%;
     margin: 5%;
     align-items: left;
 }
-.content, .price{
-    flex: 1;
+.co_content{
+    flex:6;
     margin: 2%;
 }
-.large{
+.co_large{
     font-size: medium;
 }
-.border{
-    flex: 1;
-    border: 4px solid grey;
+.co_border{
+    flex: 2;
+    border: 4px solid rgba(177, 162, 162, 0.473);
 }
-.below-card{
+.co_below-card{
     flex:1;
     display: flex;
     flex-direction: row;
 }
-.card-ending-no{
+.co_card-ending-no{
     margin-top: 2%;
     margin-left: 5%;
     flex:1;
 }
-.bill{
+.co_bill{
     margin-top: 20%;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
-.card-details{
+.co_card-details{
     margin: 5%;
 }
-#green-button{
+#co_green-button{
     background-color: #4CAF50;
     padding: 4px 104px;
     border: none;
     color: white;
 }
-.text{
+.co_text{
     padding: 4px; 
 }
-.horizontal-div{
+.co_horizontal-div{
     flex: 1;
     display: flex;
     flex-direction: row;
 }
-.left{
+.co_left{
     flex: 1;
     text-align: left;
 }
-.right{
+.co_right{
     flex: 1;
     text-align: right;
+}
+.co_price{
+    flex:1;
+    margin-top: 2%;
 }
