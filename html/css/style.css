@@ -35,24 +35,24 @@ hr{
     flex:1; 
     margin-left: 20;
 }
-.co_header__payment-method{
+.co_header__breadcrumb{
+    flex: 3;
+    padding-left: 0;
+}
+ul.co_breadcrumb__list{
     flex: 1;
-    text-align: center;
+    align-items: left;
+    display: flex;
+    flex-direction: row;
 }
-.co_header__shipping{
-    flex: 1;
-    text-align: end;
+.co_header__cross{
+    padding-left: auto;
+    padding-right: 10px;
 }
-.co_header__confirmation{
-    flex: 4;
-}
-.co_header__shipping::after, .co_header__payment-method::after{
+ul.co_breadcrumb__list li+li::before{
+    padding: 16px;
     content: "/";
 } 
-.fa-window-close{
-    position: absolute;
-    left: 92%;    
-}
 .co_buy{
     display: flex;
     flex: 1;
