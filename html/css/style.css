@@ -183,6 +183,9 @@ ul.co_breadcrumb__list li+li::before{
     font-size: 110%;
     padding-top: 2%;
 }
+.co_content__total{
+    font-weight: bolder;
+}
 @media screen and (min-width: 992px){
     .co_container{
         margin-left: 100px;
