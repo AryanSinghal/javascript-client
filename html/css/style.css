@@ -51,12 +51,7 @@ ul.breadcrumb__list{
     display: flex;
     flex-direction: row;
 }
-.fa-window-close{
-    position: absolute;
-    left: 92%;    
-}
 .header__cross{
-    flex: 1;
     padding-left: auto;
     padding-right: 10px;
 }
