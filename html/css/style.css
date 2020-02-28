@@ -14,13 +14,14 @@
     display: flex;
     flex-direction: row;
     flex:1;
+    padding-bottom: 1%;
     border: solid 1px; 
-    padding-top: 10px;
+    padding-top: 1%;
     border-color: rgba(78, 76, 76, 0.067);
 }
 .header__checkout{
     flex:1; 
-    margin-left: 20;
+    padding-left: 20;
 }
 .buy{
     display: flex;
@@ -40,23 +41,24 @@
     text-align: justify;
     padding: 10;
 }
-.header__shipping{
+.header__breadcrumb{
     flex: 1;
-    text-align: end;
-
 }
-.header__confirmation{
-    flex: 4;
-}
-.header__payment-method{
+ul.breadcrumb__list{
     flex: 1;
-    text-align: center;
+    align-items: left;
+    display: flex;
+    flex-direction: row;
 }
 .fa-window-close{
     position: absolute;
     left: 92%;    
 }
-.header__shipping::after, .header__payment-method::after{
+.header__cross{
+    flex: 1;
+}
+ul.breadcrumb__list li+li::before{
+    padding: 16px;
     content: "/";
 
 } 
