@@ -42,7 +42,8 @@
     padding: 10;
 }
 .header__breadcrumb{
-    flex: 1;
+    flex: 3;
+    padding-left: 0;
 }
 ul.breadcrumb__list{
     flex: 1;
@@ -56,9 +57,10 @@ ul.breadcrumb__list{
 }
 .header__cross{
     flex: 1;
+    padding-left: auto;
+    padding-right: 10px;
 }
 ul.breadcrumb__list li+li::before{
     padding: 16px;
     content: "/";
-
 } 
