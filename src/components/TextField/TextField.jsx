@@ -3,9 +3,6 @@ import MyStyle from './style';
 
 const TextField = (props) => {
   const { disabled = '', value = '', error = false } = props;
-  if (disabled === true) {
-    return (<MyStyle type="text" className="disabled" disabled value={value} />);
-  }
-  return (<MyStyle type="text" className={(error) ? 'error' : ''} value={value} />);
+  return (<MyStyle type="text" className={(error) ? 'error' : ''} disabled={disabled} value={value} />);
 };
 export default TextField;
