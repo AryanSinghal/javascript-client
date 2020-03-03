@@ -1,8 +1,9 @@
 import React from 'react';
-import { TextField } from '../../components';
+import { TextField, Slider } from '../../components';
 
 const TextFieldDemo = () => (
   <>
+    <Slider />
     <p>
       <b> This is a Disabled Input </b>
     </p>
