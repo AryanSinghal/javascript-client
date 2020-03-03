@@ -8,7 +8,6 @@ const TextField = (props) => {
     padding: '1%',
     ...style,
     borderRadius: '4px',
-    fontWeight: 'bold',
   };
   if (disabled === true) {
     return (<input type="text" className="text-field" disabled value={value} style={mystyle} />);
