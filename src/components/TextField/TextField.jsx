@@ -1,17 +1,11 @@
 import React from 'react';
+import MyStyle from './style';
 
 const TextField = (props) => {
-  const { disabled = '', value = '' ,style = {} } = props;
-  const mystyle = {
-    width: '97%',
-    height: '20%',
-    padding: '1%',
-    ...style,
-    borderRadius: '4px',
-  };
+  const { disabled = '', value = '', error = false } = props;
   if (disabled === true) {
-    return (<input type="text" className="text-field" disabled value={value} style={mystyle} />);
+    return (<MyStyle type="text" className="disabled" disabled value={value} />);
   }
-  return (<input type="text" className="text-field" value={value} style={mystyle} />);
+  return (<MyStyle type="text" className={(error) ? 'error' : ''} value={value} />);
 };
 export default TextField;

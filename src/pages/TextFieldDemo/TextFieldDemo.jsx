@@ -6,19 +6,19 @@ const TextFieldDemo = () => (
     <p>
       <b> This is a Disabled Input </b>
     </p>
-    <TextField disabled value="Disabled Input" style={{ border: 'grey solid 1px' }} />
+    <TextField disabled value="Disabled Input" />
     <br />
     <br />
     <p>
       <b> A Valid Input </b>
     </p>
-    <TextField value="Accessible" style={{ border: '#DAA59A solid 1px' }} />
+    <TextField value="Accessible" />
     <br />
     <br />
     <p>
       <b>An Input with error</b>
     </p>
-    <TextField value="101" style={{ border: 'red solid 1px' }} />
+    <TextField value="101" error />
     <p style={{ color: 'red' }}>Could not be greater than</p>
   </>
 );
