@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { DEFAULT_BANNER_IMAGE, PUBLIC_IMAGE_FOLDER, BANNERS } from '../../configs/constants';
 import { getNextRoundRobin, getRandomNumber } from '../../lib/utils/math';
+import ImageStyle from './style';
 
 class Slider extends React.Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class Slider extends React.Component {
     return (
       <>
         <div align="center">
-          <img src={`${PUBLIC_IMAGE_FOLDER}${BANNERS[current]}`} alt={altText} title={BANNERS[current]} />
+          <ImageStyle src={`${PUBLIC_IMAGE_FOLDER}${BANNERS[current]}`} alt={altText} title={BANNERS[current]} />
         </div>
       </>
     );
