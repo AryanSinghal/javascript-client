@@ -2,6 +2,7 @@
     <head>
         <title></title>
         <link rel="stylesheet" type="text/css" href= "css/style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
@@ -15,7 +16,7 @@
                     <div class="co_header__breadcrumb">
                         <ul class="co_breadcrumb__list">
                             <li class="co_breadcrum__shipping">Shipping</li>
-                            <li class="co_breadcrum__payment-method">Payment Method</li>
+                            <li class="co_breadcrum__payment-method"><b>Payment Method</b></li>
                             <li class="co_breadcrum__confirmation">Confirmation</li>
                           </ul>
                         </div>
@@ -45,9 +46,9 @@
                         <div class="co_new-card">
                             <font color= grey><b>New Card</b></font> <hr> 
                             <div class="co_card-details" align="center">
-                                <input type="text" class="co_text" placeholder="Name on Card" size="27"/> <br><br>
-                                <input type="text" class="co_text" placeholder="xxxx-xxxx-xxxx-xxxx" maxlength="16" size="27"/> <br><br>
-                                <input type="text" class="co_text" placeholder="mm/yy" size="12"/>&nbsp;<input class="co_text" type="text" placeholder="cvv" maxlength="3" size="12"/> <br><br>
+                                <input type="text" class="co_text" placeholder="Name on Card"/> <br><br>
+                                <input type="text" class="co_text" placeholder="xxxx-xxxx-xxxx-xxxx" maxlength="16" /> <br><br>
+                                <input type="text" class="co_card-details__text" placeholder="mm/yy"/>&nbsp;<input class="co_card-details__text" type="text" placeholder="cvv" maxlength="3"/> <br><br>
                                 <input type="button" value="Continue" id="co_green-button"/>
                             </div>
                         </div>
@@ -125,8 +126,8 @@
                             <br>
                             <hr width="100%">
                             <div class="co_bill__content">
-                                <span class="co_content__left">Total</span>
-                                <span class="co_content__right">$115.00</span>
+                                <span class="co_content__total co_content__left">Total</span>
+                                <span class="co_content__total co_content__right">$115.00</span>
                             </div>
                         </div>                
                     </div>    
