@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
 const ImageStyle = styled.img`{
-  height: 200px;
+  height: ${(props) => props.height};
   }`;
 export default ImageStyle;

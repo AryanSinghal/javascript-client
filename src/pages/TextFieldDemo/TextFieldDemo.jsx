@@ -1,9 +1,10 @@
 import React from 'react';
 import { TextField, Slider } from '../../components';
+import { BANNERS, DEFAULT_BANNER_IMAGE, DURATION } from '../../configs/constants';
 
 const TextFieldDemo = () => (
   <>
-    <Slider />
+    <Slider random banners={BANNERS} defaultBanner={DEFAULT_BANNER_IMAGE} duration={DURATION} />
     <p>
       <b> This is a Disabled Input </b>
     </p>

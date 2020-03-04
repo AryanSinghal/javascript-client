@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { DEFAULT_BANNER_IMAGE, PUBLIC_IMAGE_FOLDER, BANNERS } from '../../configs/constants';
+import { PUBLIC_IMAGE_FOLDER, TOTAL } from '../../configs/constants';
 import { getNextRoundRobin, getRandomNumber } from '../../lib/utils/math';
 import ImageStyle from './style';
 
@@ -8,24 +8,18 @@ class Slider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: 0,
+      current: -1,
     };
   }
 
   componentDidMount() {
     const { duration, random } = this.props;
-    console.log(this.props);
-    console.log('inside component');
-    const total = 5;
     let { current } = this.state;
     this.id = setInterval(() => {
       if (random) {
-        current = getRandomNumber(total);
-        console.log('inside comp......... ', current);
-      }
-      else {
-        current = getNextRoundRobin(total, current);
-        console.log('inside comp......... ', current);
+        current = getRandomNumber(TOTAL);
+      } else {
+        current = getNextRoundRobin(TOTAL, current);
       }
       this.setState({ current });
     }, duration);
@@ -37,20 +31,30 @@ class Slider extends React.Component {
 
   render() {
     const { current } = this.state;
-    const { altText } = this.props;
-    console.log('inside render', BANNERS[current]);
+    const { altText, height } = this.props;
+    const { banners, defaultBanner } = this.props;
+    if (current === -1) {
+      return (
+        <>
+          <div align="center">
+            <ImageStyle src={`${PUBLIC_IMAGE_FOLDER}${defaultBanner}`} alt={altText} title={defaultBanner} height={height} />
+          </div>
+        </>
+      );
+    }
     return (
       <>
         <div align="center">
-          <ImageStyle src={`${PUBLIC_IMAGE_FOLDER}${BANNERS[current]}`} alt={altText} title={BANNERS[current]} />
+          <ImageStyle src={`${PUBLIC_IMAGE_FOLDER}${banners[current]}`} alt={altText} title={banners[current]} height={height} />
         </div>
       </>
     );
   }
 }
-Slider.protoTypes = {
+
+Slider.propTypes = {
   altText: PropTypes.string,
-  banners: PropTypes.array,
+  banners: PropTypes.array.isRequired,
   defaultBanner: PropTypes.string,
   duration: PropTypes.number,
   height: PropTypes.number,
@@ -59,7 +63,7 @@ Slider.protoTypes = {
 
 Slider.defaultProps = {
   altText: 'Default Banner',
-  defaultBanner: 'default.png',
+  defaultBanner: 'banners/default.png',
   duration: 2000,
   height: 200,
   random: false,
