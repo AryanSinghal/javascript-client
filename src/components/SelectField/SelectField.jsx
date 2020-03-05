@@ -7,7 +7,7 @@ export const SelectField = (props) => {
 
   return (
     <Select defaultValue={value} onChange={onChange}>
-      { defaultText && <option value="">{defaultText}</option> }
+      { defaultText && <Option value="">{defaultText}</Option> }
       {
         options && options.length && options.map((option) => (
           <Option key={option.label} value={option.value}>{option.label}</Option>
