@@ -21,11 +21,16 @@ export class InputDemo extends React.Component {
   }
 
   handleSportChange = (event) => {
-    this.setState({ sport: event.target.value });
+    this.setState({ sport: event.target.value, football: '', cricket: '' });
   }
 
   handleSpecialtyChange = (event) => {
-    this.setState({ cricket: event.target.value });
+    const { sport } = this.state;
+    if (sport === CRICKET) {
+      this.setState({ cricket: event.target.value });
+    } else {
+      this.setState({ football: event.target.value });
+    }
   }
 
   getRadioOptions = () => {
