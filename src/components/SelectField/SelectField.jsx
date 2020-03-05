@@ -4,7 +4,6 @@ import { Select, Option } from './style';
 
 export const SelectField = (props) => {
   const { error, options, onChange, defaultText, value } = props;
-
   return (
     <Select defaultValue={value} onChange={onChange}>
       { defaultText && <Option value="">{defaultText}</Option> }
