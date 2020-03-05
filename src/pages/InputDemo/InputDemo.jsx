@@ -1,19 +1,60 @@
 import React from 'react';
-import { SelectField } from '../../components';
-import { TextField } from '../../components';
-import { RadioGroup } from '../../components';
+import { SelectField, TextField, RadioGroup } from '../../components';
+import {
+  NAME, SPECIALTY, GAME, SELECT_OPTIONS, CRICKET_OPTIONS, FOOTBALL_OPTIONS, CRICKET,
+} from '../../configs/constants';
 
 
+export class InputDemo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: NAME,
+      sport: GAME,
+      cricket: '',
+      football: '',
+    };
+  }
 
-export const InputDemo = () => {
-  return (
-    <>
-      <p>Name</p>
-      <TextField onChange={((e) => { console.log(e.target.value); })} />
-      <p> Select the game you play </p>
-      <SelectField />
-      <p>What you Do</p>
-      <RadioGroup />
-    </>
-  );
-};
+  handleNameChange = (event) => {
+    this.setState({ name: event.target.value });
+  }
+
+  handleSportChange = (event) => {
+    this.setState({ sport: event.target.value });
+  }
+
+  handleSpecialtyChange = (event) => {
+    this.setState({ cricket: event.target.value });
+  }
+
+  getRadioOptions = () => {
+    const { sport } = this.state;
+    return ((sport === CRICKET) ? CRICKET_OPTIONS : FOOTBALL_OPTIONS);
+  }
+
+  render() {
+    console.log(this.state);
+    const { sport, name } = this.state;
+    return (
+      <>
+        <p><b>Name</b></p>
+        <TextField onChange={this.handleNameChange} value={name} />
+        <p><b>Select the game you play </b></p>
+        <SelectField options={SELECT_OPTIONS} onChange={this.handleSportChange} defaultText="Select" value={sport} />
+        {
+          sport && (
+            <>
+              <p><b>What you Do</b></p>
+              <RadioGroup
+                options={this.getRadioOptions()}
+                onChange={this.handleSpecialtyChange}
+                value={SPECIALTY}
+              />
+            </>
+          )
+        }
+      </>
+    );
+  }
+}
