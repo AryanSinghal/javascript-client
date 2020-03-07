@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropType from 'prop-types';
+import Error from './style';
 
 export const RadioGroup = (props) => {
   const { value, error, options, onChange } = props;
@@ -11,6 +12,7 @@ export const RadioGroup = (props) => {
           {option.label}
           <br />
         </Fragment>
+        <Error className="error">{error}</Error>
       </>
     ))
   );
