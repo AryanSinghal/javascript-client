@@ -70,18 +70,15 @@ export class InputDemo extends React.Component {
     schema.validateAt(label, { [label]: this.state[label] })
       .then(() => {
         this.setState({ [key]: '' });
-        console.log('inside then');
       })
       .catch((error) => {
         this.setState({ [key]: error.errors });
-        console.log('inside catch');
         return key;
       });
   }
 
   isDisabled = () => {
     const { isTouch } = this.state;
-    console.log('hasError isdis', this.hasErrors(), isTouch);
     return (this.hasErrors() && isTouch) ? 'disabled' : '';
   }
 
