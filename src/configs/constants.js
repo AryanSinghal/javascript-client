@@ -50,3 +50,4 @@ export const FOOTBALL_OPTIONS = [
 ];
 export const CRICKET = 'cricket';
 export const FOOTBALL = 'football';
+export const OPERATORS = ['+', '-', '/', '*'];
