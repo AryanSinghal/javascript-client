@@ -19,20 +19,24 @@ export class InputDemo extends React.Component {
       sportError: '',
       cricketError: '',
       footballError: '',
+      isTouch: false,
     };
   }
 
   handleNameChange = (event) => {
     this.setState({ name: event.target.value }, () => { this.getError('name'); });
+    this.isTouched();
   }
 
   handleSportChange = (event) => {
     this.setState({ sport: event.target.value, football: '', cricket: '' }, () => { this.getError('sport'); });
+    this.isTouched();
   }
 
   handleSpecialtyChange = (event) => {
     const { sport } = this.state;
     this.setState({ [sport]: event.target.value }, () => { this.getError(sport); });
+    this.isTouched();
   }
 
   getRadioOptions = () => {
@@ -51,6 +55,7 @@ export class InputDemo extends React.Component {
     const {
       sport, name, cricket, football,
     } = this.state;
+    this.setState({ isTouch: true });
     return !!(sport || name || cricket || football);
   }
 
@@ -75,8 +80,9 @@ export class InputDemo extends React.Component {
   }
 
   isDisabled = () => {
-    console.log('hasError isdis', this.hasErrors(), this.isTouched());
-    return (this.hasErrors() && this.isTouched()) ? 'disabled' : '';
+    const { isTouch } = this.state;
+    console.log('hasError isdis', this.hasErrors(), isTouch);
+    return (this.hasErrors() && isTouch) ? 'disabled' : '';
   }
 
   render() {
@@ -91,6 +97,7 @@ export class InputDemo extends React.Component {
           onChange={this.handleNameChange}
           value={name}
           error={nameError}
+          onBlur={this.handleNameChange}
         />
         <p><b>Select the game you play </b></p>
         <SelectField
@@ -99,6 +106,7 @@ export class InputDemo extends React.Component {
           defaultText="Select"
           value={sport}
           error={sportError}
+          onBlur={this.handleSportChange}
         />
         {
           sport && (
@@ -109,6 +117,7 @@ export class InputDemo extends React.Component {
                 onChange={this.handleSpecialtyChange}
                 value={this.state[sport]}
                 error={cricketError || footballError}
+                onBlur={this.handleSpecialtyChange}
               />
             </>
           )

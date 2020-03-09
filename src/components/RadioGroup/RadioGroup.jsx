@@ -4,7 +4,7 @@ import Error from './style';
 
 export const RadioGroup = (props) => {
   const {
-    value, error, options, onChange,
+    value, error, options, onChange, onBlur,
   } = props;
   return (
     <>
@@ -12,7 +12,7 @@ export const RadioGroup = (props) => {
         options && options.length && options.map((option) => (
           <>
             <Fragment key={option.label}>
-              <input type="radio" name="specialty" value={option.value} onChange={onChange} defaultChecked={value === option.value} />
+              <input type="radio" name="specialty" value={option.value} onChange={onChange} onBlur={onBlur} defaultChecked={value === option.value} />
               {option.label}
               <br />
             </Fragment>

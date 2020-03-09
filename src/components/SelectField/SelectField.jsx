@@ -3,10 +3,10 @@ import PropType from 'prop-types';
 import { Select, Option, Error } from './style';
 
 export const SelectField = (props) => {
-  const { error, options, onChange, defaultText, value } = props;
+  const { error, options, onChange, defaultText, value, onBlur } = props;
   return (
     <>
-      <Select defaultValue={value} onChange={onChange}>
+      <Select defaultValue={value} onChange={onChange} onBlur={onBlur}>
         {defaultText && <Option value="">{defaultText}</Option>}
         {
           options && options.length && options.map((option) => (
@@ -24,6 +24,7 @@ SelectField.propType = {
   options: PropType.array.isRequired,
   defaultText: PropType.string,
   onChange: PropType.func,
+  onBlur: PropType.func,
 };
 SelectField.defaultProps = {
   error: false,
