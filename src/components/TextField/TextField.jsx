@@ -1,10 +1,15 @@
 import React from 'react';
 import PropType from 'prop-types';
-import MyStyle from './style';
+import { MyStyle, Error } from './style';
 
 const TextField = (props) => {
   const { disabled, value, error, onChange } = props;
-  return (<MyStyle type="text" className={(error) ? 'error' : ''} disabled={disabled} placeholder={value} onChange={onChange} />);
+  return (
+    <>
+      <MyStyle type="text" className={(error) ? 'error' : ''} disabled={disabled} placeholder={value} onChange={onChange} />
+      <Error>{error}</Error>
+    </>
+  );
 };
 TextField.propType = {
   disabled: PropType.string,

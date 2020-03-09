@@ -3,18 +3,24 @@ import PropType from 'prop-types';
 import Error from './style';
 
 export const RadioGroup = (props) => {
-  const { value, error, options, onChange } = props;
+  const {
+    value, error, options, onChange,
+  } = props;
   return (
-    options && options.length && options.map((option) => (
-      <>
-        <Fragment key={option.label}>
-          <input type="radio" name="specialty" value={option.value} onChange={onChange} defaultChecked={value === option.value} />
-          {option.label}
-          <br />
-        </Fragment>
-        <Error className="error">{error}</Error>
-      </>
-    ))
+    <>
+      {
+        options && options.length && options.map((option) => (
+          <>
+            <Fragment key={option.label}>
+              <input type="radio" name="specialty" value={option.value} onChange={onChange} defaultChecked={value === option.value} />
+              {option.label}
+              <br />
+            </Fragment>
+          </>
+        ))
+      }
+      <Error>{error}</Error>
+    </>
   );
 };
 

@@ -1,18 +1,21 @@
 import React from 'react';
 import PropType from 'prop-types';
-import { Select, Option } from './style';
+import { Select, Option, Error } from './style';
 
 export const SelectField = (props) => {
   const { error, options, onChange, defaultText, value } = props;
   return (
-    <Select defaultValue={value} onChange={onChange}>
-      { defaultText && <Option value="">{defaultText}</Option> }
-      {
-        options && options.length && options.map((option) => (
-          <Option key={option.label} value={option.value}>{option.label}</Option>
-        ))
-      }
-    </Select>
+    <>
+      <Select defaultValue={value} onChange={onChange}>
+        {defaultText && <Option value="">{defaultText}</Option>}
+        {
+          options && options.length && options.map((option) => (
+            <Option key={option.label} value={option.value}>{option.label}</Option>
+          ))
+        }
+      </Select>
+      <Error>{error}</Error>
+    </>
   );
 };
 SelectField.propType = {

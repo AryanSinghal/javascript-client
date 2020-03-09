@@ -4,8 +4,12 @@ const ButtonStyle = styled.button`{
     padding: 1%;
     border-radius: 4px;
     border: grey solid 1px;
+    color: black;
   }
-  &.error{
-    border: red solid 1px;
+  &.success{
+    background-color: green;
+  }
+  & .disabled{
+    color: grey;
   }`;
 export default ButtonStyle;

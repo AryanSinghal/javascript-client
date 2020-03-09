@@ -3,10 +3,11 @@ import PropType from 'prop-types';
 import { default as ButtonStyle } from './style';
 
 export const Button = (props) => {
-  const { value, error, onChange, disabled } = props;
+  const { value, error, onChange, disabled, success } = props;
+  console.log('inside button >>>', disabled, success);
   return (
     <>
-      <ButtonStyle type="button" disabled={disabled}>{value}</ButtonStyle>
+      <ButtonStyle type="button" disabled={disabled} className={success}>{value}</ButtonStyle>
     </>
   );
 };

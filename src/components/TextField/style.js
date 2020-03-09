@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const MyStyle = styled.input`{
+export const MyStyle = styled.input`{
     width: 97%;
     height: 20%;
     padding: 1%;
@@ -10,4 +10,6 @@ const MyStyle = styled.input`{
   &.error{
     border: red solid 1px;
   }`;
-export default MyStyle;
+export const Error = styled.p`{
+  color: red;
+}`;
