@@ -8,7 +8,7 @@ import { theme } from './theme';
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Typography><ChildrenDemo /></Typography>
+      <Typography align="center"><ChildrenDemo /></Typography>
     </ThemeProvider>
   );
 }

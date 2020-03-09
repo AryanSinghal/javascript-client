@@ -9,7 +9,7 @@ export class Math extends Component {
 
   calResult = (first, second, operator) => {
     let result = first + operator + second;
-    result = (OPERATORS.includes(operator)) ? eval(result) : 'invalid operator';
+    result = (OPERATORS.includes(operator)) ? eval(result) : 'Invalid Operation';
     return result;
   };
 
@@ -18,15 +18,19 @@ export class Math extends Component {
       first, second, operator, children,
     } = this.props;
     const result = this.calResult(first, second, operator);
-    return (
-      <p>{`${first} ${operator} ${second} = ${result}`}</p>
-    );
+    return (children !== undefined)
+      ? (<p>{children(first, second, operator)}</p>)
+      : (<p>{`${first} ${operator} ${second} = ${result}`}</p>);
   }
 }
 
-Math.prototype = {
+Math.protoType = {
   first: PropType.number.isRequired,
   second: PropType.number.isRequired,
   operator: PropType.oneOf(['+', '-', '/', '*']).isRequired,
   children: PropType.func,
+};
+
+Math.defaultProps = {
+  children: undefined,
 };
