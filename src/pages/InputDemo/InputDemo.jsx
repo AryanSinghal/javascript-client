@@ -19,7 +19,6 @@ export class InputDemo extends React.Component {
       sportError: '',
       cricketError: '',
       footballError: '',
-      hasError: '',
     };
   }
 
@@ -41,34 +40,18 @@ export class InputDemo extends React.Component {
     return ((sport === CRICKET) ? CRICKET_OPTIONS : FOOTBALL_OPTIONS);
   }
 
-  hasErrors = async () => {
-    try {
-      const {
-        sport, name, cricket, football,
-      } = this.state;
-      const schema = yup.object().shape({
-        sport: yup.string().required(),
-        name: yup.string().required().min(3, 'Name is required field'),
-        radio: yup.string().required('What you Do is required'),
-      });
-      const valid = await schema.isValid({
-        sport,
-        name,
-        radio: (cricket || football),
-      });
-      console.log('>>>>>>>>>>hasErr', !valid);
-      return !valid;
-    } catch (err) {
-      console.log(err);
-      return true;
-    }
+  hasErrors = () => {
+    const {
+      nameError, sportError, cricketError, footballError,
+    } = this.state;
+    return !!((nameError || sportError || cricketError || footballError));
   }
 
   isTouched = () => {
     const {
       sport, name, cricket, football,
     } = this.state;
-    return sport || name || cricket || football;
+    return !!(sport || name || cricket || football);
   }
 
   getError = (label) => {
@@ -92,7 +75,7 @@ export class InputDemo extends React.Component {
   }
 
   isDisabled = () => {
-    console.log('hasError isDus', this.hasErrors(), this.isTouched());
+    console.log('hasError isdis', this.hasErrors(), this.isTouched());
     return (this.hasErrors() && this.isTouched()) ? 'disabled' : '';
   }
 
