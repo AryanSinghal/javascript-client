@@ -19,7 +19,7 @@ export class Math extends Component {
     } = this.props;
     const result = this.calResult(first, second, operator);
     return (children !== undefined)
-      ? (<p>{children(first, second, operator)}</p>)
+      ? (<p>{children(first, second, operator, result)}</p>)
       : (<p>{`${first} ${operator} ${second} = ${result}`}</p>);
   }
 }
