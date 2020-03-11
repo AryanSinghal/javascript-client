@@ -39,6 +39,12 @@ export class InputDemo extends React.Component {
     this.isTouched();
   }
 
+  handleSpecialtyBlur = () => {
+    const { sport } = this.state;
+    this.getError(sport);
+    this.isTouched();
+  }
+
   getRadioOptions = () => {
     const { sport } = this.state;
     return ((sport === CRICKET) ? CRICKET_OPTIONS : FOOTBALL_OPTIONS);
@@ -114,7 +120,7 @@ export class InputDemo extends React.Component {
                 onChange={this.handleSpecialtyChange}
                 value={this.state[sport]}
                 error={cricketError || footballError}
-                onBlur={this.handleSpecialtyChange}
+                onBlur={this.handleSpecialtyBlur}
               />
             </>
           )
