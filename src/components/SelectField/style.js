@@ -13,3 +13,7 @@ export const Select = styled.select`{
 export const Option = styled.option`{
   font-size: 14px;
 }`;
+export const Error = styled.p`{
+  text-decoration: underline;
+  color: red;
+}`;
