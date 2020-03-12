@@ -83,7 +83,6 @@ export class AddDialog extends React.Component {
     console.log({ name, email, password });
   };
 
-
   handleNameChange = (event) => {
     this.setState({ name: event.target.value }, () => {
       this.setError('name');

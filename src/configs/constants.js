@@ -68,10 +68,10 @@ export const DIALOG_SCHEMA = yup.object().shape({
       'Must Contain 8 Characters, One Uppercase, One Lowercase and One Number'),
   confirmPassword: yup
     .string()
-    .required('Confirm Password is required field')
-    .when('password', {
-      is: (password) => console.log('pass', password) && password && password.length > 0,
-      then: console.log('pass then') || yup.string().oneOf([yup.ref('password')], 'Passwords must match'),
-      otherwise: console.log('pass otherwise'),
-    }),
+    .required('Confirm Password is required field').oneOf([yup.ref('password')], 'Passwords must match'),
+    // .when('password', {
+    //   is: (password) => console.log('pass', password) && password && password.length > 0,
+    //   then: console.log('pass then') || yup.string().oneOf([yup.ref('password')], 'Passwords must match'),
+    //   otherwise: console.log('pass otherwise'),
+    // }),
 });
