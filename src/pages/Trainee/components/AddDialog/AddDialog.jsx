@@ -32,42 +32,6 @@ export class AddDialog extends React.Component {
     };
   }
 
-  handleNameChange = (event) => {
-    this.setState({ name: event.target.value }, () => {
-      this.getError('name')
-        .then((state) => this.setState(state))
-        .catch((stateError) => this.setState(stateError));
-    });
-    this.hasErrors().then((hasError) => this.setState({ hasError }));
-  }
-
-  handleEmailChange = (event) => {
-    this.setState({ email: event.target.value }, () => {
-      this.getError('email')
-        .then((state) => this.setState(state))
-        .catch((stateError) => this.setState(stateError));
-    });
-    this.hasErrors().then((hasError) => this.setState({ hasError }));
-  }
-
-  handlePasswordChange = (event) => {
-    this.setState({ password: event.target.value }, () => {
-      this.getError('password')
-        .then((state) => this.setState(state))
-        .catch((stateError) => this.setState(stateError));
-    });
-    this.hasErrors().then((hasError) => this.setState({ hasError }));
-  }
-
-  handleConfirmPasswordChange = (event) => {
-    this.setState({ confirmPassword: event.target.value }, () => {
-      this.getError('confirmPassword')
-        .then((state) => this.setState(state))
-        .catch((stateError) => this.setState(stateError));
-    });
-    this.hasErrors().then((hasError) => this.setState({ hasError }));
-  }
-
   hasErrors = async () => {
     const {
       name, email, password, confirmPassword,
@@ -93,6 +57,13 @@ export class AddDialog extends React.Component {
     }
   }
 
+  setError = (label) => {
+    this.getError(label)
+      .then((state) => this.setState(state))
+      .catch((stateError) => this.setState(stateError));
+    this.hasErrors().then((hasError) => this.setState({ hasError }));
+  }
+
   isDisabled = () => {
     const { hasError } = this.state;
     return !!(hasError);
@@ -104,9 +75,38 @@ export class AddDialog extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
+  };
+
+  handleSubmit = () => {
+    this.setState({ open: false });
     const { name, email, password } = this.state;
     console.log({ name, email, password });
   };
+
+
+  handleNameChange = (event) => {
+    this.setState({ name: event.target.value }, () => {
+      this.setError('name');
+    });
+  }
+
+  handleEmailChange = (event) => {
+    this.setState({ email: event.target.value }, () => {
+      this.setError('email');
+    });
+  }
+
+  handlePasswordChange = (event) => {
+    this.setState({ password: event.target.value }, () => {
+      this.setError('password');
+    });
+  }
+
+  handleConfirmPasswordChange = (event) => {
+    this.setState({ confirmPassword: event.target.value }, () => {
+      this.setError('confirmPassword');
+    });
+  }
 
   render() {
     const {
@@ -212,7 +212,7 @@ export class AddDialog extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               CANCEL
             </Button>
-            <Button onClick={this.handleClose} color="primary" disabled={this.isDisabled()}>
+            <Button onClick={this.handleSubmit} color="primary" disabled={this.isDisabled()}>
               SUBMIT
             </Button>
           </DialogActions>
