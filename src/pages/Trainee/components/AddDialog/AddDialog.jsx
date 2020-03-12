@@ -84,14 +84,13 @@ export class AddDialog extends React.Component {
         .string()
         .required('Password is required field')
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
-          'Must Contain 8 Characters, One Uppercase, One Lowercase and One Number',
-        ),
+          'Must Contain 8 Characters, One Uppercase, One Lowercase and One Number'),
       confirmPassword: yup
         .string()
-        .required('Confirm Password is required field').when("password", {
-          is: val => val && val.length > 0,
+        .required('Confirm Password is required field').when('password', {
+          is: (val) => val && val.length > 0,
           then: yup.string()
-            .oneOf([yup.ref('password'), null, ''], 'Passwords must match')
+            .oneOf([yup.ref('password'), null, ''], 'Passwords must match'),
         }),
     });
     const key = `${[label]}Error`;
