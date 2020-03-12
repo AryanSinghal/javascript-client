@@ -23,6 +23,7 @@ export class AddDialog extends React.Component {
       name: '',
       email: '',
       password: '',
+      confirmPassword: '',
       nameError: '',
       emailError: '',
       passwordError: '',
@@ -44,6 +45,12 @@ export class AddDialog extends React.Component {
   handlePasswordChange = (event) => {
     this.setState({ password: event.target.value }, () => {
       this.getError('password');
+    });
+    this.isTouched();
+  }
+
+  handleConfirmPasswordChange = (event) => {
+    this.setState({ confirmPassword: event.target.value }, () => {
       this.getError('confirmPassword');
     });
     this.isTouched();
@@ -66,12 +73,26 @@ export class AddDialog extends React.Component {
 
   getError = (label) => {
     const schema = yup.object().shape({
-      name: yup.string().required('Name is required field'),
-      email: yup.string().email().required('Email is required field'),
-      password: yup.string().required('Password is required field'),
-      // .matches('^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$',
-      //   'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character'),
-      confirmPassword: yup.string().required('Confirm Password is required field').oneOf([yup.ref('password'), null], 'Passwords must match'),
+      name: yup
+        .string()
+        .required('Name is required field'),
+      email: yup
+        .string()
+        .email()
+        .required('Email is required field'),
+      password: yup
+        .string()
+        .required('Password is required field')
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+          'Must Contain 8 Characters, One Uppercase, One Lowercase and One Number',
+        ),
+      confirmPassword: yup
+        .string()
+        .required('Confirm Password is required field').when("password", {
+          is: val => val && val.length > 0,
+          then: yup.string()
+            .oneOf([yup.ref('password'), null, ''], 'Passwords must match')
+        }),
     });
     const key = `${[label]}Error`;
     schema.validateAt(label, { [label]: this.state[label] })
@@ -192,8 +213,8 @@ export class AddDialog extends React.Component {
                     ),
                   }}
                   variant="outlined"
-                  onChange={this.handlePasswordChange}
-                  onBlur={this.handlePasswordChange}
+                  onChange={this.handleConfirmPasswordChange}
+                  onBlur={this.handleConfirmPasswordChange}
                 />
               </Grid>
             </Grid>
