@@ -13,7 +13,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import PersonIcon from '@material-ui/icons/Person';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import Grid from '@material-ui/core/Grid';
-import * as yup from 'yup';
+import { DIALOG_SCHEMA } from '../../../../configs/constants';
 
 export class AddDialog extends React.Component {
   constructor(props) {
@@ -28,86 +28,74 @@ export class AddDialog extends React.Component {
       emailError: '',
       passwordError: '',
       confirmPasswordError: '',
-      isTouch: false,
+      hasError: true,
     };
   }
 
   handleNameChange = (event) => {
-    this.setState({ name: event.target.value }, () => { this.getError('name'); });
-    this.isTouched();
+    this.setState({ name: event.target.value }, () => {
+      this.getError('name')
+        .then((state) => this.setState(state))
+        .catch((stateError) => this.setState(stateError));
+    });
+    this.hasErrors().then((hasError) => this.setState({ hasError }));
   }
 
   handleEmailChange = (event) => {
-    this.setState({ email: event.target.value }, () => { this.getError('email'); });
-    this.isTouched();
+    this.setState({ email: event.target.value }, () => {
+      this.getError('email')
+        .then((state) => this.setState(state))
+        .catch((stateError) => this.setState(stateError));
+    });
+    this.hasErrors().then((hasError) => this.setState({ hasError }));
   }
 
   handlePasswordChange = (event) => {
     this.setState({ password: event.target.value }, () => {
-      this.getError('password');
+      this.getError('password')
+        .then((state) => this.setState(state))
+        .catch((stateError) => this.setState(stateError));
     });
-    this.isTouched();
+    this.hasErrors().then((hasError) => this.setState({ hasError }));
   }
 
   handleConfirmPasswordChange = (event) => {
     this.setState({ confirmPassword: event.target.value }, () => {
-      this.getError('confirmPassword');
+      this.getError('confirmPassword')
+        .then((state) => this.setState(state))
+        .catch((stateError) => this.setState(stateError));
     });
-    this.isTouched();
+    this.hasErrors().then((hasError) => this.setState({ hasError }));
   }
 
-  hasErrors = () => {
+  hasErrors = async () => {
     const {
-      nameError, emailError, passwordError,
+      name, email, password, confirmPassword,
     } = this.state;
-    return !!((nameError || emailError || passwordError));
-  }
-
-  isTouched = () => {
-    const {
-      name, email, password,
-    } = this.state;
-    this.setState({ isTouch: true });
-    return !!(name || email || password);
-  }
-
-  getError = (label) => {
-    const schema = yup.object().shape({
-      name: yup
-        .string()
-        .required('Name is required field'),
-      email: yup
-        .string()
-        .email()
-        .required('Email is required field'),
-      password: yup
-        .string()
-        .required('Password is required field')
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
-          'Must Contain 8 Characters, One Uppercase, One Lowercase and One Number',
-        ),
-      confirmPassword: yup
-        .string()
-        .required('Confirm Password is required field').when("password", {
-          is: val => val && val.length > 0,
-          then: yup.string()
-            .oneOf([yup.ref('password'), null, ''], 'Passwords must match')
-        }),
-    });
-    const key = `${[label]}Error`;
-    schema.validateAt(label, { [label]: this.state[label] })
-      .then(() => {
-        this.setState({ [key]: '' });
-      })
-      .catch((error) => {
-        this.setState({ [key]: error.errors });
-        return key;
+    try {
+      const valid = await DIALOG_SCHEMA.isValid({
+        name, email, password, confirmPassword,
       });
+      return await (!valid);
+    } catch (err) {
+      console.log(err);
+      return true;
+    }
+  }
+
+  getError = async (label) => {
+    const key = `${[label]}Error`;
+    try {
+      await DIALOG_SCHEMA.validateAt(label, { [label]: this.state[label] });
+      return { [key]: '' };
+    } catch (error) {
+      return { [key]: error.errors };
+    }
   }
 
   isDisabled = () => {
-    const { isTouch } = this.state;
-    return (this.hasErrors() && isTouch) ? 'disabled' : '';
+    const { hasError } = this.state;
+    return !!(hasError);
   }
 
   handleClickOpen = () => {
@@ -116,10 +104,11 @@ export class AddDialog extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
+    const { name, email, password } = this.state;
+    console.log({ name, email, password });
   };
 
   render() {
-    console.log(this.state);
     const {
       open, nameError, emailError, passwordError, confirmPasswordError,
     } = this.state;

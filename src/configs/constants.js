@@ -1,3 +1,5 @@
+import * as yup from 'yup';
+
 export const PUBLIC_IMAGE_FOLDER = '/images/';
 export const DEFAULT_BANNER_IMAGE = 'banners/default.png';
 export const BANNERS = ['banners/cloud.jpg', 'banners/dns-server.png', 'banners/full-stack-web-development.jpg', 'banners/js.jpg', 'banners/load-balancer.png'];
@@ -51,3 +53,25 @@ export const FOOTBALL_OPTIONS = [
 export const CRICKET = 'cricket';
 export const FOOTBALL = 'football';
 export const OPERATORS = ['+', '-', '/', '*'];
+export const DIALOG_SCHEMA = yup.object().shape({
+  name: yup
+    .string()
+    .required('Name is required field'),
+  email: yup
+    .string()
+    .email()
+    .required('Email is required field'),
+  password: yup
+    .string()
+    .required('Password is required field')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+      'Must Contain 8 Characters, One Uppercase, One Lowercase and One Number'),
+  confirmPassword: yup
+    .string()
+    .required('Confirm Password is required field')
+    .when('password', {
+      is: (password) => console.log('pass', password) && password && password.length > 0,
+      then: console.log('pass then') || yup.string().oneOf([yup.ref('password')], 'Passwords must match'),
+      otherwise: console.log('pass otherwise'),
+    }),
+});
