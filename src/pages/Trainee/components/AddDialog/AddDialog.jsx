@@ -32,25 +32,19 @@ export class AddDialog extends React.Component {
     };
   }
 
-  hasErrors = async () => {
+  hasErrors = () => {
     const {
-      name, email, password, confirmPassword,
+      name, email, password, confirmPassword, nameError,
+      emailError, passwordError, confirmPasswordError,
     } = this.state;
-    try {
-      const valid = await DIALOG_SCHEMA.isValid({
-        name, email, password, confirmPassword,
-      });
-      return await (!valid);
-    } catch (err) {
-      console.log(err);
-      return true;
-    }
+    return (!(name && email && password && confirmPassword)
+      || (nameError || emailError || passwordError || confirmPasswordError));
   }
 
-  getError = async (label) => {
+  getError = async (label, labelValue) => {
     const key = `${[label]}Error`;
     try {
-      await DIALOG_SCHEMA.validateAt(label, { [label]: this.state[label] });
+      await DIALOG_SCHEMA.validateAt(label, { [label]: labelValue });
       return { [key]: '' };
     } catch (error) {
       return { [key]: error.errors };
@@ -61,7 +55,7 @@ export class AddDialog extends React.Component {
     this.getError(label)
       .then((state) => this.setState(state))
       .catch((stateError) => this.setState(stateError));
-    this.hasErrors().then((hasError) => this.setState({ hasError }));
+    this.setState({ hasError: this.hasErrors() });
   }
 
   isDisabled = () => {
@@ -84,27 +78,44 @@ export class AddDialog extends React.Component {
   };
 
   handleNameChange = (event) => {
-    this.setState({ name: event.target.value }, () => {
-      this.setError('name');
-    });
+    const { value } = event.target;
+    this.getError('name', value)
+      .then((state) => this.setState({ ...state, hasError: this.hasErrors(), name: value }))
+      .catch((stateError) => (
+        this.setState({ ...stateError, hasError: this.hasErrors(), name: value })
+      ));
   }
 
   handleEmailChange = (event) => {
-    this.setState({ email: event.target.value }, () => {
-      this.setError('email');
-    });
+    const { value } = event.target;
+    this.getError('email', value)
+      .then((state) => this.setState({ ...state, hasError: this.hasErrors(), email: value }))
+      .catch((stateError) => (
+        this.setState({ ...stateError, hasError: this.hasErrors(), email: value })
+      ));
   }
 
   handlePasswordChange = (event) => {
-    this.setState({ password: event.target.value }, () => {
-      this.setError('password');
-    });
+    const { value } = event.target;
+    this.getError('password', value)
+      .then((state) => this.setState({ ...state, hasError: this.hasErrors(), password: value }))
+      .catch((stateError) => (
+        this.setState({ ...stateError, hasError: this.hasErrors(), password: value })
+      ));
   }
 
   handleConfirmPasswordChange = (event) => {
-    this.setState({ confirmPassword: event.target.value }, () => {
-      this.setError('confirmPassword');
-    });
+    const { password } = this.state;
+    const { value } = event.target;
+    DIALOG_SCHEMA.validateAt('confirmPassword', { confirmPassword: value }, { context: { password } })
+      .then(() => this.setState({ confirmPasswordError: '', hasError: this.hasErrors(), confirmPassword: value }))
+      .catch((err) => {
+        this.setState({
+          confirmPasswordError: err.errors,
+          hasError: this.hasErrors(),
+          confirmPassword: value,
+        });
+      });
   }
 
   render() {
