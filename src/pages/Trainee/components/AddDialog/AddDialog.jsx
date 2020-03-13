@@ -28,7 +28,6 @@ export class AddDialog extends React.Component {
       emailError: '',
       passwordError: '',
       confirmPasswordError: '',
-      hasError: true,
     };
   }
 
@@ -51,17 +50,7 @@ export class AddDialog extends React.Component {
     }
   }
 
-  setError = (label) => {
-    this.getError(label)
-      .then((state) => this.setState(state))
-      .catch((stateError) => this.setState(stateError));
-    this.setState({ hasError: this.hasErrors() });
-  }
-
-  isDisabled = () => {
-    const { hasError } = this.state;
-    return !!(hasError);
-  }
+  isDisabled = () => !!(this.hasErrors())
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -80,27 +69,27 @@ export class AddDialog extends React.Component {
   handleNameChange = (event) => {
     const { value } = event.target;
     this.getError('name', value)
-      .then((state) => this.setState({ ...state, hasError: this.hasErrors(), name: value }))
+      .then((state) => this.setState({ ...state, name: value }))
       .catch((stateError) => (
-        this.setState({ ...stateError, hasError: this.hasErrors(), name: value })
+        this.setState({ ...stateError, name: value })
       ));
   }
 
   handleEmailChange = (event) => {
     const { value } = event.target;
     this.getError('email', value)
-      .then((state) => this.setState({ ...state, hasError: this.hasErrors(), email: value }))
+      .then((state) => this.setState({ ...state, email: value }))
       .catch((stateError) => (
-        this.setState({ ...stateError, hasError: this.hasErrors(), email: value })
+        this.setState({ ...stateError, email: value })
       ));
   }
 
   handlePasswordChange = (event) => {
     const { value } = event.target;
     this.getError('password', value)
-      .then((state) => this.setState({ ...state, hasError: this.hasErrors(), password: value }))
+      .then((state) => this.setState({ ...state, password: value }))
       .catch((stateError) => (
-        this.setState({ ...stateError, hasError: this.hasErrors(), password: value })
+        this.setState({ ...stateError, password: value })
       ));
   }
 
@@ -108,17 +97,17 @@ export class AddDialog extends React.Component {
     const { password } = this.state;
     const { value } = event.target;
     DIALOG_SCHEMA.validateAt('confirmPassword', { confirmPassword: value }, { context: { password } })
-      .then(() => this.setState({ confirmPasswordError: '', hasError: this.hasErrors(), confirmPassword: value }))
+      .then(() => this.setState({ confirmPasswordError: '', confirmPassword: value }))
       .catch((err) => {
         this.setState({
           confirmPasswordError: err.errors,
-          hasError: this.hasErrors(),
           confirmPassword: value,
         });
       });
   }
 
   render() {
+    console.log(this.state);
     const {
       open, nameError, emailError, passwordError, confirmPasswordError,
     } = this.state;

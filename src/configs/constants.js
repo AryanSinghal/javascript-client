@@ -68,7 +68,5 @@ export const DIALOG_SCHEMA = yup.object().shape({
       'Must Contain 8 Characters, One Uppercase, One Lowercase and One Number'),
   confirmPassword: yup
     .string()
-    .when('$password', (password) => {
-      return (yup.string().oneOf([password], 'Passwords must match'));
-    }),
+    .when('$password', (password) => (yup.string().oneOf([password, null, ''], 'Passwords must match').required('Confirm Password is required'))),
 });
