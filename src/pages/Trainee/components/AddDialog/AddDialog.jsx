@@ -107,7 +107,6 @@ export class AddDialog extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     const {
       open, nameError, emailError, passwordError, confirmPasswordError,
     } = this.state;
