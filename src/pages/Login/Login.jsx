@@ -23,17 +23,14 @@ class Login extends React.Component {
       password: '',
       emailError: '',
       passwordError: '',
-      hasError: true,
     };
   }
 
   hasErrors = () => {
     const {
-      name, email, password, confirmPassword, nameError,
-      emailError, passwordError, confirmPasswordError,
+      email, password, emailError, passwordError,
     } = this.state;
-    return (!(name && email && password && confirmPassword)
-      || (nameError || emailError || passwordError || confirmPasswordError));
+    return (!(email && password) || (emailError || passwordError));
   }
 
   getError = async (label) => {
@@ -46,10 +43,7 @@ class Login extends React.Component {
     }
   }
 
-  isDisabled = () => {
-    const { hasError } = this.state;
-    return !!(hasError);
-  }
+  isDisabled = () => !!this.hasErrors()
 
   handleEmailChange = (event) => {
     const { value } = event.target;
@@ -72,7 +66,7 @@ class Login extends React.Component {
   render() {
     const { emailError, passwordError } = this.state;
     return (
-      <Grid style={{ height: '100vh' }} container alignItems="center" justify="center">
+      <Grid style={{ height: '90vh' }} container alignItems="center" justify="center">
         <Card style={{ width: '400px' }}>
           <CardContent>
             <div align="center">
@@ -128,7 +122,7 @@ class Login extends React.Component {
             />
           </CardContent>
           <CardActions>
-            <Button fullWidth align="center">Sign In</Button>
+            <Button fullWidth variant="contained" color="primary" size="medium" align="center" disabled={this.isDisabled()}>Sign In</Button>
           </CardActions>
         </Card>
       </Grid>
