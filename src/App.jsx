@@ -1,9 +1,13 @@
 import React from 'react';
-import { Login } from './pages';
+import { Trainee, Navbar, Login } from './pages';
 
 function App() {
   return (
-    <Login />
+    <>
+      <Navbar />
+      <br />
+      <Trainee />
+    </>
   );
 }
 
