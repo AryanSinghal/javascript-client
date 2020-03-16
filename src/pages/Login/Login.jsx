@@ -27,19 +27,13 @@ class Login extends React.Component {
     };
   }
 
-  hasErrors = async () => {
+  hasErrors = () => {
     const {
-      email, password,
+      name, email, password, confirmPassword, nameError,
+      emailError, passwordError, confirmPasswordError,
     } = this.state;
-    try {
-      const valid = await LOGIN_SCHEMA.isValid({
-        email, password,
-      });
-      return await (!valid);
-    } catch (err) {
-      console.log(err);
-      return true;
-    }
+    return (!(name && email && password && confirmPassword)
+      || (nameError || emailError || passwordError || confirmPasswordError));
   }
 
   getError = async (label) => {
@@ -52,28 +46,27 @@ class Login extends React.Component {
     }
   }
 
-  setError = (label) => {
-    this.getError(label)
-      .then((state) => this.setState(state))
-      .catch((stateError) => this.setState(stateError));
-    this.hasErrors().then((hasError) => this.setState({ hasError }));
-  }
-
   isDisabled = () => {
     const { hasError } = this.state;
     return !!(hasError);
   }
 
   handleEmailChange = (event) => {
-    this.setState({ email: event.target.value }, () => {
-      this.setError('email');
-    });
+    const { value } = event.target;
+    this.getError('email', value)
+      .then((state) => this.setState({ ...state, email: value }))
+      .catch((stateError) => (
+        this.setState({ ...stateError, email: value })
+      ));
   }
 
   handlePasswordChange = (event) => {
-    this.setState({ password: event.target.value }, () => {
-      this.setError('password');
-    });
+    const { value } = event.target;
+    this.getError('password', value)
+      .then((state) => this.setState({ ...state, password: value }))
+      .catch((stateError) => (
+        this.setState({ ...stateError, password: value })
+      ));
   }
 
   render() {

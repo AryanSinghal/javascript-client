@@ -67,19 +67,9 @@ export const DIALOG_SCHEMA = yup.object().shape({
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
       'Must Contain 8 Characters, One Uppercase, One Lowercase and One Number'),
   confirmPassword: yup
-    // .mixed().test('matched', 'Passwords must match', function (value) {
-    //   console.log(value, this.parent.password);
-    //   return value === this.parent.password;
-    // }).required('Password confirm is required'),
     .string()
-    .when('password', (password) => {
-      console.log('pass', password);
-      // if (password === confirmPassword)
-      // return (yup.string().required('Confirm Password is required field'));
-      return (yup.string().oneOf([password, null, 'A'], 'Passwords must match'));
-    }),
+    .when('$password', (password) => (yup.string().oneOf([password, null, ''], 'Passwords must match').required('Confirm Password is required'))),
 });
-
 export const LOGIN_SCHEMA = yup.object().shape({
   email: yup
     .string()
