@@ -1,11 +1,8 @@
 import React from 'react';
+import { Typography } from '@material-ui/core';
 import { Math } from '../../components';
 
 export class ChildrenDemo extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   children = (first, second, operator, result) => {
     switch (operator) {
     case '+':
@@ -23,14 +20,16 @@ export class ChildrenDemo extends React.Component {
 
   render() {
     return (
-      <>
-        <Math first="2" second="3" operator="^" children={this.children} />
-        <Math first="6" second="3" operator="+" children={this.children} />
-        <Math first="32" second="9" operator="-" children={this.children} />
-        <Math first="4" second="33" operator="*" />
-        <Math first="25" second="13" operator="?" children={this.children} />
-        <Math first="2" second="3" operator="/" />
-      </>
+      <div align="center">
+        <Math first="2" second="3" operator="^">{this.children}</Math>
+        <Math first="6" second="3" operator="+">{this.children}</Math>
+        <Math first="32" second="9" operator="-">{this.children}</Math>
+        <Math first="4" second="33" operator="*">{this.children}</Math>
+        <Typography variant="h6">
+          <Math first="25" second="13" operator="?">{this.children}</Math>
+          <Math first="2" second="3" operator="/">{this.children}</Math>
+        </Typography>
+      </div>
     );
   }
 }
