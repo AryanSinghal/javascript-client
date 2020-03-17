@@ -13,7 +13,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import PersonIcon from '@material-ui/icons/Person';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import Grid from '@material-ui/core/Grid';
-import PropType from 'prop-types';
+import PropTypes from 'prop-types';
 import { DIALOG_SCHEMA } from '../../../../configs/constants';
 
 export class AddDialog extends React.Component {
@@ -206,8 +206,8 @@ export class AddDialog extends React.Component {
   }
 }
 
-AddDialog.protoType = {
-  onChange: PropType.func,
-  onClick: PropType.func,
-  open: PropType.bool,
+AddDialog.propTypes = {
+  onChange: PropTypes.func,
+  onClick: PropTypes.func,
+  open: PropTypes.bool,
 };
