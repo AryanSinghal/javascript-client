@@ -43,8 +43,9 @@ class Login extends React.Component {
 
   getError = async (label) => {
     const key = `${[label]}Error`;
+    const { [label]: value } = this.state;
     try {
-      await LOGIN_SCHEMA.validateAt(label, { [label]: this.state[label] });
+      await LOGIN_SCHEMA.validateAt(label, { [label]: value });
       return { [key]: '' };
     } catch (error) {
       return { [key]: error.errors };
@@ -139,8 +140,8 @@ class Login extends React.Component {
   }
 }
 
-Login.protoTypes = {
-  classes: PropTypes.object,
+Login.propTypes = {
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Login);
