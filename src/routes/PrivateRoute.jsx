@@ -15,6 +15,7 @@ const PrivateLayoutRoute = ({ component: Component, ...rest }) => (
 );
 
 PrivateLayoutRoute.propTypes = {
+  component: PropTypes.func.isRequired,
 };
 
 export default PrivateLayoutRoute;

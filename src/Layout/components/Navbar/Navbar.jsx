@@ -17,10 +17,10 @@ export default function ButtonAppBar() {
               </Typography>
             </Grid>
             <Grid item xs={7}>
-              <Button color="inherit" variant="h6">TRAINEE</Button>
-              <Button color="inherit" variant="h6">TEXTFIELD DEMO</Button>
-              <Button color="inherit" variant="h6">INPUT DEMO</Button>
-              <Button color="inherit" variant="h6">CHILDREN DEMO</Button>
+              <Button href="/trainee" color="inherit" variant="h6">TRAINEE</Button>
+              <Button href="/textfield-demo" color="inherit" variant="h6">TEXTFIELD DEMO</Button>
+              <Button href="/input-demo" color="inherit" variant="h6">INPUT DEMO</Button>
+              <Button href="/children-demo" color="inherit" variant="h6">CHILDREN DEMO</Button>
               <Button color="inherit" variant="h6">LOGOUT</Button>
             </Grid>
           </Grid>
