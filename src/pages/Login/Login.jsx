@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,12 +9,19 @@ import {
   InputAdornment,
   Grid,
   Typography,
+  withStyles,
   Avatar,
 } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import LockIcon from '@material-ui/icons/Lock';
 import { LOGIN_SCHEMA } from '../../configs/constants';
+
+const styles = () => ({
+  grid: { height: '90vh' },
+  card: { width: '400px' },
+  avatar: { backgroundColor: 'red' },
+});
 
 class Login extends React.Component {
   constructor(props) {
@@ -65,12 +73,13 @@ class Login extends React.Component {
 
   render() {
     const { emailError, passwordError } = this.state;
+    const { classes } = this.props;
     return (
-      <Grid style={{ height: '90vh' }} container alignItems="center" justify="center">
-        <Card style={{ width: '400px' }}>
+      <Grid className={classes.grid} container alignItems="center" justify="center">
+        <Card className={classes.card}>
           <CardContent>
             <div align="center">
-              <Avatar style={{ backgroundColor: 'red' }}>
+              <Avatar className={classes.avatar}>
                 <LockIcon />
               </Avatar>
             </div>
@@ -130,4 +139,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.protoTypes = {
+  classes: PropTypes.object,
+};
+
+export default withStyles(styles)(Login);
