@@ -19,30 +19,23 @@ export class InputDemo extends React.Component {
       sportError: '',
       cricketError: '',
       footballError: '',
-      isTouch: {
-        name: false,
-        sport: false,
-        cricket: false,
-        football: false,
-      },
+      isTouch: false,
     };
   }
 
   handleNameChange = (event) => {
     const { value } = event.target;
-    const { isTouch } = this.state;
     this.getError('name', value)
       .then((nameError) => this.setState({
         nameError,
         name: value,
-        isTouch: { ...isTouch, name: this.isTouched('name') },
+        isTouch: this.isTouched(),
       }))
       .catch((err) => console.log(err));
   }
 
   handleSportChange = (event) => {
     const { value } = event.target;
-    const { isTouch } = this.state;
     this.getError('sport', value)
       .then((sportError) => this.setState({
         sportError,
@@ -51,44 +44,42 @@ export class InputDemo extends React.Component {
         cricket: '',
         footballError: '',
         cricketError: '',
-        isTouch: { ...isTouch, sport: this.isTouched('sport') },
+        isTouch: this.isTouched(),
       }))
       .catch((Error) => console.log(Error));
   }
 
   handleSportBlur = (event) => {
     const { value } = event.target;
-    const { isTouch } = this.state;
     this.getError('sport', value)
       .then((sportError) => this.setState({
         sportError,
         sport: value,
-        isTouch: { ...isTouch, sport: this.isTouched('sport') },
+        isTouch: this.isTouched(),
       }))
       .catch((Error) => console.log(Error));
   }
 
   handleSpecialtyChange = (event) => {
     const { value } = event.target;
-    const { isTouch } = this.state;
     const { sport } = this.state;
     const key = `${sport}Error`;
     this.getError([sport], value)
       .then((sportError) => this.setState({
         [key]: sportError,
         [sport]: value,
-        isTouch: { ...isTouch, [sport]: this.isTouched([sport]) },
+        isTouch: this.isTouched(),
       }))
       .catch((err) => console.log(err));
   }
 
   handleSpecialtyBlur = () => {
-    const { sport, isTouch, [sport]: specialty } = this.state;
+    const { sport, [sport]: specialty } = this.state;
     const key = `${sport}Error`;
     this.getError([sport], specialty)
       .then((sportError) => this.setState({
         [key]: sportError,
-        isTouch: { ...isTouch, [sport]: this.isTouched([sport]) },
+        isTouch: this.isTouched(),
       }))
       .catch((err) => console.log(err));
   }
@@ -105,7 +96,7 @@ export class InputDemo extends React.Component {
     return (nameError || emailError || passwordError || confirmPasswordError);
   }
 
-  isTouched = (param) => !!(this.state[param])
+  isTouched = () => true;
 
   getError = async (label, value) => {
     const schema = yup.object().shape({
@@ -123,18 +114,17 @@ export class InputDemo extends React.Component {
   }
 
   isDisabled = () => {
-    const { isTouch } = this.state;
     const {
-      name, sport, cricket, football,
-    } = isTouch;
+      name, sport, cricket, football, isTouch,
+    } = this.state;
     const isFilled = !!(name && sport && (cricket || football));
-    return (this.hasErrors() || !isFilled) ? 'disabled' : '';
+    return (!isTouch || this.hasErrors() || !isFilled) ? 'disabled' : '';
   }
 
   render() {
     console.log(this.state);
     const {
-      sport, name, nameError, sportError, cricketError, footballError,
+      sport, name, nameError, sportError, cricketError, footballError, [sport]: specialty,
     } = this.state;
     return (
       <>
@@ -161,7 +151,7 @@ export class InputDemo extends React.Component {
               <RadioGroup
                 options={this.getRadioOptions()}
                 onChange={this.handleSpecialtyChange}
-                value={this.state[sport]}
+                value={[specialty]}
                 error={cricketError || footballError}
                 onBlur={this.handleSpecialtyBlur}
               />
