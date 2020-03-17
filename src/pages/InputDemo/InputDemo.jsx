@@ -83,10 +83,9 @@ export class InputDemo extends React.Component {
   }
 
   handleSpecialtyBlur = () => {
-    const { sport } = this.state;
-    const { isTouch } = this.state;
+    const { sport, isTouch, [sport]: specialty } = this.state;
     const key = `${sport}Error`;
-    this.getError([sport], this.state[sport])
+    this.getError([sport], specialty)
       .then((sportError) => this.setState({
         [key]: sportError,
         isTouch: { ...isTouch, [sport]: this.isTouched([sport]) },

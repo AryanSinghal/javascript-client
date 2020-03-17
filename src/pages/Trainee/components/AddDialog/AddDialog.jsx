@@ -206,8 +206,8 @@ export class AddDialog extends React.Component {
   }
 }
 
-AddDialog.protoTypes = {
-  onChange: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
+AddDialog.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
 };

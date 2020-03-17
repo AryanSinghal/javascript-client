@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import PropType from 'prop-types';
+import PropTypes from 'prop-types';
 import Error from './style';
 
 export const RadioGroup = (props) => {
@@ -24,11 +24,12 @@ export const RadioGroup = (props) => {
   );
 };
 
-RadioGroup.propType = {
-  value: PropType.string,
-  error: PropType.bool,
-  options: PropType.array.isRequired,
-  onChange: PropType.func,
+RadioGroup.propTypes = {
+  value: PropTypes.string,
+  error: PropTypes.bool,
+  options: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
 };
 RadioGroup.defaultProps = {
   value: '',
