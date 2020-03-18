@@ -10,13 +10,11 @@ export const RadioGroup = (props) => {
     <>
       {
         options && options.length && options.map((option) => (
-          <>
-            <Fragment key={option.label}>
-              <input type="radio" name="specialty" value={option.value} onChange={onChange} onBlur={onBlur} defaultChecked={value === option.value} />
-              {option.label}
-              <br />
-            </Fragment>
-          </>
+          <Fragment key={option.value}>
+            <input type="radio" name="specialty" value={option.value} onChange={onChange} onBlur={onBlur} defaultChecked={value === option.value} />
+            {option.label}
+            <br />
+          </Fragment>
         ))
       }
       <Error>{error}</Error>
@@ -26,7 +24,7 @@ export const RadioGroup = (props) => {
 
 RadioGroup.propTypes = {
   value: PropTypes.string,
-  error: PropTypes.bool,
+  error: PropTypes.string,
   options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
