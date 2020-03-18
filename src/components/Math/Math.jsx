@@ -21,8 +21,8 @@ export class Math extends Component {
 }
 
 Math.propTypes = {
-  first: PropTypes.number.isRequired,
-  second: PropTypes.number.isRequired,
+  first: PropTypes.string.isRequired,
+  second: PropTypes.string.isRequired,
   operator: PropTypes.oneOf(['+', '-', '/', '*']).isRequired,
   children: PropTypes.func,
 };
