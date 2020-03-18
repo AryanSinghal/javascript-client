@@ -161,7 +161,7 @@ export class InputDemo extends React.Component {
         <div align="right">
           <Button value=" CANCEL " />
           &nbsp;&nbsp;&nbsp;
-          <Button value=" SUBMIT " disabled={this.isDisabled()} success={(this.isDisabled()) ? 'disabled' : 'success'} />
+          <Button value=" SUBMIT " disabled={this.isDisabled()} onClick={() => { console.log({ name, sport, specialty }); }} success={(this.isDisabled()) ? 'disabled' : 'success'} />
         </div>
       </>
     );
