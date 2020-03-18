@@ -1,23 +1,25 @@
 import React from 'react';
-import PropType from 'prop-types';
+import PropTypes from 'prop-types';
 import { default as ButtonStyle } from './style';
 
 export const Button = (props) => {
-  const { value, error, onChange, disabled, success } = props;
+  const {
+    value, onClick, disabled, success,
+  } = props;
   return (
     <>
-      <ButtonStyle type="button" disabled={disabled} className={success}>{value}</ButtonStyle>
+      <ButtonStyle type="button" disabled={disabled} className={success} onClick={onClick}>{value}</ButtonStyle>
     </>
   );
 };
 
-Button.propType = {
-  value: PropType.string.isRequired,
-  error: PropType.bool,
-  color: PropType.string,
-  onChange: PropType.func.isRequired,
-  disabled: PropType.string,
-  style: PropType.object,
+Button.propTypes = {
+  value: PropTypes.string.isRequired,
+  error: PropTypes.bool,
+  color: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  disabled: PropTypes.string,
+  style: PropTypes.object,
 };
 Button.defaultProps = {
   error: false,

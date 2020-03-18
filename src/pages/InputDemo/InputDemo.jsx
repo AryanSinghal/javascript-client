@@ -1,10 +1,9 @@
 import React from 'react';
-import * as yup from 'yup';
 import {
   SelectField, TextField, RadioGroup, Button,
 } from '../../components';
 import {
-  NAME, SPECIALTY, GAME, SELECT_OPTIONS, CRICKET_OPTIONS, FOOTBALL_OPTIONS, CRICKET,
+  SELECT_OPTIONS, CRICKET_OPTIONS, FOOTBALL_OPTIONS, CRICKET, inputDemoSchema,
 } from '../../configs/constants';
 
 export class InputDemo extends React.Component {
@@ -19,31 +18,66 @@ export class InputDemo extends React.Component {
       sportError: '',
       cricketError: '',
       footballError: '',
-      isTouch: false,
     };
   }
 
   handleNameChange = (event) => {
-    this.setState({ name: event.target.value }, () => { this.getError('name'); });
-    this.isTouched();
+    const { value } = event.target;
+    this.getError('name', value)
+      .then((nameError) => this.setState({
+        nameError,
+        name: value,
+      }))
+      .catch((err) => console.log(err));
   }
 
   handleSportChange = (event) => {
-    this.setState({ sport: event.target.value, football: '', cricket: '' }, () => { this.getError('sport'); });
-    this.isTouched();
+    const { value } = event.target;
+    this.getError('sport', value)
+      .then((sportError) => this.setState({
+        sportError,
+        sport: value,
+        football: '',
+        cricket: '',
+        footballError: '',
+        cricketError: '',
+      }))
+      .catch((Error) => console.log(Error));
+  }
+
+  handleSportBlur = (event) => {
+    const { value } = event.target;
+    this.getError('sport', value)
+      .then((sportError) => this.setState({
+        sportError,
+        sport: value,
+      }))
+      .catch((Error) => console.log(Error));
   }
 
   handleSpecialtyChange = (event) => {
+    const { value } = event.target;
     const { sport } = this.state;
-    this.setState({ [sport]: event.target.value }, () => { this.getError(sport); });
-    this.isTouched();
+    const key = `${sport}Error`;
+    this.getError([sport], value)
+      .then((sportError) => this.setState({
+        [key]: sportError,
+        [sport]: value,
+      }))
+      .catch((err) => console.log(err));
   }
 
   handleSpecialtyBlur = () => {
-    const { sport } = this.state;
-    this.getError(sport);
-    this.isTouched();
+    const { sport, [sport]: specialty } = this.state;
+    const key = `${sport}Error`;
+    this.getError([sport], specialty)
+      .then((sportError) => this.setState({
+        [key]: sportError,
+      }))
+      .catch((err) => console.log(err));
   }
+
+  onClick = () => console.log(this.state);
 
   getRadioOptions = () => {
     const { sport } = this.state;
@@ -52,46 +86,39 @@ export class InputDemo extends React.Component {
 
   hasErrors = () => {
     const {
-      nameError, sportError, cricketError, footballError,
+      nameError, emailError, passwordError, confirmPasswordError,
     } = this.state;
-    return !!((nameError || sportError || cricketError || footballError));
+    return (nameError || emailError || passwordError || confirmPasswordError);
   }
 
   isTouched = () => {
     const {
-      sport, name, cricket, football,
+      name, sport, cricket, football,
     } = this.state;
-    this.setState({ isTouch: true });
-    return !!(sport || name || cricket || football);
+    return !!(name || sport || cricket || football);
   }
 
-  getError = (label) => {
-    const schema = yup.object().shape({
-      sport: yup.string().required('Sport is required field'),
-      name: yup.string().required('Name is required field').min(3, 'Name is required field'),
-      cricket: yup.string().required('What you Do is required field'),
-      football: yup.string().required('What you Do is required field'),
-    });
-    const key = `${[label]}Error`;
-    schema.validateAt(label, { [label]: this.state[label] })
-      .then(() => {
-        this.setState({ [key]: '' });
-      })
-      .catch((error) => {
-        this.setState({ [key]: error.errors });
-        return key;
-      });
+  getError = async (label, value) => {
+    try {
+      await inputDemoSchema.validateAt(label, { [label]: value });
+      return '';
+    } catch (error) {
+      return error.errors;
+    }
   }
 
   isDisabled = () => {
-    const { isTouch } = this.state;
-    return (this.hasErrors() && isTouch) ? 'disabled' : '';
+    const {
+      name, sport, cricket, football,
+    } = this.state;
+    const isFilled = !!(name && sport && (cricket || football));
+    return (!this.isTouched() || this.hasErrors() || !isFilled) ? 'disabled' : '';
   }
 
   render() {
     console.log(this.state);
     const {
-      sport, name, nameError, sportError, cricketError, footballError,
+      sport, name, nameError, sportError, cricketError, footballError, [sport]: specialty,
     } = this.state;
     return (
       <>
@@ -99,7 +126,7 @@ export class InputDemo extends React.Component {
         <TextField
           onChange={this.handleNameChange}
           value={name}
-          error={nameError}
+          error={String(nameError)}
           onBlur={this.handleNameChange}
         />
         <p><b>Select the game you play </b></p>
@@ -107,9 +134,9 @@ export class InputDemo extends React.Component {
           options={SELECT_OPTIONS}
           onChange={this.handleSportChange}
           defaultText="Select"
-          value={sport}
-          error={sportError}
-          onBlur={this.handleSportChange}
+          value={String(sport)}
+          error={String(sportError)}
+          onBlur={this.handleSportBlur}
         />
         {
           sport && (
@@ -118,17 +145,17 @@ export class InputDemo extends React.Component {
               <RadioGroup
                 options={this.getRadioOptions()}
                 onChange={this.handleSpecialtyChange}
-                value={this.state[sport]}
-                error={cricketError || footballError}
+                value={String([specialty])}
+                error={String(cricketError || footballError)}
                 onBlur={this.handleSpecialtyBlur}
               />
             </>
           )
         }
         <div align="right">
-          <Button value=" CANCEL " />
+          <Button onClick={this.onClick} value=" CANCEL " />
           &nbsp;&nbsp;&nbsp;
-          <Button value=" SUBMIT " disabled={this.isDisabled()} success={(this.isDisabled()) ? 'disabled' : 'success'} />
+          <Button value=" SUBMIT " disabled={this.isDisabled()} onClick={this.onClick} success={(this.isDisabled()) ? 'disabled' : 'success'} />
         </div>
       </>
     );

@@ -1,3 +1,5 @@
+import * as yup from 'yup';
+
 export const PUBLIC_IMAGE_FOLDER = '/images/';
 export const DEFAULT_BANNER_IMAGE = 'banners/default.png';
 export const BANNERS = ['banners/cloud.jpg', 'banners/dns-server.png', 'banners/full-stack-web-development.jpg', 'banners/js.jpg', 'banners/load-balancer.png'];
@@ -27,11 +29,11 @@ export const CRICKET_OPTIONS = [
   },
   {
     label: 'Wicket Keeper',
-    value: 'wicket keeper',
+    value: 'wicket_keeper',
   },
   {
     label: 'All Rounder',
-    value: 'all rounder',
+    value: 'all_rounder',
   },
 ];
 export const FOOTBALL_OPTIONS = [
@@ -50,3 +52,9 @@ export const FOOTBALL_OPTIONS = [
 ];
 export const CRICKET = 'cricket';
 export const FOOTBALL = 'football';
+export const inputDemoSchema = yup.object().shape({
+  sport: yup.string().required('Sport is required field'),
+  name: yup.string().required('Name is required field').min(3, 'Name is required field'),
+  cricket: yup.string().required('What you Do is required field'),
+  football: yup.string().required('What you Do is required field'),
+});
