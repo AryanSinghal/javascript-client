@@ -18,7 +18,6 @@ export class InputDemo extends React.Component {
       sportError: '',
       cricketError: '',
       footballError: '',
-      isTouch: false,
     };
   }
 
@@ -28,7 +27,6 @@ export class InputDemo extends React.Component {
       .then((nameError) => this.setState({
         nameError,
         name: value,
-        isTouch: this.isTouched(),
       }))
       .catch((err) => console.log(err));
   }
