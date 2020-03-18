@@ -7,25 +7,23 @@ import { Grid } from '@material-ui/core';
 
 export default function ButtonAppBar() {
   return (
-    <div>
-      <AppBar position="static">
-        <Toolbar>
-          <Grid container>
-            <Grid item xs={5}>
-              <Typography variant="h6">
-                Trainee Portal
-              </Typography>
-            </Grid>
-            <Grid item xs={7}>
-              <Button href="/trainee" color="inherit" variant="h6">TRAINEE</Button>
-              <Button href="/textfield-demo" color="inherit" variant="h6">TEXTFIELD DEMO</Button>
-              <Button href="/input-demo" color="inherit" variant="h6">INPUT DEMO</Button>
-              <Button href="/children-demo" color="inherit" variant="h6">CHILDREN DEMO</Button>
-              <Button color="inherit" variant="h6">LOGOUT</Button>
-            </Grid>
+    <AppBar position="static">
+      <Toolbar>
+        <Grid container>
+          <Grid item xs={6}>
+            <Typography variant="h6">
+              Trainee Portal
+            </Typography>
           </Grid>
-        </Toolbar>
-      </AppBar>
-    </div>
+          <Grid item xs={6}>
+            <Button href="/trainee" color="inherit" variant="text">TRAINEE</Button>
+            <Button href="/textfield-demo" color="inherit" variant="text">TEXTFIELD DEMO</Button>
+            <Button href="/input-demo" color="inherit" variant="text">INPUT DEMO</Button>
+            <Button href="/children-demo" color="inherit" variant="text">CHILDREN DEMO</Button>
+            <Button color="inherit" variant="text">LOGOUT</Button>
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
   );
 }

@@ -4,11 +4,11 @@ import { default as ButtonStyle } from './style';
 
 export const Button = (props) => {
   const {
-    value, error, onClick, disabled, success,
+    value, onClick, disabled, success,
   } = props;
   return (
     <>
-      <ButtonStyle type="button" disabled={disabled} className={success}>{value}</ButtonStyle>
+      <ButtonStyle type="button" disabled={disabled} className={success} onClick={onClick}>{value}</ButtonStyle>
     </>
   );
 };
