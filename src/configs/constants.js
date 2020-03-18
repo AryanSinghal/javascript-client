@@ -29,11 +29,11 @@ export const CRICKET_OPTIONS = [
   },
   {
     label: 'Wicket Keeper',
-    value: 'wicket keeper',
+    value: 'wicket_keeper',
   },
   {
     label: 'All Rounder',
-    value: 'all rounder',
+    value: 'all_rounder',
   },
 ];
 export const FOOTBALL_OPTIONS = [
@@ -69,4 +69,10 @@ export const DIALOG_SCHEMA = yup.object().shape({
   confirmPassword: yup
     .string()
     .when('$password', (password) => (yup.string().oneOf([password, null, ''], 'Passwords must match').required('Confirm Password is required'))),
+});
+export const inputDemoSchema = yup.object().shape({
+  sport: yup.string().required('Sport is required field'),
+  name: yup.string().required('Name is required field').min(3, 'Name is required field'),
+  cricket: yup.string().required('What you Do is required field'),
+  football: yup.string().required('What you Do is required field'),
 });
