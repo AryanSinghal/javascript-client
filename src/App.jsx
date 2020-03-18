@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trainee, Navbar, Login } from './pages';
+import { Trainee, Navbar } from './pages';
 
 function App() {
   return (

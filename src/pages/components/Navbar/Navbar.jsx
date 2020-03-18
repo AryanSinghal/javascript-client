@@ -11,17 +11,17 @@ export default function ButtonAppBar() {
       <AppBar position="static">
         <Toolbar>
           <Grid container>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <Typography variant="h6">
                 Trainee Portal
               </Typography>
             </Grid>
-            <Grid item xs={7}>
-              <Button color="inherit" variant="h6">TRAINEE</Button>
-              <Button color="inherit" variant="h6">TEXTFIELD DEMO</Button>
-              <Button color="inherit" variant="h6">INPUT DEMO</Button>
-              <Button color="inherit" variant="h6">CHILDREN DEMO</Button>
-              <Button color="inherit" variant="h6">LOGOUT</Button>
+            <Grid item xs={6}>
+              <Button color="inherit" size="medium" variant="text">TRAINEE</Button>
+              <Button color="inherit" size="medium" variant="text">TEXTFIELD DEMO</Button>
+              <Button color="inherit" size="medium" variant="text">INPUT DEMO</Button>
+              <Button color="inherit" size="medium" variant="text">CHILDREN DEMO</Button>
+              <Button color="inherit" size="medium" variant="text">LOGOUT</Button>
             </Grid>
           </Grid>
         </Toolbar>
