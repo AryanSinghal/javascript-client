@@ -15,7 +15,7 @@ const AuthLayoutRoute = ({ component: Component, ...rest }) => (
 );
 
 AuthLayoutRoute.propTypes = {
-  component: PropTypes.func.isRequired,
+  component: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default AuthLayoutRoute;

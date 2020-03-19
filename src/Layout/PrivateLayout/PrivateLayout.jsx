@@ -14,7 +14,7 @@ const PrivateLayout = (props) => {
 };
 
 PrivateLayout.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default PrivateLayout;
