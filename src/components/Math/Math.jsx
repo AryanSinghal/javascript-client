@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 export class Math extends Component {
   calResult = (first, second, operator) => {
     let result;
+    first = Number(first);
+    second = Number(second);
     switch (operator) {
     case '+':
       result = first + second;
@@ -27,7 +29,7 @@ export class Math extends Component {
     const {
       first, second, operator, children,
     } = this.props;
-    const result = this.calResult(first, second, operator);
+    const result = this.calResult(Number(first), Number(second), operator);
     return (children !== undefined)
       ? (<p>{children(first, second, operator, result)}</p>)
       : (<p>{`${first} ${operator} ${second} = ${result}`}</p>);
