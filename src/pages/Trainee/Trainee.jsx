@@ -1,20 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router, Switch, Redirect, Route,
 } from 'react-router-dom';
 import TraineeList from './TraineeList';
-import trainee from './data/trainee';
 import TraineeDetails from './TraineeDetails';
 
-export const Trainee = () => (
-  <>
-    <Router>
-      <Switch>
-        <Route exact path="/trainee" component={TraineeList} />
-        {
-          trainee.map((value) => <Route exact path={`/trainee/${value.id}`} component={TraineeDetails} />)
-        }
-      </Switch>
-    </Router>
-  </>
-);
+export const Trainee = (props) => {
+  const { match: { path } } = props;
+  return (
+    <>
+      <Router>
+        <Switch>
+          <Route exact path={`${path}`} component={TraineeList} />
+          <Route exact path={`${path}/:traineeId`} component={TraineeDetails} />
+        </Switch>
+      </Router>
+    </>
+  );
+};
+
+Trainee.propTypes = {
+  match: PropTypes.instanceOf(Object).isRequired,
+};
