@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { OPERATORS } from '../../configs/constants';
 
 export class Math extends Component {
   calResult = (first, second, operator) => {
-    let result = first + operator + second;
-    // eslint-disable-next-line no-eval
-    result = (OPERATORS.includes(operator)) ? eval(result) : 'Invalid Operation';
+    let result;
+    switch (operator) {
+    case '+':
+      result = first + second;
+      break;
+    case '-':
+      result = first - second;
+      break;
+    case '/':
+      result = first / second;
+      break;
+    case '*':
+      result = first * second;
+      break;
+    default:
+      result = 'Invalid Operation';
+    }
     return result;
   };
 
