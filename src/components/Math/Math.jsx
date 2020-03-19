@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 export class Math extends Component {
   calResult = (first, second, operator) => {
     let result;
-    first = Number(first);
-    second = Number(second);
     switch (operator) {
     case '+':
       result = first + second;
