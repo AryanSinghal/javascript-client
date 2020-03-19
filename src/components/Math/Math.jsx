@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { OPERATORS } from '../../configs/constants';
 
 export class Math extends Component {
   calResult = (first, second, operator) => {
-    let result = first + operator + second;
-    result = (OPERATORS.includes(operator)) ? eval(result) : 'Invalid Operation';
+    let result;
+    switch (operator) {
+    case '+':
+      result = first + second;
+      break;
+    case '-':
+      result = first - second;
+      break;
+    case '/':
+      result = first / second;
+      break;
+    case '*':
+      result = first * second;
+      break;
+    default:
+      result = 'Invalid Operation';
+    }
     return result;
   };
 
@@ -13,7 +27,7 @@ export class Math extends Component {
     const {
       first, second, operator, children,
     } = this.props;
-    const result = this.calResult(first, second, operator);
+    const result = this.calResult(Number(first), Number(second), operator);
     return (children !== undefined)
       ? (<p>{children(first, second, operator, result)}</p>)
       : (<p>{`${first} ${operator} ${second} = ${result}`}</p>);
