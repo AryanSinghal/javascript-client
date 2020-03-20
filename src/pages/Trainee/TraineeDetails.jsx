@@ -1,8 +1,6 @@
 import React from 'react';
-// import Card from '@material-ui/core/Card';
-// import CardContent from '@material-ui/core/CardContent';
 import {
-  BrowserRouter as Router, Switch, Redirect, Route, useParams,
+  BrowserRouter as Router, Switch, useParams,
 } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import {
@@ -10,41 +8,62 @@ import {
 } from '@material-ui/core';
 import moment from 'moment';
 import trainee from './data/trainee';
+import { NoMatch } from '../NoMatch';
 
 const TraineeDetails = () => {
   const { traineeId } = useParams();
   const data = trainee.filter((item) => item.id === traineeId);
+  if (data[0] === undefined || data[0] === null) {
+    return (
+      <Router>
+        <Switch>
+          <NoMatch component={NoMatch} />
+        </Switch>
+      </Router>
+    );
+  }
   const { name, email, createdAt } = data[0];
   return (
-    <Card>
-      <Grid container spacing={2}>
-        <Grid xs={2}>
-          <CardMedia
-            component="img"
-            alt="Contemplative Reptile"
-            height="140"
-            image="/images/banners/cloud.jpg"
-            title="Contemplative Reptile"
-          />
+    <>
+      <Card>
+        <Grid container spacing={2}>
+          <Grid item xs={2}>
+            <CardMedia
+              component="img"
+              alt="Thumbnail"
+              height="140"
+              image="/images/banners/cloud.jpg"
+              title={name}
+            />
+          </Grid>
+          <Grid item xs={10}>
+            <CardContent>
+              <Typography variant="h6">
+                {name}
+              </Typography>
+              <Typography variant="subtitle1">
+                {moment(createdAt).format('dddd MMMM Do YY h:mm:ss a')}
+              </Typography>
+              <Typography variant="subtitle2">
+                {email}
+              </Typography>
+            </CardContent>
+          </Grid>
         </Grid>
-        <Grid xs={10}>
-          <CardContent>
-            <Typography variant="h6">
-              {name}
-            </Typography>
-            <br />
-            <Typography variant="h8">
-              {moment(createdAt).format('dddd MMMM Do YY h:mm:ss a')}
-            </Typography>
-            <br />
-            <br />
-            <Typography gutterBottom variant="h7">
-              {email}
-            </Typography>
-          </CardContent>
-        </Grid>
-      </Grid>
-    </Card>
+      </Card>
+      <br />
+      <br />
+      <br />
+      <div align="center">
+        <Button
+          variant="contained"
+          color="default"
+          href="/trainee"
+        >
+          Back
+        </Button>
+      </div>
+    </>
   );
 };
 

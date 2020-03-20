@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  BrowserRouter as Router, Switch, Redirect, Route,
+  BrowserRouter as Router, Switch, Route,
 } from 'react-router-dom';
 import TraineeList from './TraineeList';
 import TraineeDetails from './TraineeDetails';
 
-export const Trainee = (props) => {
+const Trainee = (props) => {
   const { match: { path } } = props;
   return (
     <>
@@ -23,3 +23,5 @@ export const Trainee = (props) => {
 Trainee.propTypes = {
   match: PropTypes.instanceOf(Object).isRequired,
 };
+
+export default Trainee;

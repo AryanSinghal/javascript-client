@@ -38,7 +38,7 @@ class TraineeList extends Component {
         <br />
         <ul>
           {
-            trainee.map((value) => (<li><a href={`trainee/${value.id}`}>{value.name}</a></li>))
+            trainee.map((value) => (<li key={value.name}><a href={`trainee/${value.id}`}>{value.name}</a></li>))
           }
         </ul>
       </>
