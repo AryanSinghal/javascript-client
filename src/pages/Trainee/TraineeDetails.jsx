@@ -32,7 +32,7 @@ const TraineeDetails = () => {
               component="img"
               alt="Thumbnail"
               height="140"
-              image="/images/banners/cloud.jpg"
+              image="/images/banners/thumbnail.png"
               title={name}
             />
           </Grid>

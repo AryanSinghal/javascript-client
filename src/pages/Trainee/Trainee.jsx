@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import TraineeList from './TraineeList';
 import TraineeDetails from './TraineeDetails';
+import { NoMatch } from '../NoMatch';
 
 const Trainee = (props) => {
   const { match: { path } } = props;
@@ -14,6 +15,7 @@ const Trainee = (props) => {
         <Switch>
           <Route exact path={`${path}`} component={TraineeList} />
           <Route exact path={`${path}/:traineeId`} component={TraineeDetails} />
+          <Route component={NoMatch} />
         </Switch>
       </Router>
     </>
