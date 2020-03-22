@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { Table, AddDialog } from './components';
 import traineeData from './data/trainee';
@@ -42,7 +43,7 @@ class TraineeList extends Component {
         <Table id="trainee_id" data={traineeData} columns={COLUMNS} />
         <ul>
           {
-            traineeData && traineeData.length && traineeData.map((value) => (<li key={value.name}><a href={`trainee/${value.id}`}>{value.name}</a></li>))
+            traineeData && traineeData.length && traineeData.map((value) => (<li key={value.name}><Link to={`/trainee/${value.id}`}>{value.name}</Link></li>))
           }
         </ul>
       </>
