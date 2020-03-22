@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { AddDialog } from './components';
 import trainee from './data/trainee';
@@ -38,7 +39,7 @@ class TraineeList extends Component {
         <br />
         <ul>
           {
-            trainee.map((value) => (<li key={value.name}><a href={`trainee/${value.id}`}>{value.name}</a></li>))
+            trainee.map((value) => (<li key={value.name}><Link to={`/trainee/${value.id}`}>{value.name}</Link></li>))
           }
         </ul>
       </>
