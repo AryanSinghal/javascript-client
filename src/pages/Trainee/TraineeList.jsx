@@ -39,7 +39,7 @@ class TraineeList extends Component {
         <br />
         <ul>
           {
-            trainee.map((value) => (<li key={value.name}><Link to={`/trainee/${value.id}`}>{value.name}</Link></li>))
+            trainee && trainee.length && trainee.map((value) => (<li key={value.name}><Link to={`/trainee/${value.id}`}>{value.name}</Link></li>))
           }
         </ul>
       </>
