@@ -1,9 +1,15 @@
 import React from 'react';
-import { Trainee } from './pages';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { Trainee, Navbar } from './pages';
 
 function App() {
   return (
-    <Trainee />
+    <>
+      <CssBaseline />
+      <Navbar />
+      <br />
+      <Trainee />
+    </>
   );
 }
 

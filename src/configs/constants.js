@@ -70,6 +70,15 @@ export const DIALOG_SCHEMA = yup.object().shape({
     .string()
     .when('$password', (password) => (yup.string().oneOf([password, null, ''], 'Passwords must match').required('Confirm Password is required'))),
 });
+export const LOGIN_SCHEMA = yup.object().shape({
+  email: yup
+    .string()
+    .email()
+    .required('Email is required field'),
+  password: yup
+    .string()
+    .required('Password is required field'),
+});
 export const inputDemoSchema = yup.object().shape({
   sport: yup.string().required('Sport is required field'),
   name: yup.string().required('Name is required field').min(3, 'Name is required field'),
