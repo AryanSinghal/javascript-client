@@ -8,7 +8,7 @@ const TextFieldDemo = () => (
     <p>
       <b> This is a Disabled Input </b>
     </p>
-    <TextField disabled value="Disabled Input" />
+    <TextField disabled="disabled" value="Disabled Input" />
     <br />
     <br />
     <p>
@@ -20,8 +20,7 @@ const TextFieldDemo = () => (
     <p>
       <b>An Input with error</b>
     </p>
-    <TextField value="101" error />
-    <p style={{ color: 'red' }}>Could not be greater than</p>
+    <TextField value="101" error="Could not be greater than" />
   </>
 );
 export default TextFieldDemo;
