@@ -33,7 +33,7 @@ const MyTable = (props) => {
           <TableBody>
             {
               data && data.length && data.map((row) => (
-                <TableRow key={row.name}>
+                <TableRow key={row}>
                   {
                     columns && columns.length && columns.map((column) => (
                       <Fragment key={row[column.field]}>
