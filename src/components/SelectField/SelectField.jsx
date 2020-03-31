@@ -1,9 +1,11 @@
 import React from 'react';
-import PropType from 'prop-types';
+import PropTypes from 'prop-types';
 import { Select, Option, Error } from './style';
 
 export const SelectField = (props) => {
-  const { error, options, onChange, defaultText, value, onBlur } = props;
+  const {
+    error, options, onChange, defaultText, value, onBlur,
+  } = props;
   return (
     <>
       <Select defaultValue={value} onChange={onChange} onBlur={onBlur}>
@@ -19,12 +21,12 @@ export const SelectField = (props) => {
   );
 };
 SelectField.propType = {
-  value: PropType.string,
-  error: PropType.bool,
-  options: PropType.array.isRequired,
-  defaultText: PropType.string,
-  onChange: PropType.func,
-  onBlur: PropType.func,
+  value: PropTypes.string,
+  error: PropTypes.bool,
+  options: PropTypes.array.isRequired,
+  defaultText: PropTypes.string,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
 };
 SelectField.defaultProps = {
   error: false,

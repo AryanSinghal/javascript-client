@@ -21,6 +21,7 @@ Button.propTypes = {
   disabled: PropTypes.string,
   style: PropTypes.object,
 };
+
 Button.defaultProps = {
   error: false,
   style: {},

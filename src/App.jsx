@@ -1,4 +1,5 @@
 import React from 'react';
+import { CssBaseline } from '@material-ui/core';
 import {
   BrowserRouter as Router, Route, Redirect, Switch,
 } from 'react-router-dom';
@@ -10,6 +11,7 @@ import { AuthRoute, PrivateRoute } from './routes';
 function App() {
   return (
     <Router>
+      <CssBaseline />
       <Switch>
         <Route exact path="/">
           <Redirect to="/login" />

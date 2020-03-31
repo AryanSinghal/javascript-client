@@ -13,16 +13,21 @@ const TextField = (props) => {
     </>
   );
 };
+
 TextField.propTypes = {
   disabled: PropTypes.string,
   value: PropTypes.string,
   error: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
 };
+
 TextField.defaultProps = {
   disabled: '',
-  error: false,
+  error: '',
   value: '',
+  onBlur: () => { },
+  onChange: () => { },
 };
+
 export default TextField;
