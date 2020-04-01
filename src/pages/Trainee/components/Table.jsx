@@ -6,6 +6,7 @@ import {
 
 const useStyles = makeStyles({
   head: { color: 'grey' },
+  table: { width: '98%' },
 });
 
 const MyTable = (props) => {
@@ -14,8 +15,8 @@ const MyTable = (props) => {
   } = props;
   const classes = useStyles();
   return (
-    <>
-      <TableContainer component={Paper} elevation={3}>
+    <div align="center">
+      <TableContainer className={classes.table} component={Paper} elevation={3}>
         <Table aria-label="simple table" id={id}>
           <TableHead>
             <TableRow>
@@ -32,8 +33,8 @@ const MyTable = (props) => {
           </TableHead>
           <TableBody>
             {
-              data && data.length && data.map((row) => (
-                <TableRow key={row}>
+              data && data.length && data.map((row, index) => (
+                <TableRow key={id + index}>
                   {
                     columns && columns.length && columns.map((column) => (
                       <Fragment key={row[column.field]}>
@@ -47,7 +48,7 @@ const MyTable = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </div>
   );
 };
 
