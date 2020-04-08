@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import { AddDialog } from './components';
-import trainee from './data/trainee';
+import { Table, AddDialog } from './components';
+import traineeData from './data/trainee';
+import { COLUMNS } from '../../configs/constants';
 
 class TraineeList extends Component {
   constructor(props) {
@@ -32,14 +33,17 @@ class TraineeList extends Component {
     const { open } = this.state;
     return (
       <>
-        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-          ADD TRAINEE
-        </Button>
+        <div align="right">
+          <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+            ADD TRAINEE
+          </Button>
+        </div>
         <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
         <br />
+        <Table id="trainee_id" data={traineeData} columns={COLUMNS} />
         <ul>
           {
-            trainee && trainee.length && trainee.map((value) => (<li key={value.name}><Link to={`/trainee/${value.id}`}>{value.name}</Link></li>))
+            traineeData && traineeData.length && traineeData.map((value) => (<li key={value.name}><Link to={`/trainee/${value.id}`}>{value.name}</Link></li>))
           }
         </ul>
       </>

@@ -20,7 +20,7 @@ export const SelectField = (props) => {
     </>
   );
 };
-SelectField.propType = {
+SelectField.propTypes = {
   value: PropTypes.string,
   error: PropTypes.bool,
   options: PropTypes.array.isRequired,

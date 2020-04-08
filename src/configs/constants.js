@@ -53,6 +53,7 @@ export const FOOTBALL_OPTIONS = [
 export const CRICKET = 'cricket';
 export const FOOTBALL = 'football';
 export const OPERATORS = ['+', '-', '/', '*'];
+
 export const DIALOG_SCHEMA = yup.object().shape({
   name: yup
     .string()
@@ -70,6 +71,7 @@ export const DIALOG_SCHEMA = yup.object().shape({
     .string()
     .when('$password', (password) => (yup.string().oneOf([password, null, ''], 'Passwords must match').required('Confirm Password is required'))),
 });
+
 export const LOGIN_SCHEMA = yup.object().shape({
   email: yup
     .string()
@@ -79,9 +81,22 @@ export const LOGIN_SCHEMA = yup.object().shape({
     .string()
     .required('Password is required field'),
 });
-export const inputDemoSchema = yup.object().shape({
+
+export const INPUT_DEMO_SCHEMA = yup.object().shape({
   sport: yup.string().required('Sport is required field'),
   name: yup.string().required('Name is required field').min(3, 'Name is required field'),
   cricket: yup.string().required('What you Do is required field'),
   football: yup.string().required('What you Do is required field'),
 });
+
+export const COLUMNS = [
+  {
+    field: 'name',
+    label: 'Name',
+    align: 'center',
+  },
+  {
+    field: 'email',
+    label: 'Email Address',
+  },
+];

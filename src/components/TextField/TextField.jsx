@@ -13,6 +13,7 @@ const TextField = (props) => {
     </>
   );
 };
+
 TextField.propTypes = {
   disabled: PropTypes.string,
   value: PropTypes.string,
@@ -20,6 +21,7 @@ TextField.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
 };
+
 TextField.defaultProps = {
   disabled: '',
   error: '',
@@ -27,4 +29,5 @@ TextField.defaultProps = {
   onBlur: () => { },
   onChange: () => { },
 };
+
 export default TextField;

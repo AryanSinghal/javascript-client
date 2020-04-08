@@ -3,7 +3,7 @@ import {
   SelectField, TextField, RadioGroup, Button,
 } from '../../components';
 import {
-  SELECT_OPTIONS, CRICKET_OPTIONS, FOOTBALL_OPTIONS, CRICKET, inputDemoSchema,
+  SELECT_OPTIONS, CRICKET_OPTIONS, FOOTBALL_OPTIONS, CRICKET, INPUT_DEMO_SCHEMA,
 } from '../../configs/constants';
 
 export class InputDemo extends React.Component {
@@ -100,7 +100,7 @@ export class InputDemo extends React.Component {
 
   getError = async (label, value) => {
     try {
-      await inputDemoSchema.validateAt(label, { [label]: value });
+      await INPUT_DEMO_SCHEMA.validateAt(label, { [label]: value });
       return '';
     } catch (error) {
       return error.errors;
