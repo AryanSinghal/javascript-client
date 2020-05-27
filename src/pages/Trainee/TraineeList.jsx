@@ -34,6 +34,7 @@ class TraineeList extends Component {
   onSelect = () => {
     const { order, orderBy } = this.state;
     console.log(orderBy, order);
+    return orderBy;
   }
 
   onSort = (order, orderBy) => {

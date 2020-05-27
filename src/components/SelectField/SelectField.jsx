@@ -20,6 +20,7 @@ export const SelectField = (props) => {
     </>
   );
 };
+
 SelectField.propTypes = {
   value: PropTypes.string,
   error: PropTypes.string,
@@ -28,6 +29,7 @@ SelectField.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
 };
+
 SelectField.defaultProps = {
   error: false,
   defaultText: '',

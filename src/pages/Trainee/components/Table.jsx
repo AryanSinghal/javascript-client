@@ -54,7 +54,7 @@ const MyTable = (props) => {
                   {
                     columns && columns.length && columns.map((column) => (
                       <Fragment key={row[column.field]}>
-                        <TableCell align={column.align || 'center'}>{row[column.field]}</TableCell>
+                        <TableCell align={column.align || 'center'}>{(column.format) ? column.format(row[column.field]) : row[column.field]}</TableCell>
                       </Fragment>
                     ))
                   }
@@ -74,6 +74,7 @@ MyTable.propTypes = {
     field: PropTypes.string,
     label: PropTypes.string,
     align: PropTypes.oneOf(['left', 'right', 'center']),
+    format: PropTypes.func
   })).isRequired,
   data: PropTypes.arrayOf(Object).isRequired,
   orderBy: PropTypes.string,
