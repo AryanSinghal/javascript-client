@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   row: {
     '&:nth-child(odd)': { backgroundColor: '#F2F2F2' },
     '&:nth-child(even)': { backgroundColor: '#FFFFFF' },
-    '&:hover': { backgroundColor: '#DDDDDD' },
+    '&:hover': { backgroundColor: '#DDDDDD', cursor: 'pointer' },
   },
 });
 
@@ -37,7 +37,6 @@ const MyTable = (props) => {
                         active={orderBy === column.field}
                         direction={orderBy === column.field ? order : 'asc'}
                         onClick={() => { onSort(order, column.field) }}
-                        onBlur={() => { onSelect() }}
                       >
                         {column.label || column.field}
                       </TableSortLabel>
@@ -50,7 +49,7 @@ const MyTable = (props) => {
           <TableBody>
             {
               data && data.length && data.map((row, index) => (
-                <TableRow key={id + index} className={classes.row}>
+                <TableRow key={id + index} className={classes.row} onClick={() => { onSelect(row) }}>
                   {
                     columns && columns.length && columns.map((column) => (
                       <Fragment key={row[column.field]}>
