@@ -22,7 +22,7 @@ export const SelectField = (props) => {
 };
 SelectField.propTypes = {
   value: PropTypes.string,
-  error: PropTypes.bool,
+  error: PropTypes.string,
   options: PropTypes.array.isRequired,
   defaultText: PropTypes.string,
   onChange: PropTypes.func,
