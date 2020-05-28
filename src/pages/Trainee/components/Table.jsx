@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 
 const MyTable = (props) => {
   const {
-    id, columns, data, order, orderBy, onSelect, onSort,
+    id, columns, data, order, orderBy, onSelect, onSort, action,
   } = props;
   const classes = useStyles();
   return (
@@ -49,14 +49,25 @@ const MyTable = (props) => {
           <TableBody>
             {
               data && data.length && data.map((row, index) => (
-                <TableRow key={id + index} className={classes.row} onClick={() => { onSelect(row) }}>
+                <TableRow key={id + index} className={classes.row}>
                   {
                     columns && columns.length && columns.map((column) => (
                       <Fragment key={row[column.field]}>
-                        <TableCell align={column.align || 'center'}>{(column.format) ? column.format(row[column.field]) : row[column.field]}</TableCell>
+                        <TableCell align={column.align || 'center'} onClick={() => { onSelect(row) }}>
+                          {(column.format) ? column.format(row[column.field]) : row[column.field]}
+                        </TableCell>
                       </Fragment>
                     ))
                   }
+                  <TableCell>
+                    <Fragment key={id + index + 'edit'}>
+                      {action[0].icon}
+                    </Fragment>
+                    <br />
+                    <Fragment key={id + index + 'delete'}>
+                      {action[1].icon}
+                    </Fragment>
+                  </TableCell>
                 </TableRow>
               ))
             }

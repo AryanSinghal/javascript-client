@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import { EditIcon, DeleteIcon } from '@material-ui/icons';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { Table, AddDialog } from './components';
 import traineeData from './data/trainee';
 import { COLUMNS } from '../../configs/constants';
