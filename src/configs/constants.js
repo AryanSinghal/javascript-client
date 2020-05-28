@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import moment from 'moment';
 
 export const PUBLIC_IMAGE_FOLDER = '/images/';
 export const DEFAULT_BANNER_IMAGE = 'banners/default.png';
@@ -98,5 +99,12 @@ export const COLUMNS = [
   {
     field: 'email',
     label: 'Email Address',
+    format: value => value && value.toUpperCase(),
   },
+  {
+    field: 'createdAt',
+    label: 'Date',
+    align: 'right',
+    format: date => moment(date).format('dddd MMMM Do YY h:mm:ss a'),
+  }
 ];

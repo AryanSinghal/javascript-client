@@ -10,6 +10,8 @@ class TraineeList extends Component {
     super(props);
     this.state = {
       open: false,
+      order: 'asc',
+      orderBy: ''
     };
   }
 
@@ -29,8 +31,18 @@ class TraineeList extends Component {
     console.log({ name, email, password });
   };
 
+  onSelect = (data) => {
+    return data;
+  }
+
+  onSort = (order, orderBy) => {
+    let newOrder = (order === 'asc') ? 'desc' : 'asc';
+    this.setState({ order: newOrder, orderBy });
+    return orderBy;
+  }
+
   render() {
-    const { open } = this.state;
+    const { open, orderBy, order } = this.state;
     return (
       <>
         <div align="right">
@@ -40,7 +52,15 @@ class TraineeList extends Component {
         </div>
         <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
         <br />
-        <Table id="trainee_id" data={traineeData} columns={COLUMNS} />
+        <Table
+          id="trainee_id"
+          data={traineeData}
+          columns={COLUMNS}
+          orderBy={orderBy}
+          order={order}
+          onSort={this.onSort}
+          onSelect={this.onSelect}
+        />
         <ul>
           {
             traineeData && traineeData.length && traineeData.map((value) => (<li key={value.name}><Link to={`/trainee/${value.id}`}>{value.name}</Link></li>))
