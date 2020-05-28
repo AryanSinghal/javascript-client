@@ -50,6 +50,7 @@ class MyTable extends Component {
     event.preventDefault();
     const name = event.target[0].value;
     const email = event.target[2].value;
+    console.log('Edited item');
     console.log({ name, email});
     this.setState({ traineeRecord: {}, editDialogOpen: false });
   }
