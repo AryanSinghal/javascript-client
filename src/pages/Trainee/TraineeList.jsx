@@ -45,14 +45,6 @@ class TraineeList extends Component {
     return orderBy;
   }
 
-  handleEditDialogOpen = (data) => {
-
-  }
-
-  handleDeleteDialogOpen = (data) => {
-
-  }
-
   handlePageChange = (page, direction) => {
     if (direction === 'right')
       this.setState({ page: page + 1 });

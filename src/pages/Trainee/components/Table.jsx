@@ -1,16 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead,
-  TableRow, Paper, makeStyles, TableSortLabel, IconButton,
+  TableRow, Paper, withStyles, TableSortLabel, IconButton,
 } from '@material-ui/core';
+import { RemoveDialog } from './RemoveDialog';
 import { ROWS_PER_PAGE } from '../../../configs/constants';
 
-const useStyles = makeStyles({
+const styles = () => ({
   head: { color: 'grey' },
-  table: { width: '98%' },
+  table: { width: '95%' },
   row: {
     '&:nth-child(odd)': { backgroundColor: '#F2F2F2' },
     '&:nth-child(even)': { backgroundColor: '#FFFFFF' },
@@ -18,88 +19,143 @@ const useStyles = makeStyles({
   },
 });
 
-const MyTable = (props) => {
-  const {
-    id, columns, data, order, orderBy, onSelect, onSort, action, page, count, onChangePage,
-  } = props;
-  const classes = useStyles();
-  return (
-    <div align="center">
-      <TableContainer className={classes.table} component={Paper} elevation={3}>
-        <Table aria-label="simple table" id={id}>
-          <TableHead>
-            <TableRow>
-              {
-                columns && columns.length && columns.map((column) => (
-                  <Fragment key={column.field}>
-                    <TableCell
-                      align={column.align || 'center'}
-                      className={classes.head}
-                      sortDirection={orderBy === column.field ? order : false}
-                    >
-                      <TableSortLabel
-                        active={orderBy === column.field}
-                        direction={orderBy === column.field ? order : 'asc'}
-                        onClick={() => { onSort(order, column.field) }}
+class MyTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      deleteDialogOpen: false,
+      editDialogOpen: false,
+      traineeRecord: {},
+    };
+  }
+
+  handleEditDialogOpen = (traineeRecord) => {
+    this.setState({ traineeRecord, editDialogOpen: true });
+  }
+
+  handleDeleteDialogOpen = (traineeRecord) => {
+    this.setState({ traineeRecord, deleteDialogOpen: true });
+  }
+
+  handleEditDialogClose = () => {
+    this.setState({ traineeRecord: {}, editDialogOpen: false });
+  }
+
+  handleDeleteDialogClose = () => {
+    this.setState({ traineeRecord: {}, deleteDialogOpen: false });
+  }
+
+  handleEditSubmit = (traineeRecord) => {
+    console.log(traineeRecord);
+    this.setState({ traineeRecord: {}, editDialogOpen: false });
+  }
+
+  handleDeleteSubmit = () => {
+    const { traineeRecord } = this.state;
+    console.log(traineeRecord);
+    this.setState({ traineeRecord: {}, deleteDialogOpen: false });
+  }
+
+  render() {
+    const {
+      id, columns, data, order, orderBy, onSelect, onSort, action, page, count, onChangePage,
+    } = this.props;
+    const { classes } = this.props;
+    const { deleteDialogOpen, editDialogOpen, traineeRecord } = this.state;
+    return (
+      <div align="center">
+        <TableContainer className={classes.table} component={Paper} elevation={3}>
+          <Table aria-label="simple table" id={id}>
+            <TableHead>
+              <TableRow>
+                {
+                  columns && columns.length && columns.map((column) => (
+                    <Fragment key={column.field}>
+                      <TableCell
+                        align={column.align || 'center'}
+                        className={classes.head}
+                        sortDirection={orderBy === column.field ? order : false}
                       >
-                        {column.label || column.field}
-                      </TableSortLabel>
+                        <TableSortLabel
+                          active={orderBy === column.field}
+                          direction={orderBy === column.field ? order : 'asc'}
+                          onClick={() => { onSort(order, column.field) }}
+                        >
+                          {column.label || column.field}
+                        </TableSortLabel>
+                      </TableCell>
+                    </Fragment>
+                  ))
+                }
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {
+                data && data.length && data.map((row, index) => (
+                  <TableRow key={id + index} className={classes.row}>
+                    {
+                      columns && columns.length && columns.map((column) => (
+                        <Fragment key={row[column.field]}>
+                          <TableCell align={column.align || 'center'} onClick={() => { onSelect(row) }}>
+                            {(column.format) ? column.format(row[column.field]) : row[column.field]}
+                          </TableCell>
+                        </Fragment>
+                      ))
+                    }
+                    <TableCell>
+                      <Fragment key={id + index + 'edit'}>
+                        <IconButton
+                          onClick={() => { }}
+                          aria-label="edit"
+                        >
+                          {action[0].icon}
+                        </IconButton>
+                      </Fragment>
+                      <br />
+                      <Fragment key={id + index + 'delete'}>
+                        <IconButton
+                          onClick={() => { this.handleDeleteDialogOpen(row)}}
+                          aria-label="delete"
+                        >
+                          {action[1].icon}
+                        </IconButton>
+                      </Fragment>
                     </TableCell>
-                  </Fragment>
+                  </TableRow>
                 ))
               }
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {
-              data && data.length && data.map((row, index) => (
-                <TableRow key={id + index} className={classes.row}>
-                  {
-                    columns && columns.length && columns.map((column) => (
-                      <Fragment key={row[column.field]}>
-                        <TableCell align={column.align || 'center'} onClick={() => { onSelect(row) }}>
-                          {(column.format) ? column.format(row[column.field]) : row[column.field]}
-                        </TableCell>
-                      </Fragment>
-                    ))
-                  }
-                  <TableCell>
-                    <Fragment key={id + index + 'edit'}>
-                      {action[0].icon}
-                    </Fragment>
-                    <br />
-                    <Fragment key={id + index + 'delete'}>
-                      {action[1].icon}
-                    </Fragment>
-                  </TableCell>
-                </TableRow>
-              ))
-            }
-          </TableBody>
-        </Table>
-        <div align='right'>
-          <span>
-            {page * ROWS_PER_PAGE + 1} - {(page + 1) * ROWS_PER_PAGE} of {count}
-          </span>
-          <IconButton
-            onClick={() => { onChangePage(page, 'left') }}
-            disabled={page === 0}
-            aria-label="prev page"
-          >
-            <KeyboardArrowLeftIcon />
-          </IconButton>
-          <IconButton
-            onClick={() => { onChangePage(page, 'right') }}
-            disabled={page >= Math.ceil(count / ROWS_PER_PAGE) - 1}
-            aria-label="next page"
-          >
-            <KeyboardArrowRightIcon />
-          </IconButton>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-      </TableContainer>
-    </div>
-  );
+            </TableBody>
+          </Table>
+          <div align='right'>
+            <span>
+              {page * ROWS_PER_PAGE + 1} - {(page + 1) * ROWS_PER_PAGE} of {count}
+            </span>
+            <IconButton
+              onClick={() => { onChangePage(page, 'left') }}
+              disabled={page === 0}
+              aria-label="prev page"
+            >
+              <KeyboardArrowLeftIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => { onChangePage(page, 'right') }}
+              disabled={page >= Math.ceil(count / ROWS_PER_PAGE) - 1}
+              aria-label="next page"
+            >
+              <KeyboardArrowRightIcon />
+            </IconButton>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+        </TableContainer>
+        <RemoveDialog
+          open={deleteDialogOpen}
+          onClose={this.handleDeleteDialogClose}
+          onSubmit={this.handleDeleteSubmit}
+          data={traineeRecord}
+        />
+      </div>
+    );
+  }
 };
 
 MyTable.propTypes = {
@@ -117,4 +173,4 @@ MyTable.propTypes = {
   onSelect: PropTypes.func,
 };
 
-export default MyTable;
+export default withStyles(styles)(MyTable);
