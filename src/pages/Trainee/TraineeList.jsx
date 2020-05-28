@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import { EditIcon, DeleteIcon } from '@material-ui/icons';
 import { Table, AddDialog } from './components';
 import traineeData from './data/trainee';
 import { COLUMNS } from '../../configs/constants';
@@ -11,7 +12,8 @@ class TraineeList extends Component {
     this.state = {
       open: false,
       order: 'asc',
-      orderBy: ''
+      orderBy: '',
+      page: 0
     };
   }
 
@@ -42,8 +44,20 @@ class TraineeList extends Component {
     return orderBy;
   }
 
+  handleEditDialogOpen = (data) => {
+
+  }
+
+  handleDeleteDialogOpen = (data) => {
+
+  }
+
+  handlePageChange = (page) => {
+
+  }
+
   render() {
-    const { open, orderBy, order } = this.state;
+    const { open, orderBy, order, page } = this.state;
     return (
       <>
         <div align="right">
@@ -61,6 +75,21 @@ class TraineeList extends Component {
           order={order}
           onSort={this.onSort}
           onSelect={this.onSelect}
+          action={
+            [
+              {
+                icon: <EditIcon />,
+                handler: this.handleEditDialogOpen,
+              },
+              {
+                icon: <DeleteIcon />,
+                handler: this.handleEditDialogOpen,
+              }
+            ]
+          }
+          count={100}
+          page={page}
+          onChangePage={this.handlePageChange}
         />
         <ul>
           {
