@@ -112,3 +112,5 @@ export const COLUMNS = [
     format: date => moment(date).format('dddd MMMM Do YY h:mm:ss a'),
   }
 ];
+
+export const ROWS_PER_PAGE = 10;

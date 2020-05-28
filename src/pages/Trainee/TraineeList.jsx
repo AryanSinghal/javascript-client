@@ -53,8 +53,11 @@ class TraineeList extends Component {
 
   }
 
-  handlePageChange = (page) => {
-
+  handlePageChange = (page, direction) => {
+    if (direction === 'right')
+      this.setState({ page: page + 1 });
+    else
+      this.setState({ page: page - 1 });
   }
 
   render() {

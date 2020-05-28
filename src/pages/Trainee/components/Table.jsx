@@ -1,8 +1,12 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, makeStyles, TableSortLabel,
+  Table, TableBody, TableCell, TableContainer, TableHead,
+  TableRow, Paper, makeStyles, TableSortLabel, IconButton,
 } from '@material-ui/core';
+import { ROWS_PER_PAGE } from '../../../configs/constants';
 
 const useStyles = makeStyles({
   head: { color: 'grey' },
@@ -16,7 +20,7 @@ const useStyles = makeStyles({
 
 const MyTable = (props) => {
   const {
-    id, columns, data, order, orderBy, onSelect, onSort, action,
+    id, columns, data, order, orderBy, onSelect, onSort, action, page, count, onChangePage,
   } = props;
   const classes = useStyles();
   return (
@@ -73,6 +77,26 @@ const MyTable = (props) => {
             }
           </TableBody>
         </Table>
+        <div align='right'>
+          <span>
+            {page * ROWS_PER_PAGE + 1} - {(page + 1) * ROWS_PER_PAGE} of {count}
+          </span>
+          <IconButton
+            onClick={() => { onChangePage(page, 'left') }}
+            disabled={page === 0}
+            aria-label="prev page"
+          >
+            <KeyboardArrowLeftIcon />
+          </IconButton>
+          <IconButton
+            onClick={() => { onChangePage(page, 'right') }}
+            disabled={page >= Math.ceil(count / ROWS_PER_PAGE) - 1}
+            aria-label="next page"
+          >
+            <KeyboardArrowRightIcon />
+          </IconButton>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
       </TableContainer>
     </div>
   );
