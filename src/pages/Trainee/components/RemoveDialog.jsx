@@ -1,13 +1,11 @@
 import React from 'react';
 import {
   Button,
-  TextField,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  InputAdornment,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
@@ -16,24 +14,22 @@ export const RemoveDialog = (props) => {
   return (
     <>
       <Dialog
+        fullWidth
         open={open}
         onClose={onClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle>Remove Trainee</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
+          <DialogContentText>
+            Do you really want to remove trainee?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="primary">
-            Disagree
+            Cancel
           </Button>
           <Button onClick={()=>{onSubmit(data)}} color="primary" autoFocus>
-            Agree
+            Delete
           </Button>
         </DialogActions>
       </Dialog>

@@ -7,6 +7,7 @@ import {
   TableRow, Paper, withStyles, TableSortLabel, IconButton,
 } from '@material-ui/core';
 import { RemoveDialog } from './RemoveDialog';
+import { EditDialog } from './EditDialog';
 import { ROWS_PER_PAGE } from '../../../configs/constants';
 
 const styles = () => ({
@@ -45,13 +46,17 @@ class MyTable extends Component {
     this.setState({ traineeRecord: {}, deleteDialogOpen: false });
   }
 
-  handleEditSubmit = (traineeRecord) => {
-    console.log(traineeRecord);
+  handleEditSubmit = (event) => {
+    event.preventDefault();
+    const name = event.target[0].value;
+    const email = event.target[2].value;
+    console.log({ name, email});
     this.setState({ traineeRecord: {}, editDialogOpen: false });
   }
 
   handleDeleteSubmit = () => {
     const { traineeRecord } = this.state;
+    console.log('Deleted item')
     console.log(traineeRecord);
     this.setState({ traineeRecord: {}, deleteDialogOpen: false });
   }
@@ -105,7 +110,7 @@ class MyTable extends Component {
                     <TableCell>
                       <Fragment key={id + index + 'edit'}>
                         <IconButton
-                          onClick={() => { }}
+                          onClick={() => { this.handleEditDialogOpen(row) }}
                           aria-label="edit"
                         >
                           {action[0].icon}
@@ -114,7 +119,7 @@ class MyTable extends Component {
                       <br />
                       <Fragment key={id + index + 'delete'}>
                         <IconButton
-                          onClick={() => { this.handleDeleteDialogOpen(row)}}
+                          onClick={() => { this.handleDeleteDialogOpen(row) }}
                           aria-label="delete"
                         >
                           {action[1].icon}
@@ -151,6 +156,12 @@ class MyTable extends Component {
           open={deleteDialogOpen}
           onClose={this.handleDeleteDialogClose}
           onSubmit={this.handleDeleteSubmit}
+          data={traineeRecord}
+        />
+        <EditDialog
+          open={editDialogOpen}
+          onClose={this.handleEditDialogClose}
+          onSubmit={this.handleEditSubmit}
           data={traineeRecord}
         />
       </div>
