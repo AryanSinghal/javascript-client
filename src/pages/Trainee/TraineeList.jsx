@@ -39,6 +39,7 @@ class TraineeList extends Component {
   onSort = (order, orderBy) => {
     let newOrder = (order === 'asc') ? 'desc' : 'asc';
     this.setState({ order: newOrder, orderBy });
+    return orderBy;
   }
 
   render() {
