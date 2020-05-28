@@ -32,7 +32,6 @@ class TraineeList extends Component {
   };
 
   onSelect = (data) => {
-    console.log(data);
     return data;
   }
 
