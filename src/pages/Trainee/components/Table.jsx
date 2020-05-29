@@ -6,9 +6,6 @@ import {
   Table, TableBody, TableCell, TableContainer, TableHead,
   TableRow, Paper, withStyles, TableSortLabel, IconButton,
 } from '@material-ui/core';
-import { RemoveDialog } from './RemoveDialog';
-import { EditDialog } from './EditDialog';
-import { ROWS_PER_PAGE } from '../../../configs/constants';
 
 const styles = () => ({
   head: { color: 'grey' },
@@ -21,53 +18,13 @@ const styles = () => ({
 });
 
 class MyTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      deleteDialogOpen: false,
-      editDialogOpen: false,
-      traineeRecord: {},
-    };
-  }
-
-  handleEditDialogOpen = (traineeRecord) => {
-    this.setState({ traineeRecord, editDialogOpen: true });
-  }
-
-  handleDeleteDialogOpen = (traineeRecord) => {
-    this.setState({ traineeRecord, deleteDialogOpen: true });
-  }
-
-  handleEditDialogClose = () => {
-    this.setState({ traineeRecord: {}, editDialogOpen: false });
-  }
-
-  handleDeleteDialogClose = () => {
-    this.setState({ traineeRecord: {}, deleteDialogOpen: false });
-  }
-
-  handleEditSubmit = (event) => {
-    event.preventDefault();
-    const name = event.target[0].value;
-    const email = event.target[2].value;
-    console.log('Edited item');
-    console.log({ name, email});
-    this.setState({ traineeRecord: {}, editDialogOpen: false });
-  }
-
-  handleDeleteSubmit = () => {
-    const { traineeRecord } = this.state;
-    console.log('Deleted item')
-    console.log(traineeRecord);
-    this.setState({ traineeRecord: {}, deleteDialogOpen: false });
-  }
 
   render() {
     const {
-      id, columns, data, order, orderBy, onSelect, onSort, action, page, count, onChangePage,
+      id, columns, data, order, orderBy, onSelect, onSort,
+      action, page, count, onChangePage, rowsPerPage,
     } = this.props;
     const { classes } = this.props;
-    const { deleteDialogOpen, editDialogOpen, traineeRecord } = this.state;
     return (
       <div align="center">
         <TableContainer className={classes.table} component={Paper} elevation={3}>
@@ -109,23 +66,18 @@ class MyTable extends Component {
                       ))
                     }
                     <TableCell>
-                      <Fragment key={id + index + 'edit'}>
-                        <IconButton
-                          onClick={() => { this.handleEditDialogOpen(row) }}
-                          aria-label="edit"
-                        >
-                          {action[0].icon}
-                        </IconButton>
-                      </Fragment>
-                      <br />
-                      <Fragment key={id + index + 'delete'}>
-                        <IconButton
-                          onClick={() => { this.handleDeleteDialogOpen(row) }}
-                          aria-label="delete"
-                        >
-                          {action[1].icon}
-                        </IconButton>
-                      </Fragment>
+                      {
+                        action && action.length && action.map((obj, index) => (
+                          <IconButton
+                            key={id + index + index}
+                            onClick={() => { obj.handler(row) }}
+                            aria-label="action"
+                          >
+                            {obj.icon}
+                            <br />
+                          </IconButton>
+                        ))
+                      }
                     </TableCell>
                   </TableRow>
                 ))
@@ -134,7 +86,7 @@ class MyTable extends Component {
           </Table>
           <div align='right'>
             <span>
-              {page * ROWS_PER_PAGE + 1} - {(page + 1) * ROWS_PER_PAGE} of {count}
+              {page * rowsPerPage + 1} - {(page + 1) * rowsPerPage} of {count}
             </span>
             <IconButton
               onClick={() => { onChangePage(page, 'left') }}
@@ -145,7 +97,7 @@ class MyTable extends Component {
             </IconButton>
             <IconButton
               onClick={() => { onChangePage(page, 'right') }}
-              disabled={page >= Math.ceil(count / ROWS_PER_PAGE) - 1}
+              disabled={page >= Math.ceil(count / rowsPerPage) - 1}
               aria-label="next page"
             >
               <KeyboardArrowRightIcon />
@@ -153,18 +105,6 @@ class MyTable extends Component {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
         </TableContainer>
-        <RemoveDialog
-          open={deleteDialogOpen}
-          onClose={this.handleDeleteDialogClose}
-          onSubmit={this.handleDeleteSubmit}
-          data={traineeRecord}
-        />
-        <EditDialog
-          open={editDialogOpen}
-          onClose={this.handleEditDialogClose}
-          onSubmit={this.handleEditSubmit}
-          data={traineeRecord}
-        />
       </div>
     );
   }
@@ -178,11 +118,18 @@ MyTable.propTypes = {
     align: PropTypes.oneOf(['left', 'right', 'center']),
     format: PropTypes.func
   })).isRequired,
+  rowsPerPage: PropTypes.number,
+  page: PropTypes.number,
   data: PropTypes.arrayOf(Object).isRequired,
   orderBy: PropTypes.string,
   order: PropTypes.oneOf(['asc', 'desc']),
-  onSort: PropTypes.func,
-  onSelect: PropTypes.func,
+  onSort: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
+};
+
+MyTable.defaultProps = {
+  rowsPerPage: 0,
+  page: 0,
 };
 
 export default withStyles(styles)(MyTable);
