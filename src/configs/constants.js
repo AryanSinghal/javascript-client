@@ -9,6 +9,7 @@ export const DURATION = 3000;
 export const NAME = 'Aryan';
 export const GAME = 'cricket';
 export const SPECIALTY = 'batsman';
+
 export const SELECT_OPTIONS = [
   {
     label: 'Cricket',
@@ -19,6 +20,7 @@ export const SELECT_OPTIONS = [
     value: 'football',
   },
 ];
+
 export const CRICKET_OPTIONS = [
   {
     label: 'Bowler',
@@ -37,6 +39,7 @@ export const CRICKET_OPTIONS = [
     value: 'all_rounder',
   },
 ];
+
 export const FOOTBALL_OPTIONS = [
   {
     label: 'Attacker',
@@ -51,6 +54,7 @@ export const FOOTBALL_OPTIONS = [
     value: 'goal keeper',
   },
 ];
+
 export const CRICKET = 'cricket';
 export const FOOTBALL = 'football';
 export const OPERATORS = ['+', '-', '/', '*'];
@@ -108,3 +112,5 @@ export const COLUMNS = [
     format: date => moment(date).format('dddd MMMM Do YY h:mm:ss a'),
   }
 ];
+
+export const ROWS_PER_PAGE = 10;

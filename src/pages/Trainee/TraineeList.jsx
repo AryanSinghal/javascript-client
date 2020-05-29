@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { Table, AddDialog } from './components';
+import { RemoveDialog } from './components';
+import { EditDialog } from './components';
 import traineeData from './data/trainee';
-import { COLUMNS } from '../../configs/constants';
+import { COLUMNS, ROWS_PER_PAGE } from '../../configs/constants';
 
 class TraineeList extends Component {
   constructor(props) {
@@ -11,7 +15,11 @@ class TraineeList extends Component {
     this.state = {
       open: false,
       order: 'asc',
-      orderBy: ''
+      orderBy: '',
+      page: 0,
+      deleteDialogOpen: false,
+      editDialogOpen: false,
+      traineeRecord: {},
     };
   }
 
@@ -41,8 +49,50 @@ class TraineeList extends Component {
     return orderBy;
   }
 
+  handlePageChange = (page, direction) => {
+    if (direction === 'right')
+      this.setState({ page: page + 1 });
+    else
+      this.setState({ page: page - 1 });
+  }
+
+
+  handleEditDialogOpen = (traineeRecord) => {
+    this.setState({ traineeRecord, editDialogOpen: true });
+  }
+
+  handleDeleteDialogOpen = (traineeRecord) => {
+    this.setState({ traineeRecord, deleteDialogOpen: true });
+  }
+
+  handleEditDialogClose = () => {
+    this.setState({ traineeRecord: {}, editDialogOpen: false });
+  }
+
+  handleDeleteDialogClose = () => {
+    this.setState({ traineeRecord: {}, deleteDialogOpen: false });
+  }
+
+  handleEditSubmit = (event) => {
+    event.preventDefault();
+    const name = event.target[0].value;
+    const email = event.target[2].value;
+    console.log('Edited item');
+    console.log({ name, email });
+    this.setState({ traineeRecord: {}, editDialogOpen: false });
+  }
+
+  handleDeleteSubmit = () => {
+    const { traineeRecord } = this.state;
+    console.log('Deleted item')
+    console.log(traineeRecord);
+    this.setState({ traineeRecord: {}, deleteDialogOpen: false });
+  }
+
   render() {
-    const { open, orderBy, order } = this.state;
+    const {
+      open, orderBy, order, page, deleteDialogOpen, editDialogOpen, traineeRecord,
+    } = this.state;
     return (
       <>
         <div align="right">
@@ -60,12 +110,40 @@ class TraineeList extends Component {
           order={order}
           onSort={this.onSort}
           onSelect={this.onSelect}
+          action={
+            [
+              {
+                icon: <EditIcon />,
+                handler: this.handleEditDialogOpen,
+              },
+              {
+                icon: <DeleteIcon />,
+                handler: this.handleDeleteDialogOpen,
+              }
+            ]
+          }
+          rowsPerPage={ROWS_PER_PAGE}
+          count={100}
+          page={page}
+          onChangePage={this.handlePageChange}
         />
         <ul>
           {
             traineeData && traineeData.length && traineeData.map((value) => (<li key={value.name}><Link to={`/trainee/${value.id}`}>{value.name}</Link></li>))
           }
         </ul>
+        <RemoveDialog
+          open={deleteDialogOpen}
+          onClose={this.handleDeleteDialogClose}
+          onSubmit={this.handleDeleteSubmit}
+          data={traineeRecord}
+        />
+        <EditDialog
+          open={editDialogOpen}
+          onClose={this.handleEditDialogClose}
+          onSubmit={this.handleEditSubmit}
+          data={traineeRecord}
+        />
       </>
     );
   }
