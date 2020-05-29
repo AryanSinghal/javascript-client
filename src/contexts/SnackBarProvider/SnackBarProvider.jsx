@@ -16,7 +16,7 @@ export class SnackbarProvider extends Component {
   }
 
   openSnackbar = (status, message) => {
-    this.setState({ open: false, status, message });
+    this.setState({ open: true, status, message });
   }
 
   closeSnackbar = () => {
@@ -30,7 +30,8 @@ export class SnackbarProvider extends Component {
       <>
         <SnackBarContext.Provider
           value={{
-            openSnackbar: this.openSnackbar
+            openSnackbar: this.openSnackbar,
+            closeSnackbar: this.closeSnackbar
           }}
         >
           {children}
@@ -44,3 +45,5 @@ export class SnackbarProvider extends Component {
     );
   }
 }
+
+export const SnackbarConsumer = SnackBarContext.Consumer;

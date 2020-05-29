@@ -1,3 +1,3 @@
-import { SnackbarProvider } from "./SnackBarProvider";
+import { SnackbarProvider, SnackbarConsumer } from './SnackBarProvider';
 
-export { SnackbarProvider };
+export { SnackbarProvider, SnackbarConsumer };
