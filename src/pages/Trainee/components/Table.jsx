@@ -85,26 +85,30 @@ class MyTable extends Component {
               }
             </TableBody>
           </Table>
-          <div align='right'>
-            <span>
-              {page * rowsPerPage + 1} - {(page + 1) * rowsPerPage} of {count}
-            </span>
-            <IconButton
-              onClick={() => { onChangePage(page, 'left') }}
-              disabled={page === 0}
-              aria-label="prev page"
-            >
-              <KeyboardArrowLeftIcon />
-            </IconButton>
-            <IconButton
-              onClick={() => { onChangePage(page, 'right') }}
-              disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-              aria-label="next page"
-            >
-              <KeyboardArrowRightIcon />
-            </IconButton>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </div>
+          {
+            (count === 0)
+              ? ''
+              : <div align='right'>
+                  <span>
+                    {page * rowsPerPage + 1} - {(page + 1) * rowsPerPage} of {count}
+                  </span>
+                  <IconButton
+                    onClick={() => { onChangePage(page, 'left') }}
+                    disabled={page === 0}
+                    aria-label="prev page"
+                  >
+                    <KeyboardArrowLeftIcon />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => { onChangePage(page, 'right') }}
+                    disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                    aria-label="next page"
+                  >
+                    <KeyboardArrowRightIcon />
+                  </IconButton>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+          }
         </TableContainer>
       </div>
     );
@@ -122,6 +126,7 @@ MyTable.propTypes = {
   rowsPerPage: PropTypes.number,
   page: PropTypes.number,
   data: PropTypes.arrayOf(Object).isRequired,
+  count: PropTypes.number.isRequired,
   orderBy: PropTypes.string,
   order: PropTypes.oneOf(['asc', 'desc']),
   onSort: PropTypes.func.isRequired,
@@ -129,7 +134,7 @@ MyTable.propTypes = {
 };
 
 MyTable.defaultProps = {
-  rowsPerPage: 0,
+  rowsPerPage: 100,
   page: 0,
 };
 
