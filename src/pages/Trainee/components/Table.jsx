@@ -68,16 +68,15 @@ class MyTable extends Component {
                     <TableCell>
                       {
                         action && action.length && action.map((obj, index) => (
-                          <>
+                          <Fragment key={id + index + index}>
                             <IconButton
-                              key={id + index + index}
                               onClick={() => { obj.handler(row) }}
                               aria-label="action"
                             >
                               {obj.icon}
                             </IconButton>
                             <br />
-                          </>
+                          </Fragment>
                         ))
                       }
                     </TableCell>
