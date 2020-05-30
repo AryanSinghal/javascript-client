@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, IconButton, Snackbar } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
+import { Button } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Table, AddDialog } from './components';
-import { SnackbarConsumer } from '../../contexts';
 import { RemoveDialog } from './components';
 import { EditDialog } from './components';
 import traineeData from './data/trainee';
@@ -21,10 +19,7 @@ class TraineeList extends Component {
       page: 0,
       deleteDialogOpen: false,
       editDialogOpen: false,
-      traineeRecord: {},
-      snackbarIsOpen: false,
-      message: '',
-      status: ''
+      traineeRecord: {}
     };
   }
 
@@ -91,15 +86,13 @@ class TraineeList extends Component {
     const { traineeRecord } = this.state;
     console.log('Deleted item')
     console.log(traineeRecord);
-    this.setState({ traineeRecord: {}, deleteDialogOpen: false, snackbarIsOpen: true });
+    this.setState({ traineeRecord: {}, deleteDialogOpen: false });
   }
 
   render() {
     const {
       open, orderBy, order, page, deleteDialogOpen, editDialogOpen, traineeRecord,
-      snackbarIsOpen, message, status,
     } = this.state;
-    console.log(this.state);
     return (
       <>
         <div align="right">
@@ -153,30 +146,9 @@ class TraineeList extends Component {
           onSubmit={this.handleEditSubmit}
           data={traineeRecord}
         />
-        <SnackbarConsumer>
-          {({ openSnackbar, closeSnackbar }) => (
-            <Snackbar
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              open={snackbarIsOpen}
-              autoHideDuration={6000}
-              onClose={closeSnackbar}
-              message={message}
-              action={[
-                <IconButton key="close" color="inherit" onClick={closeSnackbar}>
-                  <Close />
-                </IconButton>,
-              ]}
-            />
-          )}
-        </SnackbarConsumer>
       </>
     );
   }
 }
-
-TraineeList.contextType = SnackbarConsumer;
 
 export default TraineeList;

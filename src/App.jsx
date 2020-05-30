@@ -1,5 +1,5 @@
 import React from 'react';
-import { CssBaseline, Snackbar } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 import {
   BrowserRouter as Router, Route, Redirect, Switch,
 } from 'react-router-dom';

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
-import { makeStyles } from '@material-ui/core/styles';
 
 const SnackBarContext = React.createContext();
 
@@ -15,11 +14,11 @@ export class SnackbarProvider extends Component {
     };
   }
 
-  openSnackbar = (status, message) => {
+  openSnackBar = (status, message) => {
     this.setState({ open: true, status, message });
   }
 
-  closeSnackbar = () => {
+  closeSnackBar = () => {
     this.setState({ open: false, status: '', message: '' });
   }
 
@@ -30,13 +29,12 @@ export class SnackbarProvider extends Component {
       <>
         <SnackBarContext.Provider
           value={{
-            openSnackbar: this.openSnackbar,
-            closeSnackbar: this.closeSnackbar
+            openSnackbar: this.openSnackBar
           }}
         >
           {children}
-          <Snackbar open={open} autoHideDuration={6000} onClose={this.closeSnackbar}>
-            <Alert onClose={this.closeSnackbar} severity={status}>
+          <Snackbar open={open} autoHideDuration={6000} onClose={this.closeSnackBar}>
+            <Alert onClose={this.closeSnackBar} variant="filled" severity={status || 'info'}>
               {message}
             </Alert>
           </Snackbar>

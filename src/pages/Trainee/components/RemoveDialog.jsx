@@ -8,6 +8,8 @@ import {
   DialogTitle,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { SnackbarConsumer } from '../../../contexts';
+import { SUCCESS_MESSAGE } from '../../../configs/constants';
 
 export const RemoveDialog = (props) => {
   const { open, onSubmit, onClose, data } = props;
@@ -28,9 +30,20 @@ export const RemoveDialog = (props) => {
           <Button onClick={onClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={()=>{onSubmit(data)}} color="primary" autoFocus>
-            Delete
-          </Button>
+          <SnackbarConsumer>
+            {({ openSnackbar }) => (
+              <Button
+                onClick={() => {
+                  onSubmit(data);
+                  openSnackbar('success', SUCCESS_MESSAGE);
+                }}
+                color="primary"
+                autoFocus
+              >
+                Delete
+              </Button>
+            )}
+          </SnackbarConsumer>
         </DialogActions>
       </Dialog>
     </>

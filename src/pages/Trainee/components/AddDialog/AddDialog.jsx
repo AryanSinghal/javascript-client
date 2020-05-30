@@ -14,7 +14,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
-import { DIALOG_SCHEMA } from '../../../../configs/constants';
+import { SnackbarConsumer } from '../../../../contexts';
+import { DIALOG_SCHEMA, SUCCESS_MESSAGE } from '../../../../configs/constants';
 
 export class AddDialog extends React.Component {
   constructor(props) {
@@ -195,9 +196,22 @@ export class AddDialog extends React.Component {
               <Button onClick={onClose} color="primary">
                 CANCEL
               </Button>
-              <Button type="submit" onClick={onClose} color="primary" disabled={this.isDisabled()}>
-                SUBMIT
-              </Button>
+              <SnackbarConsumer>
+                {({ openSnackbar }) => (
+                  <Button
+                    onClick={() => {
+                      onClose();
+                      openSnackbar('success', SUCCESS_MESSAGE);
+                    }}
+                    type='submit'
+                    disabled={this.isDisabled()}
+                    color='primary'
+                    autoFocus
+                  >
+                    Submit
+                  </Button>
+                )}
+              </SnackbarConsumer>
             </DialogActions>
           </form>
         </Dialog>
