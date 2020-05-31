@@ -27,13 +27,14 @@ export class SnackbarProvider extends Component {
     const { children } = this.props;
     return (
       <>
-        <SnackBarContext.Provider
-          value={{
-            openSnackbar: this.openSnackBar
-          }}
-        >
+        <SnackBarContext.Provider value={{ openSnackbar: this.openSnackBar }}>
           {children}
-          <Snackbar open={open} autoHideDuration={6000} onClose={this.closeSnackBar}>
+          <Snackbar
+            open={open}
+            autoHideDuration={6000}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            onClose={this.closeSnackBar}
+          >
             <Alert onClose={this.closeSnackBar} variant="filled" severity={status || 'info'}>
               {message}
             </Alert>
