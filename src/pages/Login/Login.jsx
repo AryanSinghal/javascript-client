@@ -15,7 +15,8 @@ import {
 import EmailIcon from '@material-ui/icons/Email';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import LockIcon from '@material-ui/icons/Lock';
-import { LOGIN_SCHEMA } from '../../configs/constants';
+import { LOGIN_SCHEMA, LOGIN_URL } from '../../configs/constants';
+import callApi from '../../lib/utils/api';
 
 const styles = () => ({
   grid: { height: '90vh' },
@@ -70,6 +71,12 @@ class Login extends React.Component {
       .catch((stateError) => (
         this.setState({ ...stateError, password: value })
       ));
+  }
+
+  handleSubmit = () => {
+    const { email, password } = this.state;
+    const token = callApi('post', LOGIN_URL, { email, password });
+    console.log(token);
   }
 
   render() {
@@ -132,10 +139,20 @@ class Login extends React.Component {
             />
           </CardContent>
           <CardActions>
-            <Button fullWidth variant="contained" color="primary" size="medium" align="center" disabled={this.isDisabled()}>Sign In</Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              size="medium"
+              align="center"
+              onClick={this.handleSubmit}
+              disabled={this.isDisabled()}
+            >
+              Sign In
+            </Button>
           </CardActions>
         </Card>
-      </Grid>
+      </Grid >
     );
   }
 }
