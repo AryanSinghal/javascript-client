@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -11,9 +12,11 @@ import {
   Typography,
   withStyles,
   Avatar,
+  CircularProgress,
 } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import { SnackbarConsumer } from '../../contexts';
 import LockIcon from '@material-ui/icons/Lock';
 import { LOGIN_SCHEMA, LOGIN_URL } from '../../configs/constants';
 import callApi from '../../lib/utils/api';
@@ -32,6 +35,7 @@ class Login extends React.Component {
       password: '',
       emailError: '',
       passwordError: '',
+      progressBar: false,
     };
   }
 
@@ -73,86 +77,119 @@ class Login extends React.Component {
       ));
   }
 
-  handleSubmit = () => {
+  handleSubmit = (callback) => {
     const { email, password } = this.state;
-    const token = callApi('post', LOGIN_URL, { email, password });
-    console.log(token);
+    this.setState({ progressBar: true });
+    callApi('post', LOGIN_URL, { email, password })
+      .then((token) => {
+        if (token) {
+          localStorage.setItem('token', token);
+        }
+      })
+      .catch((err) => {
+        callback(err);
+      })
+      .finally(() => {
+        this.setState({ progressBar: false });
+      });
   }
 
   render() {
-    const { emailError, passwordError } = this.state;
+    const { emailError, passwordError, progressBar } = this.state;
     const { classes } = this.props;
     return (
-      <Grid className={classes.grid} container alignItems="center" justify="center">
-        <Card className={classes.card}>
-          <CardContent>
-            <div align="center">
-              <Avatar className={classes.avatar}>
-                <LockIcon />
-              </Avatar>
-            </div>
-            <br />
-            <Typography align="center" gutterBottom variant="h5">
-              Login
+      <>
+        {
+          (!!localStorage.getItem('token'))
+            ? <Redirect to="/trainee" />
+            : ''
+        }
+        <Grid className={classes.grid} container alignItems="center" justify="center">
+          <Card className={classes.card}>
+            <CardContent>
+              <div align="center">
+                <Avatar className={classes.avatar}>
+                  <LockIcon />
+                </Avatar>
+              </div>
+              <br />
+              <Typography align="center" gutterBottom variant="h5">
+                Login
             </Typography>
-            <br />
-            <br />
-            <TextField
-              fullWidth
-              required
-              helperText={emailError}
-              error={!!(emailError)}
-              id="email"
-              label="Email Address"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <EmailIcon />
-                  </InputAdornment>
-                ),
-              }}
-              variant="outlined"
-              onChange={this.handleEmailChange}
-              onBlur={this.handleEmailChange}
-            />
-            <br />
-            <br />
-            <br />
-            <TextField
-              fullWidth
-              helperText={passwordError}
-              error={!!(passwordError)}
-              id="password"
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <VisibilityOffIcon />
-                  </InputAdornment>
-                ),
-              }}
-              variant="outlined"
-              onChange={this.handlePasswordChange}
-              onBlur={this.handlePasswordChange}
-            />
-          </CardContent>
-          <CardActions>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              size="medium"
-              align="center"
-              onClick={this.handleSubmit}
-              disabled={this.isDisabled()}
-            >
-              Sign In
-            </Button>
-          </CardActions>
-        </Card>
-      </Grid >
+              <br />
+              <br />
+              <TextField
+                fullWidth
+                required
+                helperText={emailError}
+                error={!!(emailError)}
+                id="email"
+                label="Email Address"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                variant="outlined"
+                onChange={this.handleEmailChange}
+                onBlur={this.handleEmailChange}
+              />
+              <br />
+              <br />
+              <br />
+              <TextField
+                fullWidth
+                helperText={passwordError}
+                error={!!(passwordError)}
+                id="password"
+                label="Password"
+                type="password"
+                autoComplete="current-password"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <VisibilityOffIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                variant="outlined"
+                onChange={this.handlePasswordChange}
+                onBlur={this.handlePasswordChange}
+              />
+            </CardContent>
+            <CardActions>
+              <SnackbarConsumer>
+                {({ openSnackbar }) => (
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    size="medium"
+                    align="center"
+                    onClick={() => {
+                      this.handleSubmit((Error) => {
+                        if (Error)
+                          openSnackbar('error', Error);
+                      });
+
+                    }}
+                    disabled={this.isDisabled() || progressBar}
+                    endIcon={
+                      (progressBar)
+                        ? <CircularProgress />
+                        : ''
+                    }
+                  >
+                    Sign In
+                  </Button>
+                )}
+              </SnackbarConsumer>
+            </CardActions>
+          </Card>
+        </Grid >
+      </>
     );
   }
 }

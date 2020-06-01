@@ -12,7 +12,7 @@ const callApi = async (method, url, body) => {
     return data;
   }
   catch (err) {
-    console.log(err, err.message);
+    throw err.message;
   }
 }
 

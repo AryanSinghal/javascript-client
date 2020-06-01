@@ -38,7 +38,7 @@ export const RemoveDialog = (props) => {
                   if (new Date(data.createdAt) >= new Date('2019-02-14T00:00:00'))
                     openSnackbar('success', SUCCESS_MESSAGE);
                   else
-                    openSnackbar('error', FAILURE_MESSAGE)
+                    openSnackbar('error', FAILURE_MESSAGE);
                 }}
                 color="primary"
                 autoFocus
