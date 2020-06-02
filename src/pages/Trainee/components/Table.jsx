@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead,
+  Table, TableBody, TableCell, TableContainer, TableHead, CircularProgress,
   TableRow, Paper, withStyles, TableSortLabel, IconButton,
 } from '@material-ui/core';
 
@@ -22,7 +22,7 @@ class MyTable extends Component {
   render() {
     const {
       id, columns, data, order, orderBy, onSelect, onSort,
-      action, page, count, onChangePage, rowsPerPage,
+      action, page, count, onChangePage, rowsPerPage, progressBar,
     } = this.props;
     const { classes } = this.props;
     return (
@@ -54,11 +54,11 @@ class MyTable extends Component {
             </TableHead>
             <TableBody>
               {
-                data && data.length && data.map((row, index) => (
+                data && data.map((row, index) => (
                   <TableRow key={id + index} className={classes.row}>
                     {
-                      columns && columns.length && columns.map((column) => (
-                        <Fragment key={row[column.field]}>
+                      columns && columns.length && columns.map((column, index) => (
+                        <Fragment key={row[column.field] + index}>
                           <TableCell align={column.align || 'center'} onClick={() => { onSelect(row) }}>
                             {(column.format) ? column.format(row[column.field]) : row[column.field]}
                           </TableCell>
@@ -89,27 +89,36 @@ class MyTable extends Component {
             (count === 0)
               ? ''
               : <div align='right'>
-                  <span>
-                    {page * rowsPerPage + 1} - {(page + 1) * rowsPerPage} of {count}
-                  </span>
-                  <IconButton
-                    onClick={() => { onChangePage(page, 'left') }}
-                    disabled={page === 0}
-                    aria-label="prev page"
-                  >
-                    <KeyboardArrowLeftIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => { onChangePage(page, 'right') }}
-                    disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                    aria-label="next page"
-                  >
-                    <KeyboardArrowRightIcon />
-                  </IconButton>
+                <span>
+                  {page * rowsPerPage + 1} - {
+                    (((page + 1) * rowsPerPage) > count)
+                      ? count
+                      : (page + 1) * rowsPerPage
+                  } of {count}
+                </span>
+                <IconButton
+                  onClick={() => { onChangePage(page, 'left') }}
+                  disabled={page === 0}
+                  aria-label="prev page"
+                >
+                  <KeyboardArrowLeftIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => { onChangePage(page, 'right') }}
+                  disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                  aria-label="next page"
+                >
+                  <KeyboardArrowRightIcon />
+                </IconButton>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
           }
         </TableContainer>
+        {
+          (progressBar)
+            ? <CircularProgress />
+            : ''
+        }
       </div>
     );
   }

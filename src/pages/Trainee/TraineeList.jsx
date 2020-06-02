@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import querystring from 'querystring';
 import { Button } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -8,8 +9,8 @@ import { Table, AddDialog } from './components';
 import { RemoveDialog } from './components';
 import { EditDialog } from './components';
 import callApi from '../../lib/utils/api';
-import traineeData from './data/trainee';
-import { COLUMNS, ROWS_PER_PAGE, ADD_TRAINEE_URL } from '../../configs/constants';
+import traineeList from './data/trainee';
+import { COLUMNS, ROWS_PER_PAGE, TRAINEE_PATH, SKIP } from '../../configs/constants';
 
 class TraineeList extends Component {
   constructor(props) {
@@ -19,12 +20,15 @@ class TraineeList extends Component {
       order: 'asc',
       orderBy: '',
       page: 0,
+      count: 0,
+      skip: SKIP,
+      limit: ROWS_PER_PAGE,
+      traineeData: [],
       deleteDialogOpen: false,
       editDialogOpen: false,
       traineeRecord: {},
-      severity: '',
-      message: '',
-      progressBar: false
+      dialogProgressBar: false,
+      tableProgressBar: false,
     };
   }
 
@@ -38,20 +42,19 @@ class TraineeList extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ progressBar: true });
-    console.log('onsubmit');
+    this.setState({ dialogProgressBar: true });
     const name = event.target[0].value;
     const email = event.target[2].value;
     const password = event.target[4].value;
     console.log({ name, email, password });
     const { openSnackbar } = this.context;
-    callApi('post', ADD_TRAINEE_URL, { name, email, password })
+    callApi('post', TRAINEE_PATH, { name, email, password })
       .then((data) => {
-        this.setState({progressBar: false, open: false });
+        this.setState({ dialogProgressBar: false, open: false });
         openSnackbar('success', data.message);
       })
       .catch((err) => {
-        this.setState({ progressBar: false, open: false });
+        this.setState({ dialogProgressBar: false, open: false });
         openSnackbar('error', err.message);
       })
   };
@@ -67,10 +70,24 @@ class TraineeList extends Component {
   }
 
   handlePageChange = (page, direction) => {
-    if (direction === 'right')
-      this.setState({ page: page + 1 });
-    else
-      this.setState({ page: page - 1 });
+    let { skip, limit } = this.state;
+    if (direction === 'right') {
+      page = page + 1;
+      skip = (skip + limit);
+    }
+    else {
+      page = page - 1;
+      skip = (skip - limit);
+    }
+    callApi('get', TRAINEE_PATH + '?' + querystring.stringify({ skip, limit }))
+      .then((response) => {
+        const { data } = response;
+        this.setState({ count: data.count, traineeData: data.records });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    this.setState({ page, skip });
   }
 
 
@@ -106,10 +123,26 @@ class TraineeList extends Component {
     this.setState({ traineeRecord: {}, deleteDialogOpen: false });
   }
 
+  componentDidMount = () => {
+    this.setState({ tableProgressBar: true })
+    const { skip, limit } = this.state;
+    const { openSnackbar } = this.context;
+    callApi('get', TRAINEE_PATH + '?' + querystring.stringify({ skip, limit }))
+      .then((response) => {
+        const { data } = response;
+        this.setState({ count: data.count, traineeData: data.records, tableProgressBar: false });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ tableProgressBar: false });
+        openSnackbar('error', 'OOPS!, No More Trainees');
+      })
+  }
+
   render() {
     const {
       open, orderBy, order, page, deleteDialogOpen, editDialogOpen, traineeRecord,
-      severity, message, progressBar,
+      dialogProgressBar, tableProgressBar, count, traineeData
     } = this.state;
     return (
       <>
@@ -122,9 +155,7 @@ class TraineeList extends Component {
           open={open}
           onClose={this.handleClose}
           onSubmit={this.handleSubmit}
-          severity={severity}
-          message={message}
-          progressBar={progressBar}
+          progressBar={dialogProgressBar}
         />
         <br />
         <Table
@@ -148,14 +179,17 @@ class TraineeList extends Component {
             ]
           }
           rowsPerPage={ROWS_PER_PAGE}
-          count={100}
+          count={count}
           page={page}
           onChangePage={this.handlePageChange}
+          progressBar={tableProgressBar}
         />
         <ul>
           {
-            traineeData && traineeData.length && traineeData.map((value) => (
-              <li key={value.name}><Link to={`/trainee/${value.id}`}>{value.name}</Link></li>
+            traineeList && traineeList.length && traineeList.map((value, index) => (
+              <li key={value.name + index}>
+                <Link to={`/trainee/${value.id}`}>{value.name}</Link>
+              </li>
             ))
           }
         </ul>
