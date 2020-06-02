@@ -37,6 +37,7 @@ class TraineeList extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({ progressBar: true });
     console.log('inside submit 0');
     const name = event.target[0].value;
     console.log('inside submit 2');
@@ -47,12 +48,11 @@ class TraineeList extends Component {
     console.log({ name, email, password });
     callApi('post', ADD_TRAINEE_URL, { name, email, password })
       .then((data) => {
-        this.setState({ severity: 'success', message: data.message, progressBar: false });
+        this.setState({ severity: 'success', message: data.message, progressBar: false, open: false });
       })
       .catch((err) => {
-        this.setState({ severity: 'success', message: data.message, progressBar: false });
+        this.setState({ severity: 'success', message: data.message, progressBar: false, open: false });
       })
-    // this.setState({ open: false });
   };
 
   onSelect = (data) => {
@@ -108,6 +108,7 @@ class TraineeList extends Component {
   render() {
     const {
       open, orderBy, order, page, deleteDialogOpen, editDialogOpen, traineeRecord,
+      severity, message, progressBar,
     } = this.state;
     return (
       <>
@@ -116,7 +117,11 @@ class TraineeList extends Component {
             ADD TRAINEE
           </Button>
         </div>
-        <AddDialog open={open} onClose={this.handleClose} onSubmit={this.handleSubmit} />
+        <AddDialog
+          open={open}
+          onClose={this.handleClose}
+          onSubmit={this.handleSubmit}
+        />
         <br />
         <Table
           id="trainee_id"
