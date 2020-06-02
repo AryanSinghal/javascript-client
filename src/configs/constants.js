@@ -117,3 +117,4 @@ export const ROWS_PER_PAGE = 10;
 export const SUCCESS_MESSAGE = 'This is a success message!';
 export const FAILURE_MESSAGE = 'This is an error message!';
 export const LOGIN_URL = 'user/login';
+export const ADD_TRAINEE_URL = 'trainee';

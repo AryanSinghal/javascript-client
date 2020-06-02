@@ -6,8 +6,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Table, AddDialog } from './components';
 import { RemoveDialog } from './components';
 import { EditDialog } from './components';
+import callApi from '../../lib/utils/api';
 import traineeData from './data/trainee';
-import { COLUMNS, ROWS_PER_PAGE } from '../../configs/constants';
+import { COLUMNS, ROWS_PER_PAGE, ADD_TRAINEE_URL } from '../../configs/constants';
 
 class TraineeList extends Component {
   constructor(props) {
@@ -19,7 +20,10 @@ class TraineeList extends Component {
       page: 0,
       deleteDialogOpen: false,
       editDialogOpen: false,
-      traineeRecord: {}
+      traineeRecord: {},
+      severity: '',
+      message: '',
+      progressBar: false
     };
   }
 
@@ -33,10 +37,22 @@ class TraineeList extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    console.log('inside submit 0');
     const name = event.target[0].value;
+    console.log('inside submit 2');
     const email = event.target[2].value;
+    console.log('inside submit 4');
     const password = event.target[4].value;
+    console.log('inside submit log');
     console.log({ name, email, password });
+    callApi('post', ADD_TRAINEE_URL, { name, email, password })
+      .then((data) => {
+        this.setState({ severity: 'success', message: data.message, progressBar: false });
+      })
+      .catch((err) => {
+        this.setState({ severity: 'success', message: data.message, progressBar: false });
+      })
+    // this.setState({ open: false });
   };
 
   onSelect = (data) => {

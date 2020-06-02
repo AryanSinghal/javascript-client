@@ -8,6 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
   InputAdornment,
+  // CircularProgress,
 } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import PersonIcon from '@material-ui/icons/Person';
@@ -102,7 +103,7 @@ export class AddDialog extends React.Component {
       <div>
         <Dialog fullWidth open={open} onClose={onClose} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">ADD TRAINEE</DialogTitle>
-          <form onSubmit={onSubmit}>
+          <form>
             <DialogContent>
               <DialogContentText>
                 Enter Your Trainee Details
@@ -200,10 +201,22 @@ export class AddDialog extends React.Component {
                 {({ openSnackbar }) => (
                   <Button
                     onClick={() => {
-                      onClose();
-                      openSnackbar('success', SUCCESS_MESSAGE);
+                      console.log('onclick');
+                      onSubmit((severity, message) => {
+                        console.log('onsubmit');
+                        if (severity && message) {
+                          console.log('if')
+                          openSnackbar(severity, message);
+                        }
+
+                      });
                     }}
                     type='submit'
+                    // endIcon={
+                    //   (progressBar)
+                    //     ? <CircularProgress />
+                    //     : ''
+                    // }
                     disabled={this.isDisabled()}
                     color='primary'
                     autoFocus

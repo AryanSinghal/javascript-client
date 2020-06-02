@@ -81,13 +81,13 @@ class Login extends React.Component {
     const { email, password } = this.state;
     this.setState({ progressBar: true });
     callApi('post', LOGIN_URL, { email, password })
-      .then((token) => {
-        if (token) {
-          localStorage.setItem('token', token);
+      .then((data) => {
+        if (data.data) {
+          localStorage.setItem('token', data.data);
         }
       })
       .catch((err) => {
-        callback(err);
+        callback(err.message);
       })
       .finally(() => {
         this.setState({ progressBar: false });
