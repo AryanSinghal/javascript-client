@@ -7,6 +7,5 @@ export const theme = createMuiTheme({
       '"Comic Sans MS"',
       'sans-serif',
     ].join(','),
-    htmlFontSize: 10,
   },
 });

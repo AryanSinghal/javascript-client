@@ -19,7 +19,7 @@ class TraineeList extends Component {
       page: 0,
       deleteDialogOpen: false,
       editDialogOpen: false,
-      traineeRecord: {},
+      traineeRecord: {}
     };
   }
 
@@ -129,7 +129,9 @@ class TraineeList extends Component {
         />
         <ul>
           {
-            traineeData && traineeData.length && traineeData.map((value) => (<li key={value.name}><Link to={`/trainee/${value.id}`}>{value.name}</Link></li>))
+            traineeData && traineeData.length && traineeData.map((value) => (
+              <li key={value.name}><Link to={`/trainee/${value.id}`}>{value.name}</Link></li>
+            ))
           }
         </ul>
         <RemoveDialog
