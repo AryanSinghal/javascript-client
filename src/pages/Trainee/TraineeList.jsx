@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { SnackBarContext } from '../../contexts';
 import { Table, AddDialog } from './components';
 import { RemoveDialog } from './components';
 import { EditDialog } from './components';
@@ -38,20 +39,20 @@ class TraineeList extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ progressBar: true });
-    console.log('inside submit 0');
+    console.log('onsubmit');
     const name = event.target[0].value;
-    console.log('inside submit 2');
     const email = event.target[2].value;
-    console.log('inside submit 4');
     const password = event.target[4].value;
-    console.log('inside submit log');
     console.log({ name, email, password });
+    const { openSnackbar } = this.context;
     callApi('post', ADD_TRAINEE_URL, { name, email, password })
       .then((data) => {
-        this.setState({ severity: 'success', message: data.message, progressBar: false, open: false });
+        this.setState({progressBar: false, open: false });
+        openSnackbar('success', data.message);
       })
       .catch((err) => {
-        this.setState({ severity: 'success', message: data.message, progressBar: false, open: false });
+        this.setState({ progressBar: false, open: false });
+        openSnackbar('error', err.message);
       })
   };
 
@@ -121,6 +122,9 @@ class TraineeList extends Component {
           open={open}
           onClose={this.handleClose}
           onSubmit={this.handleSubmit}
+          severity={severity}
+          message={message}
+          progressBar={progressBar}
         />
         <br />
         <Table
@@ -171,5 +175,7 @@ class TraineeList extends Component {
     );
   }
 }
+
+TraineeList.contextType = SnackBarContext;
 
 export default TraineeList;

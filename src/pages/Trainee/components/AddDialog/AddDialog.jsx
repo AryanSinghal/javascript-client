@@ -8,15 +8,14 @@ import {
   DialogContentText,
   DialogTitle,
   InputAdornment,
-  // CircularProgress,
+  CircularProgress,
 } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import PersonIcon from '@material-ui/icons/Person';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
-import { SnackbarConsumer } from '../../../../contexts';
-import { DIALOG_SCHEMA, SUCCESS_MESSAGE } from '../../../../configs/constants';
+import { DIALOG_SCHEMA } from '../../../../configs/constants';
 
 export class AddDialog extends React.Component {
   constructor(props) {
@@ -98,12 +97,12 @@ export class AddDialog extends React.Component {
     const {
       nameError, emailError, passwordError, confirmPasswordError,
     } = this.state;
-    const { open, onSubmit, onClose } = this.props;
+    const { open, onSubmit, onClose, progressBar } = this.props;
     return (
       <div>
         <Dialog fullWidth open={open} onClose={onClose} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">ADD TRAINEE</DialogTitle>
-          <form>
+          <form onSubmit={onSubmit}>
             <DialogContent>
               <DialogContentText>
                 Enter Your Trainee Details
@@ -197,34 +196,19 @@ export class AddDialog extends React.Component {
               <Button onClick={onClose} color="primary">
                 CANCEL
               </Button>
-              <SnackbarConsumer>
-                {({ openSnackbar }) => (
-                  <Button
-                    onClick={() => {
-                      console.log('onclick');
-                      onSubmit((severity, message) => {
-                        console.log('onsubmit');
-                        if (severity && message) {
-                          console.log('if')
-                          openSnackbar(severity, message);
-                        }
-
-                      });
-                    }}
-                    type='submit'
-                    // endIcon={
-                    //   (progressBar)
-                    //     ? <CircularProgress />
-                    //     : ''
-                    // }
-                    disabled={this.isDisabled()}
-                    color='primary'
-                    autoFocus
-                  >
-                    Submit
-                  </Button>
-                )}
-              </SnackbarConsumer>
+              <Button
+                type='submit'
+                endIcon={
+                  (progressBar)
+                    ? <CircularProgress />
+                    : ''
+                }
+                disabled={this.isDisabled() || progressBar}
+                color='primary'
+                autoFocus
+              >
+                Submit
+              </Button>
             </DialogActions>
           </form>
         </Dialog>
