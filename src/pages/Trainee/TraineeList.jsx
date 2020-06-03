@@ -109,18 +109,40 @@ class TraineeList extends Component {
 
   handleEditSubmit = (event) => {
     event.preventDefault();
+    this.setState({ dialogProgressBar: true });
     const name = event.target[0].value;
     const email = event.target[2].value;
-    console.log('Edited item');
-    console.log({ name, email });
-    this.setState({ traineeRecord: {}, editDialogOpen: false });
+    const { openSnackbar } = this.context;
+    const { traineeRecord } = this.state;
+    console.log(traineeRecord.originalId);
+    callApi('put', TRAINEE_PATH, { name, email, id: traineeRecord.originalId })
+      .then((response) => {
+        const { data } = response;
+        this.setState({ traineeRecord: {}, editDialogOpen: false, dialogProgressBar: false });
+        console.log('Edited item');
+        console.log({ data, name, email });
+      })
+      .catch((err) => {
+        this.setState({ traineeRecord: {}, dialogProgressBar: false });
+        openSnackbar('error', err.message);
+      });
   }
 
   handleDeleteSubmit = () => {
+    this.setState({ dialogProgressBar: true });
     const { traineeRecord } = this.state;
-    console.log('Deleted item')
-    console.log(traineeRecord);
-    this.setState({ traineeRecord: {}, deleteDialogOpen: false });
+    const { openSnackbar } = this.context;
+    callApi('delete', TRAINEE_PATH + '/' + traineeRecord.originalId)
+      .then((response) => {
+        this.setState({ traineeRecord: {}, deleteDialogOpen: false, dialogProgressBar: false });
+        console.log('Deleted item')
+        console.log(traineeRecord);
+        window.location.reload(true);
+      })
+      .catch((err) => {
+        this.setState({ traineeRecord: {}, dialogProgressBar: false });
+        openSnackbar('error', err.message);
+      });
   }
 
   componentDidMount = () => {
@@ -197,13 +219,14 @@ class TraineeList extends Component {
           open={deleteDialogOpen}
           onClose={this.handleDeleteDialogClose}
           onSubmit={this.handleDeleteSubmit}
-          data={traineeRecord}
+          progressBar={dialogProgressBar}
         />
         <EditDialog
           open={editDialogOpen}
           onClose={this.handleEditDialogClose}
           onSubmit={this.handleEditSubmit}
           data={traineeRecord}
+          progressBar={dialogProgressBar}
         />
       </>
     );
