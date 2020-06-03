@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, CircularProgress,
+  Table, TableBody, TableCell, TableContainer, TableHead,
   TableRow, Paper, withStyles, TableSortLabel, IconButton,
 } from '@material-ui/core';
 import { withLoaderAndMessage } from '../../../components'
@@ -23,7 +23,7 @@ class MyTable extends Component {
   render() {
     const {
       id, columns, data, order, orderBy, onSelect, onSort,
-      action, page, count, onChangePage, rowsPerPage, progressBar,
+      action, page, count, onChangePage, rowsPerPage,
     } = this.props;
     const { classes } = this.props;
     return (
@@ -42,6 +42,7 @@ class MyTable extends Component {
                       >
                         <TableSortLabel
                           active={orderBy === column.field}
+                          hideSortIcon
                           direction={orderBy === column.field ? order : 'asc'}
                           onClick={() => { onSort(order, column.field) }}
                         >
@@ -115,11 +116,6 @@ class MyTable extends Component {
                 </div>
           }
         </TableContainer>
-        {
-          (progressBar)
-            ? <CircularProgress />
-            : ''
-        }
       </div>
     );
   }

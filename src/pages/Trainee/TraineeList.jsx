@@ -4,8 +4,8 @@ import querystring from 'querystring';
 import { Button } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { SnackBarContext } from '../../contexts';
 import { Table, AddDialog } from './components';
+import { SnackBarContext } from '../../contexts';
 import { RemoveDialog } from './components';
 import { EditDialog } from './components';
 import callApi from '../../lib/utils/api';
@@ -54,7 +54,7 @@ class TraineeList extends Component {
         openSnackbar('success', data.message);
       })
       .catch((err) => {
-        this.setState({ dialogProgressBar: false, open: false });
+        this.setState({ dialogProgressBar: false });
         openSnackbar('error', err.message);
       })
   };
@@ -125,17 +125,16 @@ class TraineeList extends Component {
 
   componentDidMount = () => {
     this.setState({ tableProgressBar: true })
-    const { skip, limit } = this.state;
     const { openSnackbar } = this.context;
+    const { skip, limit } = this.state;
     callApi('get', TRAINEE_PATH + '?' + querystring.stringify({ skip, limit }))
       .then((response) => {
         const { data } = response;
         this.setState({ count: data.count, traineeData: data.records, tableProgressBar: false });
       })
       .catch((err) => {
-        console.log(err);
-        this.setState({ tableProgressBar: false });
-        openSnackbar('error', 'OOPS!, No More Trainees');
+        this.setState({ tableProgressBar: false, count: 0 });
+        openSnackbar('error', err.message);
       })
   }
 
@@ -179,10 +178,11 @@ class TraineeList extends Component {
             ]
           }
           rowsPerPage={ROWS_PER_PAGE}
+          dataLength={count}
           count={count}
           page={page}
           onChangePage={this.handlePageChange}
-          progressBar={tableProgressBar}
+          loader={tableProgressBar}
         />
         <ul>
           {
