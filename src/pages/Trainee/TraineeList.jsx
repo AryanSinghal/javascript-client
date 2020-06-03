@@ -114,7 +114,6 @@ class TraineeList extends Component {
     const email = event.target[2].value;
     const { openSnackbar } = this.context;
     const { traineeRecord } = this.state;
-    console.log(traineeRecord.originalId);
     callApi('put', TRAINEE_PATH, { name, email, id: traineeRecord.originalId })
       .then((response) => {
         const { data } = response;
@@ -137,7 +136,6 @@ class TraineeList extends Component {
         this.setState({ traineeRecord: {}, deleteDialogOpen: false, dialogProgressBar: false });
         console.log('Deleted item')
         console.log(traineeRecord);
-        window.location.reload(true);
       })
       .catch((err) => {
         this.setState({ traineeRecord: {}, dialogProgressBar: false });
@@ -158,6 +156,35 @@ class TraineeList extends Component {
         this.setState({ tableProgressBar: false, count: 0 });
         openSnackbar('error', err.message);
       })
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.dialogProgressBar && !this.state.dialogProgressBar) {
+      let { skip, limit, page } = this.state;
+      callApi('get', TRAINEE_PATH + '?' + querystring.stringify({ skip, limit }))
+        .then((response) => {
+          const { data } = response;
+          if (data.records.length === 0) {
+            page = page - 1;
+            skip = skip - limit;
+          }
+          this.setState({ count: data.count, traineeData: data.records, page, skip });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    const { skip, limit, traineeData, count } = this.state;
+    if (traineeData.length === 0 && count !== 0) {
+      callApi('get', TRAINEE_PATH + '?' + querystring.stringify({ skip, limit }))
+        .then((response) => {
+          const { data } = response;
+          this.setState({ count: data.count, traineeData: data.records });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   render() {

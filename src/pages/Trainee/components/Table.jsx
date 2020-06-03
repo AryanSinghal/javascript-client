@@ -100,7 +100,7 @@ class MyTable extends Component {
                 </span>
                 <IconButton
                   onClick={() => { onChangePage(page, 'left') }}
-                  disabled={page === 0}
+                  disabled={page <= 0}
                   aria-label="prev page"
                 >
                   <KeyboardArrowLeftIcon />
