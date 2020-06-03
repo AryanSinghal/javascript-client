@@ -6,6 +6,7 @@ import {
   Table, TableBody, TableCell, TableContainer, TableHead, CircularProgress,
   TableRow, Paper, withStyles, TableSortLabel, IconButton,
 } from '@material-ui/core';
+import { withLoaderAndMessage } from '../../../components'
 
 const styles = () => ({
   head: { color: 'grey' },
@@ -147,4 +148,6 @@ MyTable.defaultProps = {
   page: 0,
 };
 
-export default withStyles(styles)(MyTable);
+const styledTable = withStyles(styles)(MyTable);
+
+export default withLoaderAndMessage(styledTable);
