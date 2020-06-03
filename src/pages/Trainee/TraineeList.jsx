@@ -175,6 +175,9 @@ class TraineeList extends Component {
         });
     }
     const { skip, limit, traineeData, count } = this.state;
+    if (count === 0) {
+      window.location.reload(true);
+    }
     if (traineeData.length === 0 && count !== 0) {
       callApi('get', TRAINEE_PATH + '?' + querystring.stringify({ skip, limit }))
         .then((response) => {
