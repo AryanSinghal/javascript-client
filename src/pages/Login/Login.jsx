@@ -11,11 +11,14 @@ import {
   Typography,
   withStyles,
   Avatar,
+  CircularProgress,
 } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import { SnackbarConsumer } from '../../contexts';
 import LockIcon from '@material-ui/icons/Lock';
-import { LOGIN_SCHEMA } from '../../configs/constants';
+import { LOGIN_SCHEMA, LOGIN_URL } from '../../configs/constants';
+import callApi from '../../lib/utils/api';
 
 const styles = () => ({
   grid: { height: '90vh' },
@@ -31,6 +34,7 @@ class Login extends React.Component {
       password: '',
       emailError: '',
       passwordError: '',
+      progressBar: false,
     };
   }
 
@@ -41,9 +45,8 @@ class Login extends React.Component {
     return (!(email && password) || (emailError || passwordError));
   }
 
-  getError = async (label) => {
+  getError = async (label, value) => {
     const key = `${[label]}Error`;
-    const { [label]: value } = this.state;
     try {
       await LOGIN_SCHEMA.validateAt(label, { [label]: value });
       return { [key]: '' };
@@ -72,8 +75,26 @@ class Login extends React.Component {
       ));
   }
 
+  handleSubmit = (callback) => {
+    const { email, password } = this.state;
+    this.setState({ progressBar: true });
+    callApi('post', LOGIN_URL, { email, password })
+      .then((token) => {
+        if (token) {
+          localStorage.setItem('token', token);
+          this.props.history.push("/trainee");
+        }
+      })
+      .catch((err) => {
+        callback(err);
+      })
+      .finally(() => {
+        this.setState({ progressBar: false });
+      });
+  }
+
   render() {
-    const { emailError, passwordError } = this.state;
+    const { emailError, passwordError, progressBar } = this.state;
     const { classes } = this.props;
     return (
       <Grid className={classes.grid} container alignItems="center" justify="center">
@@ -132,10 +153,34 @@ class Login extends React.Component {
             />
           </CardContent>
           <CardActions>
-            <Button fullWidth variant="contained" color="primary" size="medium" align="center" disabled={this.isDisabled()}>Sign In</Button>
+            <SnackbarConsumer>
+              {({ openSnackbar }) => (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  size="medium"
+                  align="center"
+                  onClick={() => {
+                    this.handleSubmit((Error) => {
+                      if (Error)
+                        openSnackbar('error', Error);
+                    });
+                  }}
+                  disabled={this.isDisabled() || progressBar}
+                  endIcon={
+                    (progressBar)
+                      ? <CircularProgress />
+                      : ''
+                  }
+                >
+                  Sign In
+                </Button>
+              )}
+            </SnackbarConsumer>
           </CardActions>
         </Card>
-      </Grid>
+      </Grid >
     );
   }
 }

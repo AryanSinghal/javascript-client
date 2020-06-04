@@ -58,7 +58,7 @@ const TraineeDetails = () => {
         <Button
           variant="contained"
           color="default"
-          href="/trainee"
+          onClick={() => { window.history.back() }}
         >
           Back
         </Button>
