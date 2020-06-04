@@ -161,7 +161,7 @@ class TraineeList extends Component {
   componentDidUpdate = (prevProps, prevState) => {
     if (prevState.dialogProgressBar && !this.state.dialogProgressBar) {
       let { skip, limit, page, count, traineeData } = this.state;
-      if (traineeData.length - 1 === 0 && count - 1 !== 0) {
+      if (traineeData.length - 1 === 0 && count - 1 > 0) {
         page = page - 1;
         skip = skip - limit;
       }

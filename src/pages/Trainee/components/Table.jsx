@@ -56,7 +56,7 @@ class MyTable extends Component {
             </TableHead>
             <TableBody>
               {
-                data && data.map((row, index) => (
+                data && ((data.length) ? true : '') && data.map((row, index) => (
                   <TableRow key={id + index} className={classes.row}>
                     {
                       columns && columns.length && columns.map((column, index) => (
