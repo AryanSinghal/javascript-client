@@ -45,9 +45,8 @@ class Login extends React.Component {
     return (!(email && password) || (emailError || passwordError));
   }
 
-  getError = async (label) => {
+  getError = async (label, value) => {
     const key = `${[label]}Error`;
-    const { [label]: value } = this.state;
     try {
       await LOGIN_SCHEMA.validateAt(label, { [label]: value });
       return { [key]: '' };
