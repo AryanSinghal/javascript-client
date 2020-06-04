@@ -160,28 +160,15 @@ class TraineeList extends Component {
 
   componentDidUpdate = (prevProps, prevState) => {
     if (prevState.dialogProgressBar && !this.state.dialogProgressBar) {
-      let { skip, limit, page } = this.state;
+      let { skip, limit, page, count, traineeData } = this.state;
+      if (traineeData.length - 1 === 0 && count - 1 !== 0) {
+        page = page - 1;
+        skip = skip - limit;
+      }
       callApi('get', TRAINEE_PATH + '?' + querystring.stringify({ skip, limit }))
         .then((response) => {
           const { data } = response;
-          if (data.count === 0)
-            window.location.reload(true);
-          if (data.records.length === 0) {
-            page = page - 1;
-            skip = skip - limit;
-          }
           this.setState({ count: data.count, traineeData: data.records, page, skip });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    const { skip, limit, traineeData, count } = this.state;
-    if (traineeData.length === 0 && count !== 0) {
-      callApi('get', TRAINEE_PATH + '?' + querystring.stringify({ skip, limit }))
-        .then((response) => {
-          const { data } = response;
-          this.setState({ count: data.count, traineeData: data.records });
         })
         .catch((err) => {
           console.log(err);
