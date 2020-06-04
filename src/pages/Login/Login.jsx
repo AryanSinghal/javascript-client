@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -84,6 +83,7 @@ class Login extends React.Component {
       .then((token) => {
         if (token) {
           localStorage.setItem('token', token);
+          window.location.reload(true);
         }
       })
       .catch((err) => {
@@ -98,98 +98,90 @@ class Login extends React.Component {
     const { emailError, passwordError, progressBar } = this.state;
     const { classes } = this.props;
     return (
-      <>
-        {
-          (!!localStorage.getItem('token'))
-            ? <Redirect to="/trainee" />
-            : ''
-        }
-        <Grid className={classes.grid} container alignItems="center" justify="center">
-          <Card className={classes.card}>
-            <CardContent>
-              <div align="center">
-                <Avatar className={classes.avatar}>
-                  <LockIcon />
-                </Avatar>
-              </div>
-              <br />
-              <Typography align="center" gutterBottom variant="h5">
-                Login
+      <Grid className={classes.grid} container alignItems="center" justify="center">
+        <Card className={classes.card}>
+          <CardContent>
+            <div align="center">
+              <Avatar className={classes.avatar}>
+                <LockIcon />
+              </Avatar>
+            </div>
+            <br />
+            <Typography align="center" gutterBottom variant="h5">
+              Login
             </Typography>
-              <br />
-              <br />
-              <TextField
-                fullWidth
-                required
-                helperText={emailError}
-                error={!!(emailError)}
-                id="email"
-                label="Email Address"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                variant="outlined"
-                onChange={this.handleEmailChange}
-                onBlur={this.handleEmailChange}
-              />
-              <br />
-              <br />
-              <br />
-              <TextField
-                fullWidth
-                helperText={passwordError}
-                error={!!(passwordError)}
-                id="password"
-                label="Password"
-                type="password"
-                autoComplete="current-password"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <VisibilityOffIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                variant="outlined"
-                onChange={this.handlePasswordChange}
-                onBlur={this.handlePasswordChange}
-              />
-            </CardContent>
-            <CardActions>
-              <SnackbarConsumer>
-                {({ openSnackbar }) => (
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                    align="center"
-                    onClick={() => {
-                      this.handleSubmit((Error) => {
-                        if (Error)
-                          openSnackbar('error', Error);
-                      });
-
-                    }}
-                    disabled={this.isDisabled() || progressBar}
-                    endIcon={
-                      (progressBar)
-                        ? <CircularProgress />
-                        : ''
-                    }
-                  >
-                    Sign In
-                  </Button>
-                )}
-              </SnackbarConsumer>
-            </CardActions>
-          </Card>
-        </Grid >
-      </>
+            <br />
+            <br />
+            <TextField
+              fullWidth
+              required
+              helperText={emailError}
+              error={!!(emailError)}
+              id="email"
+              label="Email Address"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailIcon />
+                  </InputAdornment>
+                ),
+              }}
+              variant="outlined"
+              onChange={this.handleEmailChange}
+              onBlur={this.handleEmailChange}
+            />
+            <br />
+            <br />
+            <br />
+            <TextField
+              fullWidth
+              helperText={passwordError}
+              error={!!(passwordError)}
+              id="password"
+              label="Password"
+              type="password"
+              autoComplete="current-password"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <VisibilityOffIcon />
+                  </InputAdornment>
+                ),
+              }}
+              variant="outlined"
+              onChange={this.handlePasswordChange}
+              onBlur={this.handlePasswordChange}
+            />
+          </CardContent>
+          <CardActions>
+            <SnackbarConsumer>
+              {({ openSnackbar }) => (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  size="medium"
+                  align="center"
+                  onClick={() => {
+                    this.handleSubmit((Error) => {
+                      if (Error)
+                        openSnackbar('error', Error);
+                    });
+                  }}
+                  disabled={this.isDisabled() || progressBar}
+                  endIcon={
+                    (progressBar)
+                      ? <CircularProgress />
+                      : ''
+                  }
+                >
+                  Sign In
+                </Button>
+              )}
+            </SnackbarConsumer>
+          </CardActions>
+        </Card>
+      </Grid >
     );
   }
 }

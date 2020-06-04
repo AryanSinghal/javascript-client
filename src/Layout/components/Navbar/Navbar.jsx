@@ -4,13 +4,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Grid } from '@material-ui/core';
-import { Redirect } from 'react-router-dom';
 
 class ButtonAppBar extends Component {
 
   handleLogout = () => {
     localStorage.removeItem('token');
-    this.setState({ state: this.state });
   }
 
   render() {
@@ -28,12 +26,7 @@ class ButtonAppBar extends Component {
               <Button href="/textfield-demo" color="inherit" variant="text">TEXTFIELD DEMO</Button>
               <Button href="/input-demo" color="inherit" variant="text">INPUT DEMO</Button>
               <Button href="/children-demo" color="inherit" variant="text">CHILDREN DEMO</Button>
-              <Button onClick={this.handleLogout} color="inherit" variant="text">LOGOUT</Button>
-              {
-                (!localStorage.getItem('token'))
-                  ? <Redirect to="/login" />
-                  : ''
-              }
+              <Button href="/login" onClick={this.handleLogout} color="inherit" variant="text">LOGOUT</Button>
             </Grid>
           </Grid>
         </Toolbar>
