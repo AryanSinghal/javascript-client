@@ -119,4 +119,3 @@ export const SUCCESS_MESSAGE = 'This is a success message!';
 export const FAILURE_MESSAGE = 'This is an error message!';
 export const LOGIN_URL = 'user/login';
 export const TRAINEE_PATH = 'trainee';
-
