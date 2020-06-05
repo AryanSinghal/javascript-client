@@ -1,5 +1,5 @@
 import React from 'react';
-import { CssBaseline, Typography } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 import {
   BrowserRouter as Router, Route, Redirect, Switch,
 } from 'react-router-dom';
@@ -16,7 +16,6 @@ function App() {
     <SnackbarProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Typography>
           <Router>
             <Switch>
               <Route exact path="/">
@@ -30,7 +29,6 @@ function App() {
               <PrivateRoute component={NoMatch} />
             </Switch>
           </Router>
-        </Typography>
       </ThemeProvider>
     </SnackbarProvider >
   );
