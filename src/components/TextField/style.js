@@ -10,6 +10,7 @@ export const MyStyle = styled.input`{
   &.error{
     border: red solid 1px;
   }`;
+
 export const Error = styled.p`{
   color: red;
 }`;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Select = styled.select`{
-    width: 99%;
+    width: 97%;
     height: 20%;
     padding: 1%;
     border-radius: 4px;
@@ -10,9 +10,11 @@ export const Select = styled.select`{
   &.error{
     border: red solid 1px;
   }`;
+
 export const Option = styled.option`{
   font-size: 14px;
 }`;
+
 export const Error = styled.p`{
   text-decoration: underline;
   color: red;
