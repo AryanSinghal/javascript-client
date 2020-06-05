@@ -149,6 +149,7 @@ class TraineeList extends Component {
           <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
             ADD TRAINEE
           </Button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <AddDialog
           open={open}
