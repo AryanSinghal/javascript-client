@@ -6,6 +6,7 @@ import {
   Table, TableBody, TableCell, TableContainer, TableHead,
   TableRow, Paper, withStyles, TableSortLabel, IconButton,
 } from '@material-ui/core';
+import { withLoaderAndMessage } from '../../../components'
 
 const styles = () => ({
   head: { color: 'grey' },
@@ -41,6 +42,7 @@ class MyTable extends Component {
                       >
                         <TableSortLabel
                           active={orderBy === column.field}
+                          hideSortIcon
                           direction={orderBy === column.field ? order : 'asc'}
                           onClick={() => { onSort(order, column.field) }}
                         >
@@ -50,15 +52,16 @@ class MyTable extends Component {
                     </Fragment>
                   ))
                 }
+                <TableCell />
               </TableRow>
             </TableHead>
             <TableBody>
               {
-                data && data.length && data.map((row, index) => (
+                data && data.map((row, index) => (
                   <TableRow key={id + index} className={classes.row}>
                     {
-                      columns && columns.length && columns.map((column) => (
-                        <Fragment key={row[column.field]}>
+                      columns && columns.length && columns.map((column, index) => (
+                        <Fragment key={row[column.field] + index}>
                           <TableCell align={column.align || 'center'} onClick={() => { onSelect(row) }}>
                             {(column.format) ? column.format(row[column.field]) : row[column.field]}
                           </TableCell>
@@ -68,15 +71,13 @@ class MyTable extends Component {
                     <TableCell>
                       {
                         action && action.length && action.map((obj, index) => (
-                          <Fragment key={id + index + index}>
-                            <IconButton
-                              onClick={() => { obj.handler(row) }}
-                              aria-label="action"
-                            >
-                              {obj.icon}
-                            </IconButton>
-                            <br />
-                          </Fragment>
+                          <IconButton
+                            key={id + index + index}
+                            onClick={() => { obj.handler(row) }}
+                            aria-label="action"
+                          >
+                            {obj.icon}
+                          </IconButton>
                         ))
                       }
                     </TableCell>
@@ -89,23 +90,27 @@ class MyTable extends Component {
             (count === 0)
               ? ''
               : <div align='right'>
-                  <span>
-                    {page * rowsPerPage + 1} - {(page + 1) * rowsPerPage} of {count}
-                  </span>
-                  <IconButton
-                    onClick={() => { onChangePage(page, 'left') }}
-                    disabled={page === 0}
-                    aria-label="prev page"
-                  >
-                    <KeyboardArrowLeftIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => { onChangePage(page, 'right') }}
-                    disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                    aria-label="next page"
-                  >
-                    <KeyboardArrowRightIcon />
-                  </IconButton>
+                <span>
+                  {page * rowsPerPage + 1} - {
+                    (((page + 1) * rowsPerPage) > count)
+                      ? count
+                      : (page + 1) * rowsPerPage
+                  } of {count}
+                </span>
+                <IconButton
+                  onClick={() => { onChangePage(page, 'left') }}
+                  disabled={page === 0}
+                  aria-label="prev page"
+                >
+                  <KeyboardArrowLeftIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => { onChangePage(page, 'right') }}
+                  disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                  aria-label="next page"
+                >
+                  <KeyboardArrowRightIcon />
+                </IconButton>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
           }
@@ -138,4 +143,6 @@ MyTable.defaultProps = {
   page: 0,
 };
 
-export default withStyles(styles)(MyTable);
+const styledTable = withStyles(styles)(MyTable);
+
+export default withLoaderAndMessage(styledTable);

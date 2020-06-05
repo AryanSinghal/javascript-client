@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
 
-const SnackBarContext = React.createContext();
+export const SnackBarContext = React.createContext();
 
 export class SnackbarProvider extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ export class SnackbarProvider extends Component {
           <Snackbar
             open={open}
             autoHideDuration={6000}
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             onClose={this.closeSnackBar}
           >
             <Alert onClose={this.closeSnackBar} variant="filled" severity={status || 'info'}>
