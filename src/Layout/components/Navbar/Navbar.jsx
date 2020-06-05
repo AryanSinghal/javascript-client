@@ -22,12 +22,12 @@ const ButtonAppBar = () => {
     <AppBar position="static">
       <Toolbar>
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item xs={7}>
             <Typography variant="h6">
               Trainee Portal
             </Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={5}>
             <Button onClick={() => handleOnClick('/trainee')} color="inherit" variant="text">
               TRAINEE
             </Button>
