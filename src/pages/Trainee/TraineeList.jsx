@@ -109,38 +109,18 @@ class TraineeList extends Component {
 
   handleEditSubmit = (event) => {
     event.preventDefault();
-    this.setState({ dialogProgressBar: true });
     const name = event.target[0].value;
     const email = event.target[2].value;
-    const { openSnackbar } = this.context;
-    const { traineeRecord } = this.state;
-    callApi('put', TRAINEE_PATH, { name, email, id: traineeRecord.originalId })
-      .then((response) => {
-        const { data } = response;
-        this.setState({ traineeRecord: {}, editDialogOpen: false, dialogProgressBar: false });
-        console.log('Edited item');
-        console.log({ data, name, email });
-      })
-      .catch((err) => {
-        this.setState({ traineeRecord: {}, dialogProgressBar: false });
-        openSnackbar('error', err.message);
-      });
+    console.log('Edited item');
+    console.log({ name, email });
+    this.setState({ traineeRecord: {}, editDialogOpen: false });
   }
 
   handleDeleteSubmit = () => {
-    this.setState({ dialogProgressBar: true });
     const { traineeRecord } = this.state;
-    const { openSnackbar } = this.context;
-    callApi('delete', TRAINEE_PATH + '/' + traineeRecord.originalId)
-      .then((response) => {
-        this.setState({ traineeRecord: {}, deleteDialogOpen: false, dialogProgressBar: false });
-        console.log('Deleted item')
-        console.log(traineeRecord);
-      })
-      .catch((err) => {
-        this.setState({ traineeRecord: {}, dialogProgressBar: false });
-        openSnackbar('error', err.message);
-      });
+    console.log('Deleted item')
+    console.log(traineeRecord);
+    this.setState({ traineeRecord: {}, deleteDialogOpen: false });
   }
 
   componentDidMount = () => {
@@ -156,24 +136,6 @@ class TraineeList extends Component {
         this.setState({ tableProgressBar: false, count: 0 });
         openSnackbar('error', err.message);
       })
-  }
-
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevState.dialogProgressBar && !this.state.dialogProgressBar) {
-      let { skip, limit, page, count, traineeData } = this.state;
-      if (traineeData.length - 1 === 0 && count - 1 > 0) {
-        page = page - 1;
-        skip = skip - limit;
-      }
-      callApi('get', TRAINEE_PATH + '?' + querystring.stringify({ skip, limit }))
-        .then((response) => {
-          const { data } = response;
-          this.setState({ count: data.count, traineeData: data.records, page, skip });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   }
 
   render() {
@@ -236,14 +198,13 @@ class TraineeList extends Component {
           open={deleteDialogOpen}
           onClose={this.handleDeleteDialogClose}
           onSubmit={this.handleDeleteSubmit}
-          progressBar={dialogProgressBar}
+          data={traineeRecord}
         />
         <EditDialog
           open={editDialogOpen}
           onClose={this.handleEditDialogClose}
           onSubmit={this.handleEditSubmit}
           data={traineeRecord}
-          progressBar={dialogProgressBar}
         />
       </>
     );

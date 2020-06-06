@@ -8,16 +8,17 @@ import {
   DialogContentText,
   DialogTitle,
   InputAdornment,
-  CircularProgress,
 } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import PersonIcon from '@material-ui/icons/Person';
 import PropTypes from 'prop-types';
+import { SnackbarConsumer } from '../../../contexts';
+import { SUCCESS_MESSAGE } from '../../../configs/constants';
 
 class EditDialog extends React.Component {
 
   render() {
-    const { open, onSubmit, onClose, data, progressBar } = this.props;
+    const { open, onSubmit, onClose, data } = this.props;
     return (
       <>
         <Dialog
@@ -70,19 +71,18 @@ class EditDialog extends React.Component {
               <Button onClick={onClose} color="primary">
                 Cancel
               </Button>
-              <Button
-                endIcon={
-                  (progressBar)
-                    ? <CircularProgress />
-                    : ''
-                }
-                type='submit'
-                color="primary"
-                autoFocus
-                disabled={progressBar}
-              >
-                Submit
-              </Button>
+              <SnackbarConsumer>
+                {({ openSnackbar }) => (
+                  <Button
+                    onClick={() => { openSnackbar('success', SUCCESS_MESSAGE) }}
+                    type='submit'
+                    color="primary"
+                    autoFocus
+                  >
+                    Submit
+                  </Button>
+                )}
+              </SnackbarConsumer>
             </DialogActions>
           </form>
         </Dialog>
@@ -96,7 +96,6 @@ EditDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   data: PropTypes.object.isRequired,
-  progressBar: PropTypes.bool.isRequired
 };
 
 export { EditDialog };
