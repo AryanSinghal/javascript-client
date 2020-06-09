@@ -6,7 +6,7 @@ import {
   Table, TableBody, TableCell, TableContainer, TableHead,
   TableRow, Paper, withStyles, TableSortLabel, IconButton,
 } from '@material-ui/core';
-import { withLoaderAndMessage } from '../../../components'
+import { withLoaderAndMessage } from '../../../components';
 
 const styles = () => ({
   head: { color: 'grey' },
@@ -68,7 +68,7 @@ class MyTable extends Component {
                         </Fragment>
                       ))
                     }
-                    <TableCell>
+                    <TableCell align="center">
                       {
                         action && action.length && action.map((obj, index) => (
                           <IconButton
