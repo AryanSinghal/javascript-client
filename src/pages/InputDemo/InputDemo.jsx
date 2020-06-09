@@ -5,6 +5,7 @@ import {
 import {
   SELECT_OPTIONS, CRICKET_OPTIONS, FOOTBALL_OPTIONS, CRICKET, INPUT_DEMO_SCHEMA,
 } from '../../configs/constants';
+import { MyStyle } from './style';
 
 export class InputDemo extends React.Component {
   constructor(props) {
@@ -121,7 +122,7 @@ export class InputDemo extends React.Component {
       sport, name, nameError, sportError, cricketError, footballError, [sport]: specialty,
     } = this.state;
     return (
-      <>
+      <MyStyle>
         <p><b>Name</b></p>
         <TextField
           onChange={this.handleNameChange}
@@ -155,9 +156,15 @@ export class InputDemo extends React.Component {
         <div align="right">
           <Button onClick={this.onClick} value=" CANCEL " />
           &nbsp;&nbsp;&nbsp;
-          <Button value=" SUBMIT " disabled={this.isDisabled()} onClick={this.onClick} success={(this.isDisabled()) ? 'disabled' : 'success'} />
+          <Button
+            value=" SUBMIT "
+            disabled={this.isDisabled()}
+            onClick={this.onClick}
+            success={(this.isDisabled()) ? 'disabled' : 'success'}
+          />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
-      </>
+      </MyStyle>
     );
   }
 }

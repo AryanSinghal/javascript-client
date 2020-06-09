@@ -34,4 +34,3 @@ const withLoaderAndMessage = (WrappedComponent) => {
 }
 
 export default withLoaderAndMessage;
-
