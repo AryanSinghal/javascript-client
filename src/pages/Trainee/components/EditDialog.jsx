@@ -15,9 +15,10 @@ import PersonIcon from '@material-ui/icons/Person';
 import PropTypes from 'prop-types';
 
 class EditDialog extends React.Component {
-
   render() {
-    const { open, onSubmit, onClose, data, progressBar } = this.props;
+    const {
+      open, onSubmit, onClose, data, progressBar,
+    } = this.props;
     return (
       <>
         <Dialog
@@ -76,7 +77,7 @@ class EditDialog extends React.Component {
                     ? <CircularProgress />
                     : ''
                 }
-                type='submit'
+                type="submit"
                 color="primary"
                 autoFocus
                 disabled={progressBar}
@@ -96,7 +97,7 @@ EditDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   data: PropTypes.object.isRequired,
-  progressBar: PropTypes.bool.isRequired
+  progressBar: PropTypes.bool.isRequired,
 };
 
 export { EditDialog };

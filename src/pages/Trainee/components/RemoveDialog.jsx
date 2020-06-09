@@ -11,7 +11,9 @@ import {
 import PropTypes from 'prop-types';
 
 export const RemoveDialog = (props) => {
-  const { open, onSubmit, onClose, progressBar } = props;
+  const {
+    open, onSubmit, onClose, progressBar,
+  } = props;
   return (
     <>
       <Dialog
@@ -46,10 +48,11 @@ export const RemoveDialog = (props) => {
       </Dialog>
     </>
   );
-}
+};
 
 RemoveDialog.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
+  progressBar: PropTypes.bool.isRequired,
 };
