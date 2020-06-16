@@ -16,21 +16,21 @@ function App() {
     <SnackbarProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-          <Router>
-            <Switch>
-              <Route exact path="/">
-                <Redirect to="/login" />
-              </Route>
-              <AuthRoute exact path="/login" component={Login} />
-              <PrivateRoute path="/trainee" component={Trainee} />
-              <PrivateRoute exact path="/textfield-demo" component={TextFieldDemo} />
-              <PrivateRoute exact path="/input-demo" component={InputDemo} />
-              <PrivateRoute exact path="/children-demo" component={ChildrenDemo} />
-              <PrivateRoute component={NoMatch} />
-            </Switch>
-          </Router>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/login" />
+            </Route>
+            <AuthRoute exact path="/login" component={Login} />
+            <PrivateRoute path="/trainee" component={Trainee} />
+            <PrivateRoute exact path="/textfield-demo" component={TextFieldDemo} />
+            <PrivateRoute exact path="/input-demo" component={InputDemo} />
+            <PrivateRoute exact path="/children-demo" component={ChildrenDemo} />
+            <PrivateRoute component={NoMatch} />
+          </Switch>
+        </Router>
       </ThemeProvider>
-    </SnackbarProvider >
+    </SnackbarProvider>
   );
 }
 
